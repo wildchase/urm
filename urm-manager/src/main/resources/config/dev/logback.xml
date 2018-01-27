@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="false" scan="false">
+
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d %-5level [%thread] %logger - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="defaultAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/data/opt/urm/dev/manager/manager.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/data/opt/urm/dev/manager/manager.log-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %-5level [%thread] %logger - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.panly.urm" level="DEBUG" />
+	
+	<root level="info">
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="defaultAppender" />
+	</root>
+
+</configuration>
