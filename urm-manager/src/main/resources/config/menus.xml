@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+	<menu menuId="101" menuName="权限管理" icon="fa-laptop" >
+		<menu menuId="101001" menuName="账户管理" icon="fa-laptop" url="/acct/list" />
+		<menu menuId="101002" menuName="角色管理" icon="fa-laptop" url="/role/list" />
+		<menu menuId="101003" menuName="应用管理" icon="fa-laptop" url="/app/list" />
+		<menu menuId="101004" menuName="功能管理" icon="fa-laptop" url="/func/list" />
+		<menu menuId="101005" menuName="操作管理" icon="fa-laptop" url="/oper/list" />
+	</menu>
+	
+	<menu menuId="102" menuName="日志管理" icon="fa-laptop" >
+		<menu menuId="102001" menuName="操作日志" icon="fa-laptop" url="/oper/log/list" />
+		<menu menuId="102002" menuName="鉴权日志" icon="fa-laptop" url="/auth/log/list" />
+		<menu menuId="102003" menuName="应用日志" icon="fa-laptop" url="/app/log/list" />
+	</menu>
+		
+</users>

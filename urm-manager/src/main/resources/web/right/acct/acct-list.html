@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>账户管理</title> 
+<#include "/common/meta.html">
+<script type="text/javascript" src="${ctx}/res/right/acct/acct-list.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- 首行显示-->
+		<#include "/common/header.html">
+
+		<!-- 菜单栏显示-->
+		<#include "/common/menu.html">
+
+		<!-- 内容显示位置 -->
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					账户管理<small>查询</small>
+				</h1>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<form id="queryForm">
+				<div class="row">
+					<div class="col-xs-2">
+						<div class="input-group">
+							<span class="input-group-addon">状态</span> 
+							<select class="form-control" id="status">
+								<option selected="selected"></option>
+								<#list StatusEnum as s>
+                					<option value="${s.code}">${s.desc}</option>
+                				</#list>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="input-group">
+							<span class="input-group-addon">账户名称</span> 
+							<input type="text" class="form-control" id="acctName"
+								autocomplete="on">
+						</div>
+					</div>
+				</div>
+				
+				</form>
+				<div class="row">
+					<div class="col-xs-2">
+						<button id="btn-query" class="btn btn-primary btn-sm"  >搜索</button>
+						<button id="btn-query-reset" class="btn btn-primary btn-sm">重置</button>
+					</div>
+				</div>
+				<div class="row">
+					<!-- 查询、添加、批量删除、导出、刷新 -->
+					<div class="row-fluid">
+					    <div class="pull-right">
+					        <div class="btn-group">
+					            <button type="button" class="btn btn-primary btn-sm" id="btn-add">
+					                <i class="fa fa-plus"></i>新增
+					            </button>
+					            <button type="button" class="btn btn-primary btn-sm" id="btn-delAll">
+					                <i class="fa fa-remove"></i>批量删除
+					            </button>
+					            <button type="button" class="btn btn-primary btn-sm" id="btn-export">
+					                <i class="fa fa-sign-in"></i>导出
+					            </button>
+					            <button type="button" class="btn btn-primary btn-sm" id="btn-re">
+					                <i class="fa fa-refresh"></i>刷新
+					            </button>
+					        </div>
+					    </div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header hide">
+								<h3 class="box-title">账户列表</h3>
+							</div>
+							<div class="box-body">
+								<table id="acctList" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th><input type="checkbox" class="checkall"/></th>
+											<th>账号Id</th>											<th>账号名称</th>
+											<th>邮箱</th>
+											<th>状态</th>
+											<th>上次登录</th>
+											<th>登录IP</th>
+											<th>创建人</th>
+											<th>创建时间</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		
+		
+		<!-- 添加账户 -->
+		<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" >
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+						</button>
+						<h4 class="modal-title" id="addModalLabel">添加账户</h4>
+					</div>
+					<div class="modal-body" >
+						<form class="form-horizontal"  id="addForm"  method="post">
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">账户</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="acctName" minlength="2" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">手机号码</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="phone" minlength="11" maxlength='11' required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">邮箱</label>
+								<div class="col-sm-6">
+									<input type="email" class="form-control" name="email" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">密码</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="password" required  minlength="5" maxlength="12">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">状态</label>
+								<div class="col-sm-6">
+									<select class="form-control" name="status" required>
+										<#list StatusEnum as s>
+		                					<option value="${s.code}">${s.desc}</option>
+		                				</#list>
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- modal-body END -->
+					<div class="modal-footer">
+						<button id="btn-add-submit" type="submit" class="btn btn-primary">提交</button>
+						<button id="btn-add-reset" type="submit" class="btn btn-primary">重置</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- EditUser -->
+		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" >
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+						</button>
+						<h4 class="modal-title" id="editModalLabel">修改账户</h4>
+					</div>
+					
+					<div class="modal-body" >
+						<form class="form-horizontal"  id="editForm"  method="post">
+							<input type="hidden" class="form-control" name="acctId">
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">账户名称</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="acctName" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">手机号码</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="phone" minlength="11" maxlength='11' required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">邮箱</label>
+								<div class="col-sm-9">
+									<input type="email" class="form-control" name="email" required >
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">状态</label>
+								<div class="col-sm-9">
+									<select class="form-control" name="status" required>
+										<#list StatusEnum as s>
+		                					<option value="${s.code}">${s.desc}</option>
+		                				</#list>
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- modal-body END -->
+					<div class="modal-footer">
+						<button id="btn-edit-submit" type="submit" class="btn btn-primary">提交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+		<!-- 通用footer 展示-->
+		<#include "/common/footer.html">
+
+	</div>
+</body>
+</html>
+

@@ -1,6 +1,5 @@
 package com.panly.urm.manager.config;
 
-
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.panly.urm.manager.JsonResult;
+import com.panly.urm.manager.common.web.JsonResult;
 
 
 /**
@@ -41,6 +40,7 @@ public class FrameControllerAdvice {
 
 	/**
 	 * 应用到所有@RequestMapping注解方法，在其执行之前初始化数据绑定器
+	 * 
 	 * @param binder
 	 */
 	@InitBinder
@@ -49,6 +49,7 @@ public class FrameControllerAdvice {
 
 	/**
 	 * 把值绑定到Model中，使全局@RequestMapping可以获取到该值
+	 * 
 	 * @param model
 	 */
 	@ModelAttribute
@@ -69,7 +70,7 @@ public class FrameControllerAdvice {
 		for (ConstraintViolation<?> violation : violations) {
 			strBuilder.append(violation.getMessage() + "\n");
 		}
-		return new JsonResult(JsonResult.ERROR).setMsg("校验异常"+strBuilder.toString()).setError("校验异常"+strBuilder.toString());
+		return new JsonResult(JsonResult.ERROR).setError("校验异常"+strBuilder.toString());
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class FrameControllerAdvice {
 	@ExceptionHandler(value = HttpMessageNotReadableException.class)
 	public JsonResult errorHandler(HttpMessageNotReadableException ex) {
 		logger.error("json转换异常",ex);
-		return new JsonResult(JsonResult.ERROR).setMsg("json数据格式有错").setError("json数据格式有错");
+		return new JsonResult(JsonResult.ERROR).setError("json数据格式有错");
 	}
 	
 	/**
@@ -98,7 +99,7 @@ public class FrameControllerAdvice {
 		for (ObjectError objectError : errors) {
 			sb.append(objectError.getDefaultMessage());
 		}
-		return new JsonResult(JsonResult.ERROR).setMsg("校验错误"+sb.toString()).setError("校验错误"+sb.toString());
+		return new JsonResult(JsonResult.ERROR).setError("校验错误"+sb.toString());
 	}
 	
 	/**
@@ -110,9 +111,8 @@ public class FrameControllerAdvice {
 	@ExceptionHandler(value = ValidationException.class)
 	public JsonResult errorHandler(ValidationException ex) {
 		logger.error("校验错误",ex);
-		return new JsonResult(JsonResult.ERROR).setMsg("校验错误:"+ex.getMessage()).setError("校验错误:"+ex.getMessage());
+		return new JsonResult(JsonResult.ERROR).setError("校验错误:"+ex.getMessage());
 	}
-	
 	
 	/**
 	 * 未知错误
@@ -123,7 +123,7 @@ public class FrameControllerAdvice {
 	@ExceptionHandler(value = Exception.class)
 	public JsonResult errorHandler(Exception ex) {
 		logger.error("出现错误",ex);
-		return new JsonResult(JsonResult.ERROR).setMsg(ex.getMessage()).setError(ex.getMessage());
+		return new JsonResult(JsonResult.ERROR).setError(ex.getMessage());
 	}
-
+	
 }

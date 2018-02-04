@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmRoleDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmRole" id="urmRoleResultMap">
+		<result property="roleId" column="ROLE_ID"  />
+		<result property="roleCode" column="ROLE_CODE"  />
+		<result property="roleName" column="ROLE_NAME"  />
+		<result property="roleDesc" column="ROLE_DESC"  />
+		<result property="status" column="STATUS"  />
+		<result property="createTime" column="CREATE_TIME"  />
+		<result property="updateTime" column="UPDATE_TIME"  />
+		<result property="createBy" column="CREATE_BY"  />
+		<result property="updateBy" column="UPDATE_BY"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ROLE_ID,
+		ROLE_CODE,
+		ROLE_NAME,
+		ROLE_DESC,
+		STATUS,
+		CREATE_TIME,
+		UPDATE_TIME,
+		CREATE_BY,
+		UPDATE_BY,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{roleId},
+		#{roleCode},
+		#{roleName},
+		#{roleDesc},
+		#{status},
+		#{createTime},
+		#{updateTime},
+		#{createBy},
+		#{updateBy},
+		#{recordStatus}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="roleId != null ">and ROLE_ID = #{roleId}</if>
+				<if test="roleCode != null and roleCode != ''">and ROLE_CODE = #{roleCode}</if>
+				<if test="roleName != null and roleName != ''">and ROLE_NAME = #{roleName}</if>
+				<if test="roleDesc != null and roleDesc != ''">and ROLE_DESC = #{roleDesc}</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+				<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
+				<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
+				<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmRole" >
+		insert into urm_role( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmRole">
+        insert into urm_role
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="roleId != null ">ROLE_ID,</if>
+				<if test="roleCode != null and roleCode != ''">ROLE_CODE,</if>
+				<if test="roleName != null and roleName != ''">ROLE_NAME,</if>
+				<if test="roleDesc != null and roleDesc != ''">ROLE_DESC,</if>
+				<if test="status != null ">STATUS,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+				<if test="updateTime != null ">UPDATE_TIME,</if>
+				<if test="createBy != null ">CREATE_BY,</if>
+				<if test="updateBy != null ">UPDATE_BY,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="roleId != null ">#{roleId},</if>
+				<if test="roleCode != null and roleCode != ''">#{roleCode},</if>
+				<if test="roleName != null and roleName != ''">#{roleName},</if>
+				<if test="roleDesc != null and roleDesc != ''">#{roleDesc},</if>
+				<if test="status != null ">#{status},</if>
+				<if test="createTime != null ">#{createTime},</if>
+				<if test="updateTime != null ">#{updateTime},</if>
+				<if test="createBy != null ">#{createBy},</if>
+				<if test="updateBy != null ">#{updateBy},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmRole">
+		delete from urm_role
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_role
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and ROLE_ID = #{roleId}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmRole">
+		update urm_role 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="roleCode != null and roleCode != ''">ROLE_CODE = #{roleCode},</if>
+				<if test="roleName != null and roleName != ''">ROLE_NAME = #{roleName},</if>
+				<if test="roleDesc != null and roleDesc != ''">ROLE_DESC = #{roleDesc},</if>
+				<if test="status != null ">STATUS = #{status},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+				<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+				<if test="createBy != null ">CREATE_BY = #{createBy},</if>
+				<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and ROLE_ID = #{roleId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmRoleResultMap">
+        select <include refid="table_columns" />
+        from urm_role
+    </select>
+
+    <select id="find" resultMap="urmRoleResultMap">
+        select <include refid="table_columns" />
+        from urm_role
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_role
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmRoleResultMap"  >
+		select <include refid="table_columns" />
+		from urm_role
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and ROLE_ID = #{roleId}</if>
+			<if test="1==1">and RECORD_STATUS = 1 </if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+	<select id="query" resultMap="urmRoleResultMap">
+		select
+		<include refid="table_columns" />
+		from urm_role
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="roleCode != null and roleCode != ''">and ROLE_CODE = #{roleCode}</if>
+			<if test="roleName != null and roleName != ''">and ROLE_NAME = #{roleName}</if>
+			<if test="status != null ">and STATUS = #{status}</if>
+			<if test="startCreateTime != null and startCreateTime != ''">and CREATE_TIME > #{startCreateTime}</if>
+			<if test="endCreateTime != null and endCreateTime != ''"><![CDATA[ and CREATE_TIME < #{endCreateTime} ]]></if>
+			<if test="1==1">and RECORD_STATUS=1</if>
+		</trim>
+		order by CREATE_TIME desc
+	</select>
+
+
+</mapper>

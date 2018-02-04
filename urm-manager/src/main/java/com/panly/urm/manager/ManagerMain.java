@@ -10,12 +10,10 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
-@ImportResource({ "classpath*:META-INF/spring/*.xml" })
+@ImportResource({ "classpath*:*/**/*.spring.xml" })
 @SpringBootApplication(scanBasePackages = "com.panly.urm.manager")
 @PropertySource({ 
-	"classpath:/i18n/exception.properties",
-	"classpath:/config/conf.properties",
-	"classpath:/config/${spring.profiles.active}/conf.properties"
+	"classpath:/i18n/exception.properties"
 })
 public class ManagerMain implements EnvironmentAware  {
 	

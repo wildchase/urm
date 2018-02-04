@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmAuthLogDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmAuthLog" id="urmAuthLogResultMap">
+		<result property="authLogId" column="AUTH_LOG_ID"  />
+		<result property="appId" column="APP_ID"  />
+		<result property="appName" column="APP_NAME"  />
+		<result property="acctId" column="ACCT_ID"  />
+		<result property="acctName" column="ACCT_NAME"  />
+		<result property="authType" column="AUTH_TYPE"  />
+		<result property="authParam" column="AUTH_PARAM"  />
+		<result property="authCost" column="AUTH_COST"  />
+		<result property="success" column="SUCCESS"  />
+		<result property="authRet" column="AUTH_RET"  />
+		<result property="createTime" column="CREATE_TIME"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		AUTH_LOG_ID,
+		APP_ID,
+		APP_NAME,
+		ACCT_ID,
+		ACCT_NAME,
+		AUTH_TYPE,
+		AUTH_PARAM,
+		AUTH_COST,
+		SUCCESS,
+		AUTH_RET,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{authLogId},
+		#{appId},
+		#{appName},
+		#{acctId},
+		#{acctName},
+		#{authType},
+		#{authParam},
+		#{authCost},
+		#{success},
+		#{authRet},
+		#{createTime}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="authLogId != null ">and AUTH_LOG_ID = #{authLogId}</if>
+				<if test="appId != null ">and APP_ID = #{appId}</if>
+				<if test="appName != null and appName != ''">and APP_NAME = #{appName}</if>
+				<if test="acctId != null ">and ACCT_ID = #{acctId}</if>
+				<if test="acctName != null and acctName != ''">and ACCT_NAME = #{acctName}</if>
+				<if test="authType != null and authType != ''">and AUTH_TYPE = #{authType}</if>
+				<if test="authParam != null and authParam != ''">and AUTH_PARAM = #{authParam}</if>
+				<if test="authCost != null ">and AUTH_COST = #{authCost}</if>
+				<if test="success != null ">and SUCCESS = #{success}</if>
+				<if test="authRet != null and authRet != ''">and AUTH_RET = #{authRet}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmAuthLog" >
+		insert into urm_auth_log( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmAuthLog">
+        insert into urm_auth_log
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="authLogId != null ">AUTH_LOG_ID,</if>
+				<if test="appId != null ">APP_ID,</if>
+				<if test="appName != null and appName != ''">APP_NAME,</if>
+				<if test="acctId != null ">ACCT_ID,</if>
+				<if test="acctName != null and acctName != ''">ACCT_NAME,</if>
+				<if test="authType != null and authType != ''">AUTH_TYPE,</if>
+				<if test="authParam != null and authParam != ''">AUTH_PARAM,</if>
+				<if test="authCost != null ">AUTH_COST,</if>
+				<if test="success != null ">SUCCESS,</if>
+				<if test="authRet != null and authRet != ''">AUTH_RET,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="authLogId != null ">#{authLogId},</if>
+				<if test="appId != null ">#{appId},</if>
+				<if test="appName != null and appName != ''">#{appName},</if>
+				<if test="acctId != null ">#{acctId},</if>
+				<if test="acctName != null and acctName != ''">#{acctName},</if>
+				<if test="authType != null and authType != ''">#{authType},</if>
+				<if test="authParam != null and authParam != ''">#{authParam},</if>
+				<if test="authCost != null ">#{authCost},</if>
+				<if test="success != null ">#{success},</if>
+				<if test="authRet != null and authRet != ''">#{authRet},</if>
+				<if test="createTime != null ">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmAuthLog">
+		delete from urm_auth_log
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_auth_log
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and AUTH_LOG_ID = #{authLogId}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmAuthLog">
+		update urm_auth_log 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="appId != null ">APP_ID = #{appId},</if>
+				<if test="appName != null and appName != ''">APP_NAME = #{appName},</if>
+				<if test="acctId != null ">ACCT_ID = #{acctId},</if>
+				<if test="acctName != null and acctName != ''">ACCT_NAME = #{acctName},</if>
+				<if test="authType != null and authType != ''">AUTH_TYPE = #{authType},</if>
+				<if test="authParam != null and authParam != ''">AUTH_PARAM = #{authParam},</if>
+				<if test="authCost != null ">AUTH_COST = #{authCost},</if>
+				<if test="success != null ">SUCCESS = #{success},</if>
+				<if test="authRet != null and authRet != ''">AUTH_RET = #{authRet},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and AUTH_LOG_ID = #{authLogId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmAuthLogResultMap">
+        select <include refid="table_columns" />
+        from urm_auth_log
+    </select>
+
+    <select id="find" resultMap="urmAuthLogResultMap">
+        select <include refid="table_columns" />
+        from urm_auth_log
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_auth_log
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmAuthLogResultMap"  >
+		select <include refid="table_columns" />
+		from urm_auth_log
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and AUTH_LOG_ID = #{authLogId}</if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+	<select id="queryAuthLog" resultMap="urmAuthLogResultMap">
+        select <include refid="table_columns" />
+        from urm_auth_log
+        <trim prefix="where" prefixOverrides="and | or ">
+			<if test="appId != null ">and APP_ID = #{appId}</if>
+			<if test="acctId != null ">and ACCT_ID = #{acctId}</if>
+			<if test="authType != null and authType != ''">and AUTH_TYPE = #{authType}</if>
+			<if test="success != null ">and SUCCESS = #{success}</if>
+			<if test="startCreateTime != null and startCreateTime != ''">and CREATE_TIME > #{startCreateTime}</if>
+			<if test="endCreateTime != null and endCreateTime != ''"><![CDATA[ and CREATE_TIME < #{endCreateTime} ]]></if>
+        </trim>
+	</select>
+
+
+</mapper>

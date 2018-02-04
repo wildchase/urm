@@ -71,6 +71,27 @@
 			<artifactId>httpclient</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		
+		<!-- java加解密算法的补充类 -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			  <groupId>org.apache.velocity</groupId>
+			  <artifactId>velocity</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 

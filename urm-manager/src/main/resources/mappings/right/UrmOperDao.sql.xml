@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmOperDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmOper" id="urmOperResultMap">
+		<result property="operId" column="OPER_ID"  />
+		<result property="operCode" column="OPER_CODE"  />
+		<result property="operName" column="OPER_NAME"  />
+		<result property="functionId" column="FUNCTION_ID"  />
+		<result property="status" column="STATUS"  />
+		<result property="createTime" column="CREATE_TIME"  />
+		<result property="updateTime" column="UPDATE_TIME"  />
+		<result property="createBy" column="CREATE_BY"  />
+		<result property="updateBy" column="UPDATE_BY"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		OPER_ID,
+		OPER_CODE,
+		OPER_NAME,
+		FUNCTION_ID,
+		STATUS,
+		CREATE_TIME,
+		UPDATE_TIME,
+		CREATE_BY,
+		UPDATE_BY,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{operId},
+		#{operCode},
+		#{operName},
+		#{functionId},
+		#{status},
+		#{createTime},
+		#{updateTime},
+		#{createBy},
+		#{updateBy},
+		#{recordStatus}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="operId != null ">and OPER_ID = #{operId}</if>
+				<if test="operCode != null and operCode != ''">and OPER_CODE = #{operCode}</if>
+				<if test="operName != null and operName != ''">and OPER_NAME = #{operName}</if>
+				<if test="functionId != null ">and FUNCTION_ID = #{functionId}</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+				<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
+				<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
+				<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmOper" >
+		insert into urm_oper( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmOper">
+        insert into urm_oper
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="operId != null ">OPER_ID,</if>
+				<if test="operCode != null and operCode != ''">OPER_CODE,</if>
+				<if test="operName != null and operName != ''">OPER_NAME,</if>
+				<if test="functionId != null ">FUNCTION_ID,</if>
+				<if test="status != null ">STATUS,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+				<if test="updateTime != null ">UPDATE_TIME,</if>
+				<if test="createBy != null ">CREATE_BY,</if>
+				<if test="updateBy != null ">UPDATE_BY,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="operId != null ">#{operId},</if>
+				<if test="operCode != null and operCode != ''">#{operCode},</if>
+				<if test="operName != null and operName != ''">#{operName},</if>
+				<if test="functionId != null ">#{functionId},</if>
+				<if test="status != null ">#{status},</if>
+				<if test="createTime != null ">#{createTime},</if>
+				<if test="updateTime != null ">#{updateTime},</if>
+				<if test="createBy != null ">#{createBy},</if>
+				<if test="updateBy != null ">#{updateBy},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmOper">
+		delete from urm_oper
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_oper
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and OPER_ID = #{operId}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmOper">
+		update urm_oper 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="operCode != null and operCode != ''">OPER_CODE = #{operCode},</if>
+				<if test="operName != null and operName != ''">OPER_NAME = #{operName},</if>
+				<if test="functionId != null ">FUNCTION_ID = #{functionId},</if>
+				<if test="status != null ">STATUS = #{status},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+				<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+				<if test="createBy != null ">CREATE_BY = #{createBy},</if>
+				<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and OPER_ID = #{operId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmOperResultMap">
+        select <include refid="table_columns" />
+        from urm_oper
+    </select>
+
+    <select id="find" resultMap="urmOperResultMap">
+        select <include refid="table_columns" />
+        from urm_oper
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_oper
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmOperResultMap"  >
+		select <include refid="table_columns" />
+		from urm_oper
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and OPER_ID = #{operId}</if>
+			<if test="1==1">and RECORD_STATUS = 1 </if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+	<select id="query" resultType="com.panly.urm.manager.right.entity.UrmOper">
+        select 
+        a.OPER_ID operId,
+		a.OPER_CODE operCode,
+		a.OPER_NAME operName,
+		a.FUNCTION_ID functionId,
+		a.STATUS status,
+		a.CREATE_TIME createTime,
+		a.UPDATE_TIME updateTime,
+		a.CREATE_BY createBy,
+		a.UPDATE_BY updateBy,
+		b.APP_ID appId
+        from urm_oper a ,urm_function_model b
+        where a.function_id=b.function_id
+        and a.RECORD_STATUS = 1 and b.RECORD_STATUS = 1
+		<if test="operCode != null and operCode != ''">and a.OPER_CODE like concat('%',#{operCode},'%') </if>
+		<if test="operName != null and operName != ''">and a.OPER_NAME  like concat('%',#{operName},'%')</if>
+		<if test="functionId != null ">and a.FUNCTION_ID = #{functionId}</if>
+		<if test="appId != null ">and b.APP_ID = #{appId}</if>
+		<if test="status != null ">and a.STATUS = #{status}</if>
+		<if test="startCreateTime != null and startCreateTime != ''">and a.CREATE_TIME > #{startCreateTime}</if>
+		<if test="endCreateTime != null and endCreateTime != ''"><![CDATA[ and a.CREATE_TIME < #{endCreateTime} ]]></if>
+		order by a.create_time desc
+	</select>
+
+
+</mapper>

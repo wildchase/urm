@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>权限管理平台</title> 
+<#include "/common/meta.html">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- 首行显示-->
+		<#include "/common/header.html">
+
+		<!-- 菜单栏显示-->
+		<#include "/common/menu.html">
+
+		<!-- 内容显示位置 -->
+		<div class="content-wrapper">
+			<!-- 内容展示header -->
+			<!-- <section class="content-header">
+				<h1>
+					Page Header <small>Optional description</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+					<li class="active">Here</li>
+				</ol>
+			</section> -->
+			<!-- 内容展示 body -->
+			<section class="content container-fluid">欢迎[${userName}] 登陆权限管理平台,</section>
+		</div>
+
+		<!-- 通用footer 展示-->
+		<#include "/common/footer.html">
+	</div>
+</body>
+</html>
+

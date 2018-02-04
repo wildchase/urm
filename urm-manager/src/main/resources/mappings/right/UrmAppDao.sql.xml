@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmAppDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmApp" id="urmAppResultMap">
+		<result property="appId" column="APP_ID"  />
+		<result property="appCode" column="APP_CODE"  />
+		<result property="appName" column="APP_NAME"  />
+		<result property="status" column="STATUS"  />
+		<result property="createTime" column="CREATE_TIME"  />
+		<result property="updateTime" column="UPDATE_TIME"  />
+		<result property="createBy" column="CREATE_BY"  />
+		<result property="updateBy" column="UPDATE_BY"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		APP_ID,
+		APP_CODE,
+		APP_NAME,
+		STATUS,
+		CREATE_TIME,
+		UPDATE_TIME,
+		CREATE_BY,
+		UPDATE_BY,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{appId},
+		#{appCode},
+		#{appName},
+		#{status},
+		#{createTime},
+		#{updateTime},
+		#{createBy},
+		#{updateBy},
+		#{recordStatus}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="appId != null ">and APP_ID = #{appId}</if>
+				<if test="appCode != null and appCode != ''">and APP_CODE = #{appCode}</if>
+				<if test="appName != null and appName != ''">and APP_NAME = #{appName}</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+				<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
+				<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
+				<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmApp" >
+		insert into urm_app( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmApp">
+        insert into urm_app
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="appId != null ">APP_ID,</if>
+				<if test="appCode != null and appCode != ''">APP_CODE,</if>
+				<if test="appName != null and appName != ''">APP_NAME,</if>
+				<if test="status != null ">STATUS,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+				<if test="updateTime != null ">UPDATE_TIME,</if>
+				<if test="createBy != null ">CREATE_BY,</if>
+				<if test="updateBy != null ">UPDATE_BY,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="appId != null ">#{appId},</if>
+				<if test="appCode != null and appCode != ''">#{appCode},</if>
+				<if test="appName != null and appName != ''">#{appName},</if>
+				<if test="status != null ">#{status},</if>
+				<if test="createTime != null ">#{createTime},</if>
+				<if test="updateTime != null ">#{updateTime},</if>
+				<if test="createBy != null ">#{createBy},</if>
+				<if test="updateBy != null ">#{updateBy},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmApp">
+		delete from urm_app
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_app
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and APP_ID = #{appId}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmApp">
+		update urm_app 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="appCode != null and appCode != ''">APP_CODE = #{appCode},</if>
+				<if test="appName != null and appName != ''">APP_NAME = #{appName},</if>
+				<if test="status != null ">STATUS = #{status},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+				<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+				<if test="createBy != null ">CREATE_BY = #{createBy},</if>
+				<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and APP_ID = #{appId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmAppResultMap">
+        select <include refid="table_columns" />
+        from urm_app
+    </select>
+
+    <select id="find" resultMap="urmAppResultMap">
+        select <include refid="table_columns" />
+        from urm_app
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_app
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmAppResultMap"  >
+		select <include refid="table_columns" />
+		from urm_app
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and APP_ID = #{appId}</if>
+			<if test="1==1">and RECORD_STATUS = 1 </if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+	 <select id="query" resultMap="urmAppResultMap">
+        select <include refid="table_columns" />
+        from urm_app
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="appCode != null and appCode != ''">and APP_CODE like concat('%',#{appCode},'%')</if>
+				<if test="appName != null and appName != ''">and APP_NAME like concat('%',#{appName},'%')</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="startCreateTime != null and startCreateTime != ''">and CREATE_TIME > #{startCreateTime}</if>
+				<if test="endCreateTime != null and endCreateTime != ''"><![CDATA[ and CREATE_TIME < #{endCreateTime} ]]></if>
+				<if test="1==1">and RECORD_STATUS=1</if>
+        </trim>
+        order  by CREATE_TIME desc
+	</select>
+	
+
+
+</mapper>

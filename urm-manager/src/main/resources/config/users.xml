@@ -1,0 +1,4 @@
+<users>
+     <user userId="1" account="admin" userName="默认超管" password="123456" roleCode="admin" roleName="管理员" />
+     <user userId="2" account="lipan" userName="xxxxxx" password="123456" roleCode="admin" roleName="管理员" />
+</users>

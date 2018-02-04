@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>操作管理</title> <#include "/common/meta.html">
+<script type="text/javascript" src="/res/right/oper/oper-detail.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- 首行显示-->
+		<#include "/common/header.html">
+
+		<!-- 菜单栏显示-->
+		<#include "/common/menu.html">
+
+		<!-- 内容显示位置 -->
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					操作管理<small>详情</small>
+				</h1>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<div class="invoice">
+					<div class="row">
+						<div class="col-xs-6">
+							 <p class="lead">操作信息</p>
+							<div class="table-responsive">
+								<table class="table">
+									<tr>
+										<th style="width: 50%">操作名称</th>
+										<td>${oper.operCode}</td>
+									</tr>
+									<tr>
+										<th>操作名称</th>
+										<td>${oper.operName}</td>
+									</tr>
+									<tr>
+										<th>所属应用</th>
+										<td>${oper.appName}</td>
+									</tr>
+									<tr>
+										<th>所属功能</th>
+										<td>${oper.functionName}</td>
+									</tr>
+									<tr>
+										<th>状态:</th>
+										<td>${(oper.status==1)?string("正常","禁用")}</td>
+									</tr>
+									<tr>
+										<th>创建时间:</th>
+										<td>${oper.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</section>
+		</div>
+		<!-- 通用footer 展示-->
+		<#include "/common/footer.html">
+
+	</div>
+</body>
+</html>
+

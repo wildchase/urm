@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmDataRightDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmDataRight" id="urmDataRightResultMap">
+		<result property="rightId" column="RIGHT_ID"  />
+		<result property="relaId" column="RELA_ID"  />
+		<result property="relaType" column="RELA_TYPE"  />
+		<result property="dataRightTableKey" column="DATA_RIGHT_TABLE_KEY"  />
+		<result property="dataRightSql" column="DATA_RIGHT_SQL"  />
+		<result property="status" column="STATUS"  />
+		<result property="createTime" column="CREATE_TIME"  />
+		<result property="updateTime" column="UPDATE_TIME"  />
+		<result property="createBy" column="CREATE_BY"  />
+		<result property="updateBy" column="UPDATE_BY"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		RIGHT_ID,
+		RELA_ID,
+		RELA_TYPE,
+		DATA_RIGHT_TABLE_KEY,
+		DATA_RIGHT_SQL,
+		STATUS,
+		CREATE_TIME,
+		UPDATE_TIME,
+		CREATE_BY,
+		UPDATE_BY,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{rightId},
+		#{relaId},
+		#{relaType},
+		#{dataRightTableKey},
+		#{dataRightSql},
+		#{status},
+		#{createTime},
+		#{updateTime},
+		#{createBy},
+		#{updateBy},
+		#{recordStatus}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="rightId != null ">and RIGHT_ID = #{rightId}</if>
+				<if test="relaId != null ">and RELA_ID = #{relaId}</if>
+				<if test="relaType != null ">and RELA_TYPE = #{relaType}</if>
+				<if test="dataRightTableKey != null and dataRightTableKey != ''">and DATA_RIGHT_TABLE_KEY = #{dataRightTableKey}</if>
+				<if test="dataRightSql != null and dataRightSql != ''">and DATA_RIGHT_SQL = #{dataRightSql}</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+				<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
+				<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
+				<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmDataRight" >
+		insert into urm_data_right( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
+        insert into urm_data_right
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="rightId != null ">RIGHT_ID,</if>
+				<if test="relaId != null ">RELA_ID,</if>
+				<if test="relaType != null ">RELA_TYPE,</if>
+				<if test="dataRightTableKey != null and dataRightTableKey != ''">DATA_RIGHT_TABLE_KEY,</if>
+				<if test="dataRightSql != null and dataRightSql != ''">DATA_RIGHT_SQL,</if>
+				<if test="status != null ">STATUS,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+				<if test="updateTime != null ">UPDATE_TIME,</if>
+				<if test="createBy != null ">CREATE_BY,</if>
+				<if test="updateBy != null ">UPDATE_BY,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="rightId != null ">#{rightId},</if>
+				<if test="relaId != null ">#{relaId},</if>
+				<if test="relaType != null ">#{relaType},</if>
+				<if test="dataRightTableKey != null and dataRightTableKey != ''">#{dataRightTableKey},</if>
+				<if test="dataRightSql != null and dataRightSql != ''">#{dataRightSql},</if>
+				<if test="status != null ">#{status},</if>
+				<if test="createTime != null ">#{createTime},</if>
+				<if test="updateTime != null ">#{updateTime},</if>
+				<if test="createBy != null ">#{createBy},</if>
+				<if test="updateBy != null ">#{updateBy},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
+		delete from urm_data_right
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_data_right
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and RIGHT_ID = #{rightId}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
+		update urm_data_right 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="relaId != null ">RELA_ID = #{relaId},</if>
+				<if test="relaType != null ">RELA_TYPE = #{relaType},</if>
+				<if test="dataRightTableKey != null and dataRightTableKey != ''">DATA_RIGHT_TABLE_KEY = #{dataRightTableKey},</if>
+				<if test="dataRightSql != null and dataRightSql != ''">DATA_RIGHT_SQL = #{dataRightSql},</if>
+				<if test="status != null ">STATUS = #{status},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+				<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+				<if test="createBy != null ">CREATE_BY = #{createBy},</if>
+				<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and RIGHT_ID = #{rightId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmDataRightResultMap">
+        select <include refid="table_columns" />
+        from urm_data_right
+    </select>
+
+    <select id="find" resultMap="urmDataRightResultMap">
+        select <include refid="table_columns" />
+        from urm_data_right
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_data_right
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmDataRightResultMap"  >
+		select <include refid="table_columns" />
+		from urm_data_right
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and RIGHT_ID = #{rightId}</if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+
+
+</mapper>

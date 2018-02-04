@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmAcctDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmAcct" id="urmAcctResultMap">
+		<result property="acctId" column="ACCT_ID"  />
+		<result property="acctName" column="ACCT_NAME"  />
+		<result property="phone" column="PHONE"  />
+		<result property="email" column="EMAIL"  />
+		<result property="password" column="PASSWORD"  />
+		<result property="salt" column="SALT"  />
+		<result property="lastLoginIp" column="LAST_LOGIN_IP"  />
+		<result property="lastLoginTime" column="LAST_LOGIN_TIME"  />
+		<result property="status" column="STATUS"  />
+		<result property="createTime" column="CREATE_TIME"  />
+		<result property="updateTime" column="UPDATE_TIME"  />
+		<result property="createBy" column="CREATE_BY"  />
+		<result property="updateBy" column="UPDATE_BY"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		ACCT_ID,
+		ACCT_NAME,
+		PHONE,
+		EMAIL,
+		PASSWORD,
+		SALT,
+		LAST_LOGIN_IP,
+		LAST_LOGIN_TIME,
+		STATUS,
+		CREATE_TIME,
+		UPDATE_TIME,
+		CREATE_BY,
+		UPDATE_BY,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{acctId},
+		#{acctName},
+		#{phone},
+		#{email},
+		#{password},
+		#{salt},
+		#{lastLoginIp},
+		#{lastLoginTime},
+		#{status},
+		#{createTime},
+		#{updateTime},
+		#{createBy},
+		#{updateBy},
+		#{recordStatus}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="acctId != null ">and ACCT_ID = #{acctId}</if>
+				<if test="acctName != null and acctName != ''">and ACCT_NAME = #{acctName}</if>
+				<if test="phone != null and phone != ''">and PHONE = #{phone}</if>
+				<if test="email != null and email != ''">and EMAIL = #{email}</if>
+				<if test="password != null and password != ''">and PASSWORD = #{password}</if>
+				<if test="salt != null and salt != ''">and SALT = #{salt}</if>
+				<if test="lastLoginIp != null and lastLoginIp != ''">and LAST_LOGIN_IP = #{lastLoginIp}</if>
+				<if test="lastLoginTime != null ">and LAST_LOGIN_TIME = #{lastLoginTime}</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+				<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
+				<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
+				<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmAcct" >
+		insert into urm_acct( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmAcct">
+        insert into urm_acct
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="acctId != null ">ACCT_ID,</if>
+				<if test="acctName != null and acctName != ''">ACCT_NAME,</if>
+				<if test="phone != null and phone != ''">PHONE,</if>
+				<if test="email != null and email != ''">EMAIL,</if>
+				<if test="password != null and password != ''">PASSWORD,</if>
+				<if test="salt != null and salt != ''">SALT,</if>
+				<if test="lastLoginIp != null and lastLoginIp != ''">LAST_LOGIN_IP,</if>
+				<if test="lastLoginTime != null ">LAST_LOGIN_TIME,</if>
+				<if test="status != null ">STATUS,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+				<if test="updateTime != null ">UPDATE_TIME,</if>
+				<if test="createBy != null ">CREATE_BY,</if>
+				<if test="updateBy != null ">UPDATE_BY,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="acctId != null ">#{acctId},</if>
+				<if test="acctName != null and acctName != ''">#{acctName},</if>
+				<if test="phone != null and phone != ''">#{phone},</if>
+				<if test="email != null and email != ''">#{email},</if>
+				<if test="password != null and password != ''">#{password},</if>
+				<if test="salt != null and salt != ''">#{salt},</if>
+				<if test="lastLoginIp != null and lastLoginIp != ''">#{lastLoginIp},</if>
+				<if test="lastLoginTime != null ">#{lastLoginTime},</if>
+				<if test="status != null ">#{status},</if>
+				<if test="createTime != null ">#{createTime},</if>
+				<if test="updateTime != null ">#{updateTime},</if>
+				<if test="createBy != null ">#{createBy},</if>
+				<if test="updateBy != null ">#{updateBy},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmAcct">
+		delete from urm_acct
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_acct
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and ACCT_ID = #{acctId}</if>
+			<if test="1==1">and RECORD_STATUS = 1 </if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmAcct">
+		update urm_acct 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="acctName != null and acctName != ''">ACCT_NAME = #{acctName},</if>
+				<if test="phone != null and phone != ''">PHONE = #{phone},</if>
+				<if test="email != null and email != ''">EMAIL = #{email},</if>
+				<if test="password != null and password != ''">PASSWORD = #{password},</if>
+				<if test="salt != null and salt != ''">SALT = #{salt},</if>
+				<if test="lastLoginIp != null and lastLoginIp != ''">LAST_LOGIN_IP = #{lastLoginIp},</if>
+				<if test="lastLoginTime != null ">LAST_LOGIN_TIME = #{lastLoginTime},</if>
+				<if test="status != null ">STATUS = #{status},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+				<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+				<if test="createBy != null ">CREATE_BY = #{createBy},</if>
+				<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and ACCT_ID = #{acctId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmAcctResultMap">
+        select <include refid="table_columns" />
+        from urm_acct
+    </select>
+
+    <select id="find" resultMap="urmAcctResultMap">
+        select <include refid="table_columns" />
+        from urm_acct
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_acct
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmAcctResultMap"  >
+		select <include refid="table_columns" />
+		from urm_acct
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and ACCT_ID = #{acctId}</if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+	<select id="query" resultMap="urmAcctResultMap">
+        select <include refid="table_columns" />
+        from urm_acct
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="acctId != null ">and ACCT_ID = #{acctId}</if>
+				<if test="acctName != null and acctName != ''">and ACCT_NAME like concat('%',#{acctName},'%')</if>
+				<if test="phone != null and phone != ''">and PHONE like concat('%',#{phone},'%')</if>
+				<if test="email != null and email != ''">and EMAIL like concat('%',#{email},'%')</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="startCreateTime != null and startCreateTime != ''">and CREATE_TIME > #{startCreateTime}</if>
+				<if test="endCreateTime != null and endCreateTime != ''"><![CDATA[ and CREATE_TIME < #{endCreateTime} ]]></if>
+				<if test="1==1">and RECORD_STATUS=1</if>
+        </trim>
+        order by CREATE_TIME desc
+	</select>
+	
+	<select id="findAcctRoles" resultType="com.panly.urm.manager.right.vo.AcctRelaRoleVo">
+        select 
+        a.rela_id relaId,
+        a.acct_id acctId,
+        a.role_id roleId,
+        b.role_code roleCode,
+        b.role_name roleName,
+        b.role_desc roleDesc,
+        b.status status,
+        a.create_time createTime,
+        a.update_time updateTime,
+        a.create_by createBy,
+        a.update_by updateBy
+        from urm_acct_rela_role a ,urm_role b
+        where a.role_id = b.role_id
+        and ACCT_ID = #{acctId}
+        and a.record_status = 1 
+        and b.record_status = 1 
+        order by a.create_time desc 
+	</select>
+	
+	
+	<select id="findAcctNotHaveRoles" resultType="com.panly.urm.manager.right.vo.RoleVo">
+        select 
+        a.role_id roleId,
+        a.role_code roleCode,
+        a.role_name roleName,
+        a.role_desc roleDesc,
+        a.status status,
+        a.create_time createTime,
+        a.create_by createBy,
+        a.update_time updateTime,
+        a.update_by updateBy
+        from urm_role a 
+        where
+    	a.record_status = 1 
+    	and a.status = 1
+    	<if test="roleName != null and roleName != ''"> and a.role_name like concat('%',#{roleName},'%')</if>
+    	and a.role_id not in (
+			select b.role_id from urm_acct_rela_role b where b.acct_id = #{acctId} and b.record_status = 1  
+		)
+	</select>
+
+</mapper>

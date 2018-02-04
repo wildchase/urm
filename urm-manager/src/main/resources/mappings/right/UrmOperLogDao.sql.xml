@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmOperLogDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmOperLog" id="urmOperLogResultMap">
+		<result property="operLogId" column="OPER_LOG_ID"  />
+		<result property="userId" column="USER_ID"  />
+		<result property="userName" column="USER_NAME"  />
+		<result property="url" column="URL"  />
+		<result property="operType" column="OPER_TYPE"  />
+		<result property="operContent" column="OPER_CONTENT"  />
+		<result property="operCost" column="OPER_COST"  />
+		<result property="success" column="SUCCESS"  />
+		<result property="errorMsg" column="ERROR_MSG"  />
+		<result property="createTime" column="CREATE_TIME"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		OPER_LOG_ID,
+		USER_ID,
+		USER_NAME,
+		URL,
+		OPER_TYPE,
+		OPER_CONTENT,
+		OPER_COST,
+		SUCCESS,
+		ERROR_MSG,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{operLogId},
+		#{userId},
+		#{userName},
+		#{url},
+		#{operType},
+		#{operContent},
+		#{operCost},
+		#{success},
+		#{errorMsg},
+		#{createTime}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="operLogId != null ">and OPER_LOG_ID = #{operLogId}</if>
+				<if test="userId != null ">and USER_ID = #{userId}</if>
+				<if test="userName != null and userName != ''">and USER_NAME = #{userName}</if>
+				<if test="url != null and url != ''">and URL = #{url}</if>
+				<if test="operType != null and operType != ''">and OPER_TYPE = #{operType}</if>
+				<if test="operContent != null and operContent != ''">and OPER_CONTENT = #{operContent}</if>
+				<if test="operCost != null ">and OPER_COST = #{operCost}</if>
+				<if test="success != null ">and SUCCESS = #{success}</if>
+				<if test="errorMsg != null and errorMsg != ''">and ERROR_MSG = #{errorMsg}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmOperLog" >
+		insert into urm_oper_log( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmOperLog">
+        insert into urm_oper_log
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="operLogId != null ">OPER_LOG_ID,</if>
+				<if test="userId != null ">USER_ID,</if>
+				<if test="userName != null and userName != ''">USER_NAME,</if>
+				<if test="url != null and url != ''">URL,</if>
+				<if test="operType != null and operType != ''">OPER_TYPE,</if>
+				<if test="operContent != null and operContent != ''">OPER_CONTENT,</if>
+				<if test="operCost != null ">OPER_COST,</if>
+				<if test="success != null ">SUCCESS,</if>
+				<if test="errorMsg != null and errorMsg != ''">ERROR_MSG,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="operLogId != null ">#{operLogId},</if>
+				<if test="userId != null ">#{userId},</if>
+				<if test="userName != null and userName != ''">#{userName},</if>
+				<if test="url != null and url != ''">#{url},</if>
+				<if test="operType != null and operType != ''">#{operType},</if>
+				<if test="operContent != null and operContent != ''">#{operContent},</if>
+				<if test="operCost != null ">#{operCost},</if>
+				<if test="success != null ">#{success},</if>
+				<if test="errorMsg != null and errorMsg != ''">#{errorMsg},</if>
+				<if test="createTime != null ">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmOperLog">
+		delete from urm_oper_log
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_oper_log
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and OPER_LOG_ID = #{operLogId}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmOperLog">
+		update urm_oper_log 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="userId != null ">USER_ID = #{userId},</if>
+				<if test="userName != null and userName != ''">USER_NAME = #{userName},</if>
+				<if test="url != null and url != ''">URL = #{url},</if>
+				<if test="operType != null and operType != ''">OPER_TYPE = #{operType},</if>
+				<if test="operContent != null and operContent != ''">OPER_CONTENT = #{operContent},</if>
+				<if test="operCost != null ">OPER_COST = #{operCost},</if>
+				<if test="success != null ">SUCCESS = #{success},</if>
+				<if test="errorMsg != null and errorMsg != ''">ERROR_MSG = #{errorMsg},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and OPER_LOG_ID = #{operLogId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmOperLogResultMap">
+        select <include refid="table_columns" />
+        from urm_oper_log
+    </select>
+
+    <select id="find" resultMap="urmOperLogResultMap">
+        select <include refid="table_columns" />
+        from urm_oper_log
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_oper_log
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmOperLogResultMap"  >
+		select <include refid="table_columns" />
+		from urm_oper_log
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and OPER_LOG_ID = #{operLogId}</if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+	<select id="queryOperLog" resultMap="urmOperLogResultMap">
+        select <include refid="table_columns" />
+        from urm_oper_log
+        <trim prefix="where" prefixOverrides="and | or ">
+			<if test="userName != null and userName != ''">and USER_NAME like concat('%',#{userName},'%')</if>
+			<if test="url != null and url != ''">and URL like concat('%',#{url},'%')</if>
+			<if test="operType != null and operType != ''">and OPER_TYPE = #{operType}</if>
+			<if test="success != null ">and SUCCESS = #{success}</if>
+			<if test="startCreateTime != null and startCreateTime != ''">and CREATE_TIME > #{startCreateTime}</if>
+			<if test="endCreateTime != null and endCreateTime != ''"><![CDATA[ and CREATE_TIME < #{endCreateTime} ]]></if>
+        </trim>
+        order by create_time desc
+	</select>
+	
+	
+
+
+</mapper>

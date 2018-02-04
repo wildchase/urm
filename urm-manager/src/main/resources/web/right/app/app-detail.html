@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>应用管理</title> <#include "/common/meta.html">
+<script type="text/javascript" src="/res/right/app/app-detail.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- 首行显示-->
+		<#include "/common/header.html">
+
+		<!-- 菜单栏显示-->
+		<#include "/common/menu.html">
+
+		<!-- 内容显示位置 -->
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					应用管理<small>详情</small>
+				</h1>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<div class="invoice">
+					<div class="row">
+						<div class="col-xs-6">
+							<p class="lead">账号信息</p>
+							<div class="table-responsive">
+								<table class="table">
+									<tr>
+										<th style="width: 50%">应用编号</th>
+										<td>${app.appCode}</td>
+									</tr>
+									<tr>
+										<th>应用名称</th>
+										<td>${app.appName}</td>
+									</tr>
+									<tr>
+										<th>状态:</th>
+										<td>${(app.status==1)?string("正常","禁用")}</td>
+									</tr>
+									<tr>
+										<th>创建时间:</th>
+										<td>${app.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- 通用footer 展示-->
+		<#include "/common/footer.html">
+
+	</div>
+</body>
+</html>
+

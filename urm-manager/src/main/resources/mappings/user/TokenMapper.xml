@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.user.dao.TokenDao">
+
+	<insert id="createToken" parameterType="com.panly.urm.manager.user.model.Token">
+		INSERT INTO TOKEN
+		(token,user_id,account,user_name,create_time)
+		VALUES (
+		#{token},#{userId},#{account},#{userName},#{createTime} )
+	</insert>
+
+	<select id="getToken" resultType="com.panly.urm.manager.user.model.Token">
+		SELECT
+		token,user_id as userId,account,user_name as userName,create_time as createTime
+		FROM TOKEN
+		WHERE token = #{token}
+	</select>
+
+	<delete id="deleteToken">
+		delete from TOKEN where token = #{token}
+	</delete>
+
+</mapper>

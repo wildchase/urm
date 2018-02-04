@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmFunctionModelDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmFunctionModel" id="urmFunctionModelResultMap">
+		<result property="functionId" column="FUNCTION_ID"  />
+		<result property="functionCode" column="FUNCTION_CODE"  />
+		<result property="functionName" column="FUNCTION_NAME"  />
+		<result property="functionDesc" column="FUNCTION_DESC"  />
+		<result property="appId" column="APP_ID"  />
+		<result property="parentFunctionId" column="PARENT_FUNCTION_ID"  />
+		<result property="status" column="STATUS"  />
+		<result property="createTime" column="CREATE_TIME"  />
+		<result property="updateTime" column="UPDATE_TIME"  />
+		<result property="createBy" column="CREATE_BY"  />
+		<result property="updateBy" column="UPDATE_BY"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		FUNCTION_ID,
+		FUNCTION_CODE,
+		FUNCTION_NAME,
+		FUNCTION_DESC,
+		APP_ID,
+		PARENT_FUNCTION_ID,
+		STATUS,
+		CREATE_TIME,
+		UPDATE_TIME,
+		CREATE_BY,
+		UPDATE_BY,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{functionId},
+		#{functionCode},
+		#{functionName},
+		#{functionDesc},
+		#{appId},
+		#{parentFunctionId},
+		#{status},
+		#{createTime},
+		#{updateTime},
+		#{createBy},
+		#{updateBy},
+		#{recordStatus}
+	</sql>
+
+    <!-- columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="functionId != null ">and FUNCTION_ID = #{functionId}</if>
+				<if test="functionCode != null and functionCode != ''">and FUNCTION_CODE = #{functionCode}</if>
+				<if test="functionName != null and functionName != ''">and FUNCTION_NAME = #{functionName}</if>
+				<if test="functionDesc != null and functionDesc != ''">and FUNCTION_DESC = #{functionDesc}</if>
+				<if test="appId != null ">and APP_ID = #{appId}</if>
+				<if test="parentFunctionId != null ">and PARENT_FUNCTION_ID = #{parentFunctionId}</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+				<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
+				<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
+				<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmFunctionModel" >
+		insert into urm_function_model( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmFunctionModel">
+        insert into urm_function_model
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="functionId != null ">FUNCTION_ID,</if>
+				<if test="functionCode != null and functionCode != ''">FUNCTION_CODE,</if>
+				<if test="functionName != null and functionName != ''">FUNCTION_NAME,</if>
+				<if test="functionDesc != null and functionDesc != ''">FUNCTION_DESC,</if>
+				<if test="appId != null ">APP_ID,</if>
+				<if test="parentFunctionId != null ">PARENT_FUNCTION_ID,</if>
+				<if test="status != null ">STATUS,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+				<if test="updateTime != null ">UPDATE_TIME,</if>
+				<if test="createBy != null ">CREATE_BY,</if>
+				<if test="updateBy != null ">UPDATE_BY,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="functionId != null ">#{functionId},</if>
+				<if test="functionCode != null and functionCode != ''">#{functionCode},</if>
+				<if test="functionName != null and functionName != ''">#{functionName},</if>
+				<if test="functionDesc != null and functionDesc != ''">#{functionDesc},</if>
+				<if test="appId != null ">#{appId},</if>
+				<if test="parentFunctionId != null ">#{parentFunctionId},</if>
+				<if test="status != null ">#{status},</if>
+				<if test="createTime != null ">#{createTime},</if>
+				<if test="updateTime != null ">#{updateTime},</if>
+				<if test="createBy != null ">#{createBy},</if>
+				<if test="updateBy != null ">#{updateBy},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmFunctionModel">
+		delete from urm_function_model
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_function_model
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and FUNCTION_ID = #{functionId}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmFunctionModel">
+		update urm_function_model 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="functionCode != null and functionCode != ''">FUNCTION_CODE = #{functionCode},</if>
+				<if test="functionName != null and functionName != ''">FUNCTION_NAME = #{functionName},</if>
+				<if test="functionDesc != null and functionDesc != ''">FUNCTION_DESC = #{functionDesc},</if>
+				<if test="appId != null ">APP_ID = #{appId},</if>
+				<if test="parentFunctionId != null ">PARENT_FUNCTION_ID = #{parentFunctionId},</if>
+				<if test="status != null ">STATUS = #{status},</if>
+				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+				<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+				<if test="createBy != null ">CREATE_BY = #{createBy},</if>
+				<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and FUNCTION_ID = #{functionId}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmFunctionModelResultMap">
+        select <include refid="table_columns" />
+        from urm_function_model
+    </select>
+
+    <select id="find" resultMap="urmFunctionModelResultMap">
+        select <include refid="table_columns" />
+        from urm_function_model
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_function_model
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmFunctionModelResultMap"  >
+		select <include refid="table_columns" />
+		from urm_function_model
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and FUNCTION_ID = #{functionId}</if>
+			<if test="1==1">and RECORD_STATUS = 1 </if>
+        </trim>
+	</select>
+	
+	<!-- other SQL -->
+	<select id="query" resultMap="urmFunctionModelResultMap">
+        select <include refid="table_columns" />
+        from urm_function_model
+         <trim prefix="where" prefixOverrides="and | or ">
+				<if test="functionCode != null and functionCode != ''">and FUNCTION_CODE like concat('%',#{functionCode},'%') </if>
+				<if test="functionName != null and functionName != ''">and FUNCTION_NAME like concat('%',#{functionName},'%') </if>
+				<if test="appId != null ">and APP_ID = #{appId}</if>
+				<if test="parentFunctionId != null ">and PARENT_FUNCTION_ID = #{parentFunctionId}</if>
+				<if test="status != null ">and STATUS = #{status}</if>
+				<if test="startCreateTime != null and startCreateTime != ''">and CREATE_TIME > #{startCreateTime}</if>
+				<if test="endCreateTime != null and endCreateTime != ''"><![CDATA[ and CREATE_TIME < #{endCreateTime} ]]></if>
+				<if test="1==1">and RECORD_STATUS=1</if>
+        </trim>
+        order by create_time desc
+	</select>
+
+
+</mapper>

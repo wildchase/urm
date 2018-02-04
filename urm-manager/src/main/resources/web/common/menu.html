@@ -1,0 +1,60 @@
+<aside class="main-sidebar">
+	<!-- sidebar: style can be found in sidebar.less -->
+	<section class="sidebar">
+		<!-- Sidebar Menu -->
+		<ul class="sidebar-menu" data-widget="tree">		
+			<#list menus as m>
+				<#if m.menu??> 
+					<li  class="treeview  <#if menuId?index_of(m.menuId)==0 >active</#if>  ">
+					  <a href="#" id="${m.menuId}">
+						<i class="fa ${m.icon}"></i> <span>${m.menuName}</span>
+					  </a>
+					  <ul class="treeview-menu">
+					  	<#list m.menu as c >
+							<li <#if c.menuId=menuId> class="active"</#if>  >
+								<a href="${c.url}" id="${c.menuId}" > 
+									<i class="fa ${c.icon}"></i> <span>${c.menuName}</span>
+								</a>
+							</li>
+						</#list>
+					  </ul>
+					</li>
+				<#else>
+					<li <#if m.menuId=menuId> class="active"</#if>  >
+						<a href="${m.url}" id="${m.menuId}" > 
+							<i class="fa ${m.icon}"></i> <span>${m.menuName}</span>
+						</a>
+					</li>
+				</#if>
+				
+				
+				
+			</#list>
+		</ul>
+		<!-- /.sidebar-menu -->
+	</section>
+	<!-- /.sidebar -->
+</aside>
+
+<!-- 
+<li class="treeview">
+  <a href="#">
+	<i class="fa fa-files-o"></i>
+	<span>Layout Options</span>
+  </a>
+  <ul class="treeview-menu">
+	<li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+	<li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+	<li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+	<li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+  </ul>
+</li>
+
+<li>
+  <a href="pages/calendar.html">
+	<i class="fa fa-calendar"></i> <span>Calendar</span>
+  </a>
+</li>
+
+
+ -->

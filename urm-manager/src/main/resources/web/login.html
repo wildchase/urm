@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>登陆页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="res/components/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="res/components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="res/components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="res/adminlte/css/AdminLTE.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="res/components/iCheck/square/blue.css">
+
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    	权限管理系统
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">登陆界面</p>
+
+    <form method="post">
+      <div class="form-group has-feedback">
+        <input id="account"  type="text" class="form-control" placeholder="账户"  autocomplete="off" value="admin">
+      </div>
+      <div class="form-group has-feedback">
+        <span id="msg" class="red"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input id="password" type="password" class="form-control" placeholder="密码"  autocomplete="off" value="123456">
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <!-- <div class="checkbox icheck">
+            <label>
+              <input type="checkbox">记住密码
+            </label>
+          </div> -->
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <div onclick="login();" class="btn btn-primary btn-block btn-flat">登陆</div>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="res/components/jquery/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="res/components/bootstrap/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="res/components/iCheck/icheck.min.js"></script>
+<script>
+ var returnUrl = '${returnUrl}';
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+  
+  function login() {
+      $.ajax({
+          url : "/login",
+          type : "post",
+          async : false,
+          dataType:'json',
+          data : {
+          	  account : $("#account").val(),
+              password : $("#password").val()
+          },
+          success : function(data){
+              if(data.status=='1'){
+                	$("#msg").hide();
+	            	if(returnUrl){
+	            		 window.location = returnUrl;
+	            	}else{
+	            		window.location = "/index";
+	            	}
+              }else{
+	                $("#msg").show()
+	                $("#msg").html(data.msg);
+              }
+          }
+      });
+  }
+</script>
+</body>
+</html>

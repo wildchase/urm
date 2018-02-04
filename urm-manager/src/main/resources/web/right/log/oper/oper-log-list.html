@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>操作日志</title> <#include "/common/meta.html">
+<script type="text/javascript"
+	src="${ctx}/res/right/log/oper/oper-log-list.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- 首行显示-->
+		<#include "/common/header.html">
+
+		<!-- 菜单栏显示-->
+		<#include "/common/menu.html">
+
+		<!-- 内容显示位置 -->
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					操作日志<small>查询</small>
+				</h1>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<form id="queryForm">
+					<div class="row">
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">用户名称</span> <input type="text"
+									class="form-control" name="userName" autocomplete="on">
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">访问地址</span> <input type="text"
+									class="form-control" name="url" autocomplete="on">
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">操作类型</span>
+								<select class="form-control" name="operType">
+									<option selected="selected"></option>
+									<#list OperTypeEnum as s>
+	                					<option value="${s.code}">${s.desc}</option>
+	                				</#list>
+								</select>
+								
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">成功状态</span> <select
+									class="form-control" name="success">
+									<option selected="selected"></option>
+									<option value="1">成功</option>
+									<option value="2">失败</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">开始时间</span>
+								<input type="text" class="form-control pull-right"
+									id="startCreateTime" name="startCreateTime">
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">结束时间</span>
+								<input type="text" class="form-control pull-right"
+									id="endCreateTime" name="endCreateTime">
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="col-xs-2">
+						<button id="btn-query" class="btn btn-primary btn-sm">搜索</button>
+						<button id="btn-query-reset" class="btn btn-primary btn-sm">重置</button>
+					</div>
+				</div>
+				<div class="row">
+					<!-- 导出、刷新 -->
+					<div class="row-fluid">
+						<div class="pull-right">
+							<div class="btn-group">
+								<button type="button" class="btn btn-primary btn-sm"
+									id="btn-export">
+									<i class="fa fa-sign-in"></i>导出
+								</button>
+								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
+									<i class="fa fa-refresh"></i>刷新
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header hide">
+								<h3 class="box-title">账户列表</h3>
+							</div>
+							<div class="box-body">
+								<table id="operLogList" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th>用户名称</th>
+											<th>访问地址</th>
+											<th>操作类型</th>
+											<th>耗费时间</th>
+											<th>是否成功</th>
+											<th>时间</th>
+											<th>日志</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- 通用footer 展示-->
+		<#include "/common/footer.html">
+
+	</div>
+</body>
+</html>
+

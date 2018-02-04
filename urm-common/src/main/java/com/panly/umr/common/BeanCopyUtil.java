@@ -1,8 +1,13 @@
 package com.panly.umr.common;
 
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +85,32 @@ public class BeanCopyUtil {
 			} catch (Exception e) {
 				log.error("copy object error",e);
 			}
+		}
+	}
+	
+	public static Map<String, Object> getObjectMapProperties(Object src) {
+		if (src == null) {
+			return null;
+		} else {
+			Map<String, Object> map = new HashMap<>();
+			try {
+				Class<?> clazz = src.getClass();
+				Set<String> props = new HashSet<>();
+				for (Class<?> superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
+					Field[] fs = clazz.getDeclaredFields();
+					for (int i = 0; i < fs.length; i++) {
+						props.add(fs[i].getName());
+					}
+				}
+				for (String key : props) {
+					map.put(key, ReflectUtil.forceGetProperty(src, key));
+				}
+				return map;
+			} catch (Exception e) {
+				log.error("get ObjectMap Properties error", e);
+				return map;
+			}
+		
 		}
 	}
 	

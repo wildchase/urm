@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>角色管理</title> <#include "/common/meta.html">
+<script type="text/javascript" src="/res/right/role/role-detail.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- 首行显示-->
+		<#include "/common/header.html">
+
+		<!-- 菜单栏显示-->
+		<#include "/common/menu.html">
+
+		<!-- 内容显示位置 -->
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					角色管理<small>详情</small>
+				</h1>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<div class="invoice">
+					<div class="row">
+						<div class="col-xs-6">
+							 <p class="lead">角色信息</p>
+							<div class="table-responsive">
+								<table class="table">
+									<tr>
+										<th style="width: 50%">角色编号</th>
+										<td>${role.roleCode}</td>
+									</tr>
+									<tr>
+										<th>角色名称</th>
+										<td>${role.roleName}</td>
+									</tr>
+									<tr>
+										<th>角色介绍:</th>
+										<td>${role.roleDesc}</td>
+									</tr>
+									<tr>
+										<th>状态:</th>
+										<td>${(role.status==1)?string("正常","禁用")}</td>
+									</tr>
+									<tr>
+										<th>创建时间:</th>
+										<td>${role.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+									</tr>
+									<tr>
+										<th>创建时间:</th>
+										<td>${role.roleName?index_of('管理')}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12">
+							<p class="lead">账户信息 
+								<button id="btn-query-reset" class="btn btn-primary btn-sm pull-right">添加账户</button>
+							</p>
+							<div class="table-responsive">
+								<table class="table table-striped" >
+									<thead>
+							            <tr>
+							              <th>账户ID</th>
+							              <th>账号</th>
+							              <th>电话</th>
+							              <th>邮箱</th>
+							              <th>状态</th>
+							              <th>创建人</th>
+							              <th>创建时间</th>
+							              <th>操作</th>
+							            </tr>
+						            </thead>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="row">
+						<div class="col-xs-12">
+							<p class="lead">权限信息</p>
+						</div>
+					</div>
+					
+				</div>
+			</section>
+		</div>
+		<!-- 通用footer 展示-->
+		<#include "/common/footer.html">
+
+	</div>
+</body>
+</html>
+

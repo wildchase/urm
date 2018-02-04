@@ -44,6 +44,7 @@
 		<module>urm-manager</module>
 		<module>urm-right</module>
 		<module>urm-gateway</module>
+		<module>urm-auth</module>
 		<module>urm-example</module>
 	</modules>
 
@@ -51,25 +52,24 @@
 		<dependencies>
 
 			<dependency>
-				<groupId>com.panly</groupId>
-				<artifactId>api-common</artifactId>
+				<groupId>com.panly.urm</groupId>
+				<artifactId>urm-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.panly</groupId>
-				<artifactId>api-gateway</artifactId>
+				<artifactId>urm-gateway</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.panly</groupId>
-				<artifactId>api-right</artifactId>
+				<groupId>com.panly.urm</groupId>
+				<artifactId>urm-right</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>1.2.44</version>
+				<version>1.2.45</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
@@ -107,19 +107,64 @@
 				<artifactId>jsqlparser</artifactId>
 				<version>1.0</version>
 			</dependency>
-
+			<!-- 数据库连接池 -->
+			<dependency>
+				<groupId>com.zaxxer</groupId>
+				<artifactId>HikariCP-java7</artifactId>
+				<version>2.4.13</version>
+			</dependency>
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib</artifactId>
 				<version>3.1</version>
 			</dependency>
-
 			<dependency>
 				<groupId>com.sohu</groupId>
 				<artifactId>idcenter</artifactId>
 				<version>1.1.1</version>
 			</dependency>
+			<dependency>
+				<groupId>commons-dbutils</groupId>
+				<artifactId>commons-dbutils</artifactId>
+				<version>1.7</version>
+			</dependency>
 
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.4</version>
+			</dependency>
+
+			<!-- java加解密算法的补充类 -->
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bcprov-jdk15on</artifactId>
+				<version>1.53</version>
+				<scope>provided</scope>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi</artifactId>
+			    <version>3.17</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi-ooxml</artifactId>
+			    <version>3.17</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.velocity</groupId>
+			    <artifactId>velocity</artifactId>
+			    <version>1.7</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 
