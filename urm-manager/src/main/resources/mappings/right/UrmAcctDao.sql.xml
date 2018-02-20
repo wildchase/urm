@@ -207,7 +207,7 @@
         a.update_by updateBy
         from urm_acct_rela_role a ,urm_role b
         where a.role_id = b.role_id
-        and ACCT_ID = #{acctId}
+        and a.acct_id = #{acctId}
         and a.record_status = 1 
         and b.record_status = 1 
         order by a.create_time desc 
@@ -230,9 +230,40 @@
     	a.record_status = 1 
     	and a.status = 1
     	<if test="roleName != null and roleName != ''"> and a.role_name like concat('%',#{roleName},'%')</if>
+    	<if test="roleCode != null and roleCode != ''"> and a.role_code like concat('%',#{roleCode},'%')</if>
     	and a.role_id not in (
 			select b.role_id from urm_acct_rela_role b where b.acct_id = #{acctId} and b.record_status = 1  
 		)
+	</select>
+	
+	
+	<select id="getAcctRightRela" resultType="com.panly.urm.manager.common.tree.RightRela">
+        select 
+		b.rela_id relaId,
+		b.oper_id operId,
+		1 relaType,
+		b.create_by createBy,
+		b.create_time createTime,
+		a.acct_id bizId,
+		a.acct_name bizName
+		from urm_acct a,urm_acct_rela_oper b
+		where a.acct_id = b.acct_id 
+		and a.record_status = 1 and a.status = 1 and b.record_status = 1 
+		and a.acct_id=#{acctId}
+		union all
+		select 
+		d.rela_id relaId,
+		d.oper_id operId,
+		2 relaType,
+		d.create_by createBy,
+		d.create_time createTime,
+		c.role_id bizId,
+		c.role_name bizName
+		from urm_acct a , urm_acct_rela_role b ,urm_role c, urm_role_rela_oper d 
+		where a.acct_id = b.acct_id and b.role_id = c.role_id and c.role_id = d.role_id
+		and a.record_status = 1 and a.status = 1 and b.record_status = 1 
+		and c.record_status = 1 and c.status = 1 and d.record_status = 1
+		and a.acct_id=#{acctId}
 	</select>
 
 </mapper>

@@ -1,7 +1,10 @@
 package com.panly.urm.manager.right.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
+import com.panly.urm.manager.common.tree.RightRela;
 import com.panly.urm.manager.right.entity.UrmAcct;
 import com.panly.urm.manager.right.vo.AcctParamsVo;
 import com.panly.urm.manager.right.vo.AcctRelaRoleVo;
@@ -36,6 +39,8 @@ public interface UrmAcctDao {
 	List<AcctRelaRoleVo> findAcctRoles(AcctParamsVo acctQueryVo);
 
 	List<RoleVo> findAcctNotHaveRoles(AcctParamsVo acctQueryVo);
+
+	List<RightRela> getAcctRightRela(@Param("acctId")Long acctId);
 
 
 }

@@ -16,10 +16,26 @@ public class AcctParamsVo extends DataTablePageBase {
 	
 	private String roleName;
 	
+	private String roleCode;
+	
 	/**
 	 * 添加的roleId
 	 */
 	private String roleIds;
+	
+	//添加操作
+	private Long operId;
+	
+	//删除关联
+	private Long relaId;
+	
+	//删除关联类型
+	private String relaType;
+	
+	/**
+	 * 选中的nodeId
+	 */
+	private String chooseNodeId;
 	
 	public Long getAcctId() {
 		return acctId;
@@ -81,6 +97,36 @@ public class AcctParamsVo extends DataTablePageBase {
 	}
 	public void setRoleIds(String roleIds) {
 		this.roleIds = roleIds;
+	}
+	public String getRoleCode() {
+		return roleCode;
+	}
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+	public Long getOperId() {
+		return operId;
+	}
+	public void setOperId(Long operId) {
+		this.operId = operId;
+	}
+	public Long getRelaId() {
+		return relaId;
+	}
+	public void setRelaId(Long relaId) {
+		this.relaId = relaId;
+	}
+	public String getRelaType() {
+		return relaType;
+	}
+	public void setRelaType(String relaType) {
+		this.relaType = relaType;
+	}
+	public String getChooseNodeId() {
+		return chooseNodeId;
+	}
+	public void setChooseNodeId(String chooseNodeId) {
+		this.chooseNodeId = chooseNodeId;
 	}	
 	
 	

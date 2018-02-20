@@ -124,12 +124,14 @@
     <select id="findAll" resultMap="urmOperResultMap">
         select <include refid="table_columns" />
         from urm_oper
+        order by create_time desc
     </select>
 
     <select id="find" resultMap="urmOperResultMap">
         select <include refid="table_columns" />
         from urm_oper
         <include refid="page_where" />
+        order by create_time desc
 	</select>
 
     <select id="getCount" resultType="int" >

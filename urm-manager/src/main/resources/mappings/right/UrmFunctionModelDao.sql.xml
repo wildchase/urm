@@ -138,12 +138,14 @@
     <select id="findAll" resultMap="urmFunctionModelResultMap">
         select <include refid="table_columns" />
         from urm_function_model
+        order by create_time desc
     </select>
 
     <select id="find" resultMap="urmFunctionModelResultMap">
         select <include refid="table_columns" />
         from urm_function_model
         <include refid="page_where" />
+        order by create_time desc
 	</select>
 
     <select id="getCount" resultType="int" >

@@ -28,19 +28,9 @@ $(function(){
         "columns": [// 每页展示什么
              { "data": "userName","width":"10%" },
              { "data": "url" ,"width":"10%" },
-             { "data": "operType" ,"width":"10%" },
+             { "data": "operTypeName" ,"width":"10%" },
              { "data": "operCost" ,"width":"10%" },
-             { 	
-            	 "data": "success",
-            	 "render": function (data, type, full, meta) {
-                     if( data==1 ){
-                    	 return "成功";
-                     }else{
-                    	 return "失败";
-                     }
-                 },
-                 "width":"10%" 
-             },
+             { "data": "successName","width":"10%" },
              { "data": "createTime","width":"10%"  },
              { "data": "operContent", "width":"30%"},
              { 
@@ -72,7 +62,7 @@ $(function(){
     
     $("#btn-export").click(function(){
     	var data = $("#querySearch").serializeObject();
-    	$.download(ctx+"/acct/download",data);
+    	$.download(ctx+"/oper/log/download",data);
     });
     
     $("#btn-re").click(function(){
@@ -83,12 +73,6 @@ $(function(){
     //修改
     $('#operLogList tbody').on('click', '#editRow', function () {
 		var data = _dataTables.row($(this).parents('tr')).data();
-		$("#editModal").find("input[name=acctId]").val(data.acctId);
-		$("#editModal").find("input[name=acctName]").val(data.acctName);
-		$("#editModal").find("input[name=phone]").val(data.phone);
-		$("#editModal").find("input[name=email]").val(data.email);
-		$("#editModal").find("select[name=status]").val(data.status);	
-		$("#editModal").modal("show");
     });
     
     

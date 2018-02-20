@@ -81,11 +81,14 @@ public class OperService {
 		oper.setCreateBy(UserUtil.getUserId());
 		oper.setCreateTime(new Date());
 		
+		Long functionId = null;
 		if(operParamsVo.getSecondFunctionId()!=null){
-			oper.setFunctionId(operParamsVo.getSecondFunctionId());
+			functionId = operParamsVo.getSecondFunctionId();
 		}else if (operParamsVo.getFirstFunctionId()!=null){
-			oper.setFunctionId(operParamsVo.getFirstFunctionId());
-		}else{
+			functionId = operParamsVo.getFirstFunctionId();
+		}
+		functionId = operParamsVo.getFunctionId();
+		if(functionId==null){
 			throw new RuntimeException("未选择功能");
 		}
 		return urmOperDao.insertSelective(oper);

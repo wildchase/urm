@@ -35,16 +35,16 @@
 					if (errorfn) {
 						errorfn(e);
 					} else {
-						alert(d.error);
+						layer.msg(d.error);
 					}
 				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				var ret = XMLHttpRequest.responseJSON;
 				if(ret instanceof Object){
-					alert(ret.status+":"+ret.error);
+					layer.msg(ret.status+":"+ret.error);
 				}else{
-					alert(XMLHttpRequest.responseText);
+					layer.msg(XMLHttpRequest.responseText);
 				}
 			}
 		});
@@ -72,7 +72,7 @@
 					if (errorfn) {
 						errorfn(e);
 					} else {
-						alert(d.error);
+						layer.msg(d.error);
 					}
 				}
 			},
@@ -124,6 +124,13 @@
 	}
 	
 })(jQuery);
+
+
+function log(obj){
+	if(window.console){
+		console.log(obj);
+	}
+}
 
 $(function() {
 

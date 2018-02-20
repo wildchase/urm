@@ -4,6 +4,8 @@ import com.panly.urm.manager.common.page.core.DataTablePageBase;
 
 public class AppParamsVo  extends DataTablePageBase{
 
+	private Long appId;
+	
 	private String appCode;
 	
 	private String appName;
@@ -62,7 +64,14 @@ public class AppParamsVo  extends DataTablePageBase{
 	public void setEndCreateTime(String endCreateTime) {
 		this.endCreateTime = endCreateTime;
 	}
-	
+
+	public Long getAppId() {
+		return appId;
+	}
+
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
 	
 	
 }

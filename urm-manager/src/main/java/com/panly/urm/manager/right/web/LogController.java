@@ -1,6 +1,9 @@
 package com.panly.urm.manager.right.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.panly.urm.manager.common.constants.OperTypeEnum;
+import com.panly.urm.manager.common.excel.FileDownloadUtil;
 import com.panly.urm.manager.common.page.core.PageDTO;
 import com.panly.urm.manager.common.page.core.PageDTOUtil;
 import com.panly.urm.manager.common.web.JsonResult;
@@ -55,7 +59,7 @@ public class LogController {
 	
 	
 	@ResponseBody
-	@RequestMapping("/oper/auth/page")
+	@RequestMapping("/auth/log/page")
 	public JsonResult queryAuthLog(AuthLogParamsVo authLogParamsVo){
 		PageDTO<AuthLogVo> page = logService.queryAuthLog(authLogParamsVo);
 		return PageDTOUtil.changePageToDataTableResult(page);
@@ -67,6 +71,19 @@ public class LogController {
 	public JsonResult queryAppLog(AppLogParamsVo appLogParamsVo){
 		PageDTO<AppLogVo> page = logService.queryAppLog(appLogParamsVo);
 		return PageDTOUtil.changePageToDataTableResult(page);
+	}
+	
+	@RequestMapping(value="/oper/log/download")
+	public void downloadOperLog(OperLogParamsVo operLogParamsVo,HttpServletResponse response){
+		List<OperLogVo> data = logService.queryOperLogList(operLogParamsVo);
+		
+		String sheetName = "操作日志";
+		String title = "操作日志";
+		String fileName = "操作日志.xlsx";
+		String[] headers = { "用户名称@userName", "访问地址@url", "操作类型@operTypeName", "耗费时间@operCost",
+				"是否成功@successName","时间@createTime","日志@operContent@8000"};
+		
+		FileDownloadUtil.exportToExcel(response,sheetName,title,fileName,headers,data);
 	}
 	
 	

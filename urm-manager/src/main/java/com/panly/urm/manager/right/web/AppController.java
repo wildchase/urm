@@ -1,5 +1,6 @@
 package com.panly.urm.manager.right.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.panly.umr.common.BeanCopyUtil;
 import com.panly.urm.manager.common.constants.OperTypeEnum;
 import com.panly.urm.manager.common.constants.StatusEnum;
 import com.panly.urm.manager.common.excel.FileDownloadUtil;
 import com.panly.urm.manager.common.page.core.PageDTO;
 import com.panly.urm.manager.common.page.core.PageDTOUtil;
+import com.panly.urm.manager.common.tree.TreeNode;
 import com.panly.urm.manager.common.web.JsonResult;
 import com.panly.urm.manager.log.anno.Log;
 import com.panly.urm.manager.right.service.AppService;
@@ -107,6 +110,18 @@ public class AppController {
 		Integer status = (Integer) map.get("status");
 		map.put("status",StatusEnum.STATUS_DESC_MAP.get(status));
 		return map;
+	}
+	
+	//获取app下面的操作和功能
+	@RequestMapping(value="/func/oper/tree",method=RequestMethod.POST)
+	public void getFuncOperTreeNodeByAppId(AppParamsVo appParamsVo,HttpServletResponse resp) throws IOException{
+		TreeNode node = appService.getFuncOperTreeNodeByAppId(appParamsVo.getAppId());
+		List<TreeNode> nodes = new ArrayList<>();
+		nodes.add(node);
+		
+		JsonResult ret = new JsonResult().setData(nodes);
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(JSON.toJSONString(ret));
 	}
 	
 	

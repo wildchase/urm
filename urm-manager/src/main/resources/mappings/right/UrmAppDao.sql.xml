@@ -117,12 +117,14 @@
     <select id="findAll" resultMap="urmAppResultMap">
         select <include refid="table_columns" />
         from urm_app
+        order by create_time desc
     </select>
 
     <select id="find" resultMap="urmAppResultMap">
         select <include refid="table_columns" />
         from urm_app
         <include refid="page_where" />
+        order by create_time desc
 	</select>
 
     <select id="getCount" resultType="int" >

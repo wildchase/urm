@@ -17,7 +17,7 @@ $(function(){
         "lengthChange":true,   //
         "serverSide": true,  	// 是否服务端分页
         "ajax": {// ajax 配置
-            "url": ctx+"/oper/log/page",
+            "url": ctx+"/app/log/page",
             "type":"POST",
         	"data": function ( d ) {
         		var data = $("#queryForm").serializeObject();

@@ -17,7 +17,7 @@ $(function(){
         "lengthChange":true,   //
         "serverSide": true,  	// 是否服务端分页
         "ajax": {// ajax 配置
-            "url": ctx+"/oper/log/page",
+            "url": ctx+"/auth/log/page",
             "type":"POST",
         	"data": function ( d ) {
         		var data = $("#queryForm").serializeObject();
@@ -79,7 +79,7 @@ $(function(){
     
     $("#btn-export").click(function(){
     	var data = $("#querySearch").serializeObject();
-    	$.download(ctx+"/acct/download",data);
+    	$.download(ctx+"/auth/log/download",data);
     });
     
     $("#btn-re").click(function(){
@@ -90,12 +90,6 @@ $(function(){
     //修改
     $('#acctList tbody').on('click', '#editRow', function () {
 		var data = _dataTables.row($(this).parents('tr')).data();
-		$("#editModal").find("input[name=acctId]").val(data.acctId);
-		$("#editModal").find("input[name=acctName]").val(data.acctName);
-		$("#editModal").find("input[name=phone]").val(data.phone);
-		$("#editModal").find("input[name=email]").val(data.email);
-		$("#editModal").find("select[name=status]").val(data.status);	
-		$("#editModal").modal("show");
     });
     
     

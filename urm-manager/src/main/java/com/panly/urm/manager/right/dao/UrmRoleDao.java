@@ -1,9 +1,14 @@
 package com.panly.urm.manager.right.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
+import com.panly.urm.manager.common.tree.RightRela;
 import com.panly.urm.manager.right.entity.UrmRole;
+import com.panly.urm.manager.right.vo.AcctVo;
 import com.panly.urm.manager.right.vo.RoleParamsVo;
+import com.panly.urm.manager.right.vo.RoleRelaAcctVo;
 
 /**
  * dal Interface:UrmRole
@@ -31,6 +36,11 @@ public interface UrmRoleDao {
 
 	List<UrmRole> query(RoleParamsVo roleQueryVo);
 
+	List<RoleRelaAcctVo> findRoleHaveAccts(RoleParamsVo roleParamsVo);
+
+	List<AcctVo> findRoleNotHaveAccts(RoleParamsVo roleParamsVo);
+
+	List<RightRela> getRoleRightRela(Long roleId);
 	
 
 

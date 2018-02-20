@@ -1,174 +1,220 @@
-var table_have = null;
 
-var table_not_have = null;
+var appTemp,funcTemp,operTemp;
 
 $(function(){
-	table_have = $('#role_have_list').DataTable({
-	  	"language": {
-          	"url": ctx+"/res/components/datatable.net/zh_CN.js"
-     	},
-	    "processing" : true, 	// 控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现.
-	    "ordering": false, 		// 全局控制列表的所有排序功能.
-        "lengthChange": false, // 控制是否能够调整每页的条数,如果设为false,标准的每页条数控制控件也会被隐藏.
-        "searching": false,		// 控制控件的搜索功能
-        "info": true, 			// 控制总数信息(标准界面右下角显示总数和过滤条数的控件)的显隐
-        "autoWidth": false,		// 定义是否由控件自动控制列宽
-        "pageLength": 5, 		// 定义初始的页长
-        "lengthChange":false,   //
-        "serverSide": true,  	// 是否服务端分页
-        "ajax": {// ajax 配置
-            "url": ctx+"/acct/role/have",
-            "type":"POST",
-        	"data": function ( d ) {
-                d.acctId=$('#acctId').val();
-            }
-        },
-        "columns": [// 每页展示什么
-             { 
-            	 "render": function (data, type, full, meta) {
-            		 return '<a href="'+ctx+'/role/detail?roleId='+full.roleId+'">'+full.roleCode+'</a>';
-                 }
-             },
-             { "data": "roleName" },
-             { "data": "roleDesc" },
-             { 
-            	 "data": "status",
-            	 "render": function (data, type, full, meta) {
-                     if( data==1 ){
-                    	 return "正常";
-                     }else{
-                    	 return "禁用";
-                     }
-                 }
-             },
-             { "data": "createUserName" },
-             { "data": "createTime" },
-             { 
-            	 "render": function (data, type, full, meta) {
-                     return "<div class='btn-group'>"+
-                     "<button id='delRow'  title='删除关联关系' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button>"+
-                     "</div>";
-                 }
-             }
-        ]
-    });
-	
-	//添加角色按钮
-	$("#btn-add-role").click(function(){
-		$("#roleChooseModal").modal("show");
-		table_not_have.ajax.reload();
-	});
-	
-	
-	table_not_have = $('#role_not_have_list').DataTable({
-	  	"language": {
-          	"url": ctx+"/res/components/datatable.net/zh_CN.js"
-     	},
-	    "processing" : true, 	// 控制是否在数据加载时出现”Processing”的提示,一般在远程加载并且比较慢的情况下才会出现.
-	    "ordering": false, 		// 全局控制列表的所有排序功能.
-        "lengthChange": false, // 控制是否能够调整每页的条数,如果设为false,标准的每页条数控制控件也会被隐藏.
-        "searching": false,		// 控制控件的搜索功能
-        "info": true, 			// 控制总数信息(标准界面右下角显示总数和过滤条数的控件)的显隐
-        "autoWidth": false,		// 定义是否由控件自动控制列宽
-        "pageLength": 10, 		// 定义初始的页长
-        "lengthChange":false,   //
-        "serverSide": true,  	// 是否服务端分页
-        "ajax": {// ajax 配置
-            "url": ctx+"/acct/role/nothave",
-            "type":"POST",
-        	"data": function ( d ) {
-                d.acctId=$('#acctId').val();
-                d.roleName=$('#roleName').val();
-            }
-        },
-        "columns": [// 每页展示什么
-             { 
-            	 "data": "roleId",
-        		 "render": function (data, type, full, meta) {
-        			 return '<input type="checkbox"  class="checkchild" name="chooseRow" value="' + data + '"/>';
-                 },
-            	 "bSortable": false
-             },
-             { "data": "roleCode" },
-             { "data": "roleName" },
-             { "data": "roleDesc" },
-             { 
-            	 "data": "status",
-            	 "render": function (data, type, full, meta) {
-                     if( data==1 ){
-                    	 return "正常";
-                     }else{
-                    	 return "禁用";
-                     }
-                 }
-             },
-             { "data": "createUserName" }
-             
-        ]
-    });
-	
-	//删除关联关系
-	//单个删除
-    $('#role_have_list tbody').on('click', '#delRow', function () {
-    	var data = table_have.row($(this).parents('tr')).data();
-		var sendData = {"deleteIds":data.relaId};
-    	layer.msg('确定删除与['+data.roleName+"]角色的关联", {
-    		  time: 0 //不自动关闭
-    		  ,btn: ['确认', '取消']
-    		  ,yes: function(index){
-    		    layer.close(index);
-    		    $.ajaxPostJson(ctx+"/acct/role/del",sendData,function(ret){
-    		    	table_have.draw(false);
-    			})
-    		  }
-    	});
-    });
-	
-	
-	$(".checkall").click(function () {
-		 if ($(this).prop("checked") === true) {
-	            $(".checkchild").prop("checked", $(this).prop("checked"));
-	            $('#acctList tbody tr').addClass('selected');
-	     } else {
-	            $(".checkchild").prop("checked", false);
-	            $('#acctList tbody tr').removeClass('selected');
-	     }      
-	});
-	
-	
-	$("#btn-query").click(function () {
-		table_not_have.ajax.reload();
-	});
-	
-	
-	$("#btn-add-submit").click(function(){
-		var checkRow = $('#role_not_have_list tbody').find("input[name=chooseRow]:checked");
-    	if(checkRow.length==0){
-    		layer.alert("请选中要添加的角色");
-    		return;
-    	}
-    	
-    	var chooseIds = "";
-		    for (var i = 0; i < checkRow.length; i++) {
-		    	chooseIds = chooseIds+$(checkRow[i]).val();
-		    	if(i!=checkRow.length-1){
-		    		chooseIds = chooseIds+",";
-		    	}
-		}
-	    $.ajaxPostJson(ctx+"/acct/role/add",{"acctId":$("#acctId").val(),"roleIds":chooseIds},function(ret){
-	    	table_have.draw(false);
-	    	table_not_have.draw(false);
-	    	$("#roleChooseModal").modal("hide");
-		})
-	})
-	
-	$("#btn-add-reset").click(function(){
-		$('#role_not_have_list').find("input[type=checkbox]").prop("checked", false);
-	})
-	
-	//展示权限tree
-	
-	
-	
+	appTemp = new EJS({url:ctx+"/res/template/app/tree-app-show.ejs",type:"[",cache:false});
+	funcTemp = new EJS({url:ctx+"/res/template/app/tree-func-show.ejs",type:"[",cache:false});
+	operTemp = new EJS({url:ctx+"/res/template/app/tree-oper-show.ejs",type:"[",cache:false});
+	showTree();
 	
 });
+//添加的data
+var treeData = null;
+//选中的data
+var chooseData = null;
+
+function showTree(){
+	//展示权限tree
+	$.ajaxPost("/app/func/oper/tree",{appId:$("#appId").val()},function(result){
+		treeData = result.data;
+		$('#tree').treeview({data: treeData,levels:5}); 
+		$('#tree').on('nodeSelected',function(event, data) {
+			chooseData = data;
+			var type = data.type;
+			switch (type) {
+			case '1':
+				renderShowApp();
+				break;
+			case '2':
+				renderShowFunc();
+				break;
+			case '3':
+				renderShowOper();
+				break;	
+			default:
+				$("#show").text("");
+				break;
+			}
+		});
+		
+		$('#tree').on('nodeUnselected',function(event, data) {
+			$("#show").html("");
+		});
+		
+		if(chooseData){
+			chooseOperSelected();
+		}else{
+			firstOperSelected();
+		}
+	});
+}
+
+
+//1，默认选中第一个 oper 选中
+function firstOperSelected(){
+	var nodes = $('#tree').treeview('getEnabled',null);
+	for (var i = 0; i < nodes.length; i++) {
+		var node = nodes[i];
+		if(node.type=='3'){
+			$('#tree').treeview('toggleNodeSelected',[node.nodeId,{ silent: false}]);
+			break;
+		}
+	}
+}
+
+function chooseOperSelected(){
+	var nodes = $('#tree').treeview('getEnabled',null);
+	for (var i = 0; i < nodes.length; i++) {
+		var node = nodes[i];
+		if(node.type==chooseData.type &&node.id==chooseData.id){
+			$('#tree').treeview('toggleNodeSelected',[node.nodeId,{ silent: false}]);
+			break;
+		}
+	}
+}
+
+
+
+function renderShowApp(){
+	$("#show").html(appTemp.render(chooseData));
+	//绑定新增功能操作
+	$("#btn-add-func").unbind("click").click(function(){
+		$("#addFuncModal").modal("show");
+		$("#addFuncForm")[0].reset();
+		$("#addFuncForm").find("input[name=appId]").val($("#appId").val());	
+		$("#addFuncForm").find("input[name=appName]").val($("#appName").val());
+		$("#addFuncForm").find("input[name=parentFunctionId]").val('');	
+		$("#addFuncForm").find("input[name=parentFunctionName]").val('');
+		
+		var addFuncVali = $("#addFuncForm").validate();
+		$('#btn-add-submit-func').unbind("click").click(function(){
+	    	if(addFuncVali.form()){
+	    		//提交请求
+	    		var data = $("#addFuncForm").serializeObject();
+	    		var sendData = JSON.stringify(data);
+	    		console.log(sendData);
+	    		$.ajaxPostJson(ctx+"/func/add",sendData,function(ret){
+	    			addFuncVali.resetForm();
+	    			$("#addFuncModal").modal("hide");
+	    			showTree();
+	    		})
+	    	}
+	    });
+		$('#btn-add-reset-func').unbind("click").click(function(){
+			$("#addFuncForm").find("input[name=functionCode]").val('');	
+			$("#addFuncForm").find("input[name=functionName]").val('');
+			$("#addFuncForm").find("input[name=functionDesc]").val('');
+	    });
+		
+	});
+	
+}
+
+
+function renderShowFunc(){
+	$("#show").html(funcTemp.render(chooseData));
+	//绑定新增功能按钮
+	$("#btn-add-func").unbind("click").click(function(){
+		$("#addFuncModal").modal("show");
+		$("#addFuncForm")[0].reset();
+		$("#addFuncForm").find("input[name=appId]").val($("#appId").val());	
+		$("#addFuncForm").find("input[name=appName]").val($("#appName").val());
+		$("#addFuncForm").find("input[name=parentFunctionId]").val(chooseData['id']);	
+		$("#addFuncForm").find("input[name=parentFunctionName]").val(chooseData['text']);
+		
+		
+		var addFuncVali = $("#addFuncForm").validate();
+		$('#btn-add-submit-func').unbind("click").click(function(){
+	    	if(addFuncVali.form()){
+	    		//提交请求
+	    		var data = $("#addFuncForm").serializeObject();
+	    		var sendData = JSON.stringify(data);
+	    		console.log(sendData);
+	    		$.ajaxPostJson(ctx+"/func/add",sendData,function(ret){
+	    			addFuncVali.resetForm();
+	    			$("#addFuncModal").modal("hide");
+	    			showTree();
+	    		})
+	    	}
+	    });
+		
+		$('#btn-add-reset-func').unbind("click").click(function(){
+			$("#addFuncForm").find("input[name=functionCode]").val('');	
+			$("#addFuncForm").find("input[name=functionName]").val('');
+			$("#addFuncForm").find("input[name=functionDesc]").val('');
+	    });
+	});
+	
+	//绑定添加操作按钮
+	$("#btn-add-oper").unbind("click").click(function(){
+		$("#addOperModal").modal("show");
+		$("#addOperForm")[0].reset();
+		$("#addOperForm").find("input[name=appId]").val($("#appId").val());	
+		$("#addOperForm").find("input[name=appName]").val($("#appName").val());
+		$("#addOperForm").find("input[name=functionId]").val(chooseData['id']);	
+		$("#addOperForm").find("input[name=functionName]").val(chooseData['text']);
+		
+		
+		var addFuncVali = $("#addOperForm").validate();
+		$('#btn-add-submit-oper').unbind("click").click(function(){
+	    	if(addFuncVali.form()){
+	    		//提交请求
+	    		var data = $("#addOperForm").serializeObject();
+	    		var sendData = JSON.stringify(data);
+	    		console.log(sendData);
+	    		$.ajaxPostJson(ctx+"/oper/add",sendData,function(ret){
+	    			addFuncVali.resetForm();
+	    			$("#addOperModal").modal("hide");
+	    			showTree();
+	    		})
+	    	}
+	    });
+		
+		$('#btn-add-reset-oper').unbind("click").click(function(){
+			$("#addOperForm").find("input[name=operCode]").val('');	
+			$("#addOperForm").find("input[name=operName]").val('');
+	    });
+	});
+	
+	//绑定删除功能操作
+	$("#btn-del-func").unbind("click").click(function(){
+		if(chooseData['nodes']){
+			layer.msg('功能下还有功能或操作，不能删除');
+			return false;
+		}
+		layer.msg('你确定删除功能['+chooseData.text+"]", {
+  		  time: 0 //不自动关闭
+  		  ,btn: ['确认', '取消']
+  		  ,yes: function(index){
+  		    layer.close(index);
+  		    $.ajaxPostJson(ctx+"/func/delete",{"deleteIds":chooseData.id},function(ret){
+  		    	showTree();
+  			})
+  		  }
+    	});
+	});
+	
+}
+
+function renderShowOper(){
+	$("#show").html(operTemp.render(chooseData));
+	
+	//绑定删除操作
+	$("#btn-del-oper").unbind("click").click(function(){
+		layer.msg('你确定删除操作['+chooseData.text+"]", {
+  		  time: 0 //不自动关闭
+  		  ,btn: ['确认', '取消']
+  		  ,yes: function(index){
+  		    layer.close(index);
+  		    $.ajaxPostJson(ctx+"/oper/delete",{"deleteIds":chooseData.id},function(ret){
+  		    	showTree();
+  			})
+  		  }
+    	});
+	});
+	
+}
+
+
+
+

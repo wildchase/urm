@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmRightDbConfigDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmRightDbConfig" id="urmRightDbConfigResultMap">
+		<result property="dbCode" column="DB_CODE"  />
+		<result property="dbName" column="DB_NAME"  />
+		<result property="dbIntru" column="DB_INTRU"  />
+		<result property="dbUrl" column="DB_URL"  />
+		<result property="dbClass" column="DB_CLASS"  />
+		<result property="dbUsername" column="DB_USERNAME"  />
+		<result property="dbPassword" column="DB_PASSWORD"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		DB_CODE,
+		DB_NAME,
+		DB_INTRU,
+		DB_URL,
+		DB_CLASS,
+		DB_USERNAME,
+		DB_PASSWORD,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{dbCode},
+		#{dbName},
+		#{dbIntru},
+		#{dbUrl},
+		#{dbClass},
+		#{dbUsername},
+		#{dbPassword},
+		#{recordStatus}
+	</sql>
+
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="dbCode != null and dbCode != ''">and DB_CODE = #{dbCode}</if>
+				<if test="dbName != null and dbName != ''">and DB_NAME = #{dbName}</if>
+				<if test="dbIntru != null and dbIntru != ''">and DB_INTRU = #{dbIntru}</if>
+				<if test="dbUrl != null and dbUrl != ''">and DB_URL = #{dbUrl}</if>
+				<if test="dbClass != null and dbClass != ''">and DB_CLASS = #{dbClass}</if>
+				<if test="dbUsername != null and dbUsername != ''">and DB_USERNAME = #{dbUsername}</if>
+				<if test="dbPassword != null and dbPassword != ''">and DB_PASSWORD = #{dbPassword}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmRightDbConfig" >
+		insert into urm_right_db_config( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmRightDbConfig">
+        insert into urm_right_db_config
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="dbCode != null and dbCode != ''">DB_CODE,</if>
+				<if test="dbName != null and dbName != ''">DB_NAME,</if>
+				<if test="dbIntru != null and dbIntru != ''">DB_INTRU,</if>
+				<if test="dbUrl != null and dbUrl != ''">DB_URL,</if>
+				<if test="dbClass != null and dbClass != ''">DB_CLASS,</if>
+				<if test="dbUsername != null and dbUsername != ''">DB_USERNAME,</if>
+				<if test="dbPassword != null and dbPassword != ''">DB_PASSWORD,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="dbCode != null and dbCode != ''">#{dbCode},</if>
+				<if test="dbName != null and dbName != ''">#{dbName},</if>
+				<if test="dbIntru != null and dbIntru != ''">#{dbIntru},</if>
+				<if test="dbUrl != null and dbUrl != ''">#{dbUrl},</if>
+				<if test="dbClass != null and dbClass != ''">#{dbClass},</if>
+				<if test="dbUsername != null and dbUsername != ''">#{dbUsername},</if>
+				<if test="dbPassword != null and dbPassword != ''">#{dbPassword},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmRightDbConfig">
+		delete from urm_right_db_config
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_right_db_config
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and DB_CODE = #{dbCode}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmRightDbConfig">
+		update urm_right_db_config 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="dbName != null and dbName != ''">DB_NAME = #{dbName},</if>
+				<if test="dbIntru != null and dbIntru != ''">DB_INTRU = #{dbIntru},</if>
+				<if test="dbUrl != null and dbUrl != ''">DB_URL = #{dbUrl},</if>
+				<if test="dbClass != null and dbClass != ''">DB_CLASS = #{dbClass},</if>
+				<if test="dbUsername != null and dbUsername != ''">DB_USERNAME = #{dbUsername},</if>
+				<if test="dbPassword != null and dbPassword != ''">DB_PASSWORD = #{dbPassword},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and DB_CODE = #{dbCode}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmRightDbConfigResultMap">
+        select <include refid="table_columns" />
+        from urm_right_db_config
+    </select>
+
+    <select id="find" resultMap="urmRightDbConfigResultMap">
+        select <include refid="table_columns" />
+        from urm_right_db_config
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_right_db_config
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmRightDbConfigResultMap"  >
+		select <include refid="table_columns" />
+		from urm_right_db_config
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and DB_CODE = #{dbCode}</if>
+        </trim>
+	</select>
+	
+	
+	
+	<!-- -->
+
+
+</mapper>

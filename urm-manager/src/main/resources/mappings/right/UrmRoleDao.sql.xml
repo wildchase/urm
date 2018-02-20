@@ -162,6 +162,69 @@
 		</trim>
 		order by CREATE_TIME desc
 	</select>
-
+	
+	
+	
+	<select id="findRoleHaveAccts" resultType="com.panly.urm.manager.right.vo.RoleRelaAcctVo">
+        select 
+        a.rela_id relaId,
+        a.acct_id acctId,
+        a.role_id roleId,
+        a.create_time createTime,
+        a.update_time updateTime,
+        a.create_by createBy,
+        a.update_by updateBy,
+        b.acct_name acctName,
+        b.phone phone,
+        b.email email,
+        b.status acctStatus
+        from urm_acct_rela_role a ,
+        urm_acct b
+        where a.acct_id = b.acct_id
+        and a.role_id = #{roleId}
+        and a.record_status = 1 
+        and b.record_status = 1 
+        order by a.create_time desc 
+	</select>
+	
+	
+	<select id="findRoleNotHaveAccts" resultType="com.panly.urm.manager.right.vo.AcctVo">
+        select 
+        a.acct_id acctId,
+        a.acct_name acctName,
+        a.phone phone,
+        a.email email,
+        a.status status,
+        a.create_time createTime,
+        a.create_by createBy,
+        a.update_time updateTime,
+        a.update_by updateBy
+        from urm_acct a 
+        where
+    	a.record_status = 1 
+    	and a.status = 1
+    	<if test="acctName != null and acctName != ''"> and a.acct_name like concat('%',#{acctName},'%')</if>
+    	and a.acct_id not in (
+			select b.acct_id from urm_acct_rela_role b where b.role_id = #{roleId} and b.record_status = 1  
+		)
+	</select>
+	
+	<!-- 获取权限 -->
+	<select id="getRoleRightRela" resultType="com.panly.urm.manager.common.tree.RightRela">
+		select 
+		b.rela_id relaId,
+		b.oper_id operId,
+		2 relaType,
+		b.create_by createBy,
+		b.create_time createTime,
+		a.role_id bizId,
+		a.role_name bizName
+		from 
+		urm_role a, urm_role_rela_oper b
+		where a.role_id = b.role_id
+		and a.record_status = 1 and a.status = 1 and b.record_status = 1 
+		and a.role_id=#{roleId}
+	</select>
+	
 
 </mapper>

@@ -1,0 +1,161 @@
+<p class="lead">授权信息</p>
+<div class="row">
+	<div class="col-xs-8">
+		<div class="table-responsive">
+			<table class="table">
+				<tr>
+					<th style="width: 40%">功能名称</th>
+					<td> [%=functionName %] </td>
+				</tr>
+				<tr>
+					<th>操作名称</th>
+					<td>[%=operName %]</td>
+				</tr>
+				<tr>
+					<th>授权状态</th>
+					<td>
+					[% if (relas.length>0) { %]
+						<span style='color:#228B22'>已授权</span>
+		           	[% }else{ %]
+		           		<span style='color:red'>未授权</span>
+		            [% } %] 
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="col-xs-4">
+		[% if (!haveAcctOper) { %]
+			<button id="btn-add-acct-oper" class="btn btn-primary btn-sm pull-right" onclick="addAcctOper()">添加账户授权</button>
+        [% } %]
+	</div>
+</div>
+
+
+<!-- 展示操作关联 -->
+[% relas.forEach(function(rela){ %] 
+	<div class="row">
+		<hr>
+	</div>
+	
+	[% if (rela.relaType=='1') { %]
+	<div class="row">
+		<div class="col-xs-8">
+			<div class="table-responsive">
+				<table class="table">
+					<tr>
+						<th style="width: 40%">授权类型</th>
+						<td> 
+							账户授权
+						</td>
+					</tr>
+					<tr>
+						<th>授权来源</th>
+						<td>[%=rela.createUserName %]</td>
+					</tr>
+					<tr>
+						<th>授权时间</th>
+						<td>[%=rela.createTime %]</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<button class="btn btn-primary btn-sm pull-right" onclick="delAcctOper()">删除账户授权</button>
+			<button class="btn btn-primary btn-sm pull-right" onclick="addAcctOperRight()">添加数据权限</button>
+		</div>
+	</div>
+	[% }else{ %]
+	<div class="row">
+		<div class="col-xs-8">
+			<div class="table-responsive">
+				<table class="table">
+					<tr>
+						<th style="width: 40%">授权类型</th>
+						<td> 
+							角色授权
+						</td>
+					</tr>
+					<tr>
+						<th >角色名称</th>
+						<td>[%=rela.bizName %]</td>
+					</tr>
+					<tr>
+						<th>授权来源</th>
+						<td>[%=rela.createUserName %]</td>
+					</tr>
+					<tr>
+						<th>授权时间</th>
+						<td>[%=rela.createTime %]</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	[% } %]
+	
+	<!-- 循环显示用户的权限 -->
+	[% rela.rights.forEach(function(right){ %] 
+		[% if (right.rightType=='1') { %]
+		<div class="row">
+			<div class="col-xs-8">
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<th style="width: 40%">数据权限类型</th>
+							<td> 
+								数据链路
+							</td>
+						</tr>
+						<tr>
+							<th>数据链路名称</th>
+							<td>[%=right.dbName %]</td>
+						</tr>
+						<tr>
+							<th>授权sql</th>
+							<td>[%=right.dataRightSql %]</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<button class="btn btn-primary btn-sm pull-right" onclick="deleteAcctOperRight('[%=right.rightId %]')">删除数据</button>
+				<button class="btn btn-primary btn-sm pull-right" onclick="modifyDbRight('[%=right.rightId %]')">修改数据</button>
+			</div>
+		</div>	
+		[% }else{ %]
+		<div class="row">
+			<div class="col-xs-8">
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<th style="width: 40%">数据权限类型</th>
+							<td> 
+								值集
+							</td>
+						</tr>
+						<tr>
+							<th>值集名称</th>
+							<td>[%=right.valueName %]</td>
+						</tr>
+						<tr>
+							<th>选中值</th>
+							<td>[%=right.valueConfigName %]</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<button class="btn btn-primary btn-sm pull-right" onclick="deleteAcctOperRight('[%=right.rightId %]')">删除数据</button>
+				<button class="btn btn-primary btn-sm pull-right" onclick="modifyValueRight('[%=right.rightId %]')">修改数据</button>
+			</div>
+		</div>	
+		[% } %]
+	[% }) %] 
+[% }) %] 
+
+
+
+
+
+

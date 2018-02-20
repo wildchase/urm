@@ -1,0 +1,101 @@
+<p class="lead">授权信息</p>
+<div class="row">
+	<div class="col-xs-8">
+		<div class="table-responsive">
+			<table class="table">
+				<tr>
+					<th style="width: 40%">功能名称</th>
+					<td> [%=functionName %] </td>
+				</tr>
+				<tr>
+					<th>操作编号</th>
+					<td>[%=code %]</td>
+				</tr>
+				<tr>
+					<th>操作名称</th>
+					<td>[%=operName %]</td>
+				</tr>
+				<tr>
+					<th>授权状态</th>
+					<td>
+					[% if (typeof(operRelaId)!='undefined' ) { %]
+						<span style='color:#228B22'>已授权</span>
+		           	[% }else{ %]
+		           		<span style='color:red'>未授权</span>
+		            [% } %] 
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="col-xs-4">
+		[% if (typeof(operRelaId) != 'undefined' ) { %]
+			<button id="btn-del-role-oper" class="btn btn-primary btn-sm pull-right" onclick="delRoleOper()">删除角色授权</button>
+			<button id="btn-del-role-oper" class="btn btn-primary btn-sm pull-right" onclick="addRight()">添加数据授权</button>
+		 [% }else{ %]	
+			<button id="btn-add-role-oper" class="btn btn-primary btn-sm pull-right" onclick="addRoleOper()">添加角色授权</button>
+        [% } %]
+	</div>
+</div>
+[% if (typeof(operRelaId) != 'undefined' ) { %]
+<!-- 循环显示用户的权限 -->
+[% rights.forEach(function(right){ %] 
+	[% if (right.rightType=='1') { %]
+	<div class="row">
+		<div class="col-xs-8">
+			<div class="table-responsive">
+				<table class="table">
+					<tr>
+						<th style="width: 40%">数据权限类型</th>
+						<td> 
+							数据链路
+						</td>
+					</tr>
+					<tr>
+						<th>数据链路名称</th>
+						<td>[%=right.dbName %]</td>
+					</tr>
+					<tr>
+						<th>授权sql</th>
+						<td>[%=right.dataRightSql %]</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<button class="btn btn-primary btn-sm pull-right" onclick="deleteRight('[%=right.rightId %]')">删除数据</button>
+			<button class="btn btn-primary btn-sm pull-right" onclick="modifyDbRight('[%=right.rightId %]')">修改数据</button>
+		</div>
+	</div>	
+	[% }else{ %]
+	<div class="row">
+		<div class="col-xs-8">
+			<div class="table-responsive">
+				<table class="table">
+					<tr>
+						<th style="width: 40%">数据权限类型</th>
+						<td> 
+							值集
+						</td>
+					</tr>
+					<tr>
+						<th>值集名称</th>
+						<td>[%=right.valueName %]</td>
+					</tr>
+					<tr>
+						<th>选中值</th>
+						<td>[%=right.valueConfigName %]</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<button class="btn btn-primary btn-sm pull-right" onclick="deleteOperRight('[%=right.rightId %]')">删除数据</button>
+			<button class="btn btn-primary btn-sm pull-right" onclick="modifyValueRight('[%=right.rightId %]')">修改数据</button>
+		</div>
+	</div>	
+	[% } %]
+[% }) %] 
+
+[% } %]
+

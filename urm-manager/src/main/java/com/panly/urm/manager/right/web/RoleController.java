@@ -1,5 +1,6 @@
 package com.panly.urm.manager.right.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,17 @@ import com.panly.urm.manager.common.constants.StatusEnum;
 import com.panly.urm.manager.common.excel.FileDownloadUtil;
 import com.panly.urm.manager.common.page.core.PageDTO;
 import com.panly.urm.manager.common.page.core.PageDTOUtil;
+import com.panly.urm.manager.common.tree.TreeNode;
+import com.panly.urm.manager.common.util.JsonUtil;
 import com.panly.urm.manager.common.web.JsonResult;
 import com.panly.urm.manager.log.anno.Log;
+import com.panly.urm.manager.right.config.DbConfig;
+import com.panly.urm.manager.right.service.AcctRoleRelaService;
+import com.panly.urm.manager.right.service.OperRelaService;
 import com.panly.urm.manager.right.service.RoleService;
+import com.panly.urm.manager.right.vo.AcctVo;
 import com.panly.urm.manager.right.vo.RoleParamsVo;
+import com.panly.urm.manager.right.vo.RoleRelaAcctVo;
 import com.panly.urm.manager.right.vo.RoleVo;
 import com.panly.urm.manager.user.anno.MenuOp;
 
@@ -37,6 +45,15 @@ public class RoleController {
 	
 	@Autowired
 	public RoleService roleService;
+	
+	@Autowired
+	private AcctRoleRelaService acctRoleRelaService;
+	
+	@Autowired
+	private OperRelaService operRelaService;
+	
+	@Autowired
+	private DbConfig dbConfig;
 	
 	/**
 	 * 进入登录页面
@@ -57,6 +74,8 @@ public class RoleController {
 	public ModelAndView detail(Long roleId,HttpServletRequest req){
 		ModelAndView mav = new ModelAndView("right/role/role-detail");
 		mav.addObject("role", roleService.get(roleId));
+		mav.addObject("dbs", dbConfig.getRightDbConfigs());
+		mav.addObject("values", dbConfig.getRightValueSetConfigs());
 		return mav;
 	}
 	
@@ -141,6 +160,81 @@ public class RoleController {
 		Integer status = (Integer) map.get("status");
 		map.put("status",StatusEnum.STATUS_DESC_MAP.get(status));
 		return map;
+	}
+	
+	
+	
+	/**
+	 * 详情页面 查询 角色对应的用户
+	 * @param roleQueryVo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/acct/have")
+	public JsonResult queryRoleList(RoleParamsVo roleParamsVo) {
+		PageDTO<RoleRelaAcctVo> page = roleService.findRoleHaveAccts(roleParamsVo);
+		return PageDTOUtil.changePageToDataTableResult(page);
+	}
+
+	/**
+	 * 详情页面没有该角色的用户
+	 * @param roleQueryVo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/acct/nothave")
+	public JsonResult query(RoleParamsVo roleParamsVo) {
+		PageDTO<AcctVo> page = roleService.findRoleNotHaveAccts(roleParamsVo);
+		return PageDTOUtil.changePageToDataTableResult(page);
+	}
+	
+	@Log(type = OperTypeEnum.ROLE_ACCT_ADD, value = "${userName}为角色[${roleParamsVo.roleId}]添加账户 [${roleParamsVo.acctIds}]")
+	@ResponseBody
+	@RequestMapping(value = "/acct/add", method = RequestMethod.POST)
+	public JsonResult addAcctRela(@RequestBody RoleParamsVo roleParamsVo) {
+		String[] ids = StringUtils.tokenizeToStringArray(
+				roleParamsVo.getAcctIds(), ",");
+		for (String acctId : ids) {
+			acctRoleRelaService.addRela(Long.parseLong(acctId),roleParamsVo.getRoleId());
+		}
+		return new JsonResult();
+	}
+
+	@Log(type = OperTypeEnum.ROLE_ACCT_DEL, value = "${userName}为角色[${roleParamsVo.roleId}]删除关联关系[${roleParamsVo.deleteIds}]")
+	@ResponseBody
+	@RequestMapping(value = "/acct/del", method = RequestMethod.POST)
+	public JsonResult delAcctRela(@RequestBody RoleParamsVo roleParamsVo) {
+		String[] relaIds = StringUtils.tokenizeToStringArray(roleParamsVo.getDeleteIds(), ",");
+		for (String relaId : relaIds) {
+			acctRoleRelaService.delRela(Long.parseLong(relaId));
+		}
+		return new JsonResult();
+	}
+	
+	//获取app下面的操作和功能
+	@RequestMapping(value="/func/oper/tree")
+	public void getFuncOperTreeNodeByRoleId(RoleParamsVo roleParamsVo,HttpServletResponse resp) throws IOException{
+		List<TreeNode> nodes = roleService.getFuncOperRightTreeNodeByRoleId(roleParamsVo.getRoleId());
+		JsonResult ret = new JsonResult().setData(nodes);
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(JsonUtil.toJsonDataFormat(ret));
+	}
+	
+	
+	@Log(type = OperTypeEnum.ROLE_OPER_ADD, value = "${userName}为账号[${roleParamVo.roleId}]添加操作关联 [${roleParamVo.operId}]")
+	@ResponseBody
+	@RequestMapping(value = "/oper/add", method = RequestMethod.POST)
+	public JsonResult addOperRela(@RequestBody RoleParamsVo roleParamVo) {
+		operRelaService.addRoleOperRela(roleParamVo.getRoleId(), roleParamVo.getOperId());
+		return new JsonResult();
+	}
+
+	@Log(type = OperTypeEnum.ROLE_OPER_DEL, value = "${userName}为账号[${roleParamVo.roleId}]删除操作关联 [${roleParamVo.relaId}],关联类型[${roleParamVo.relaType}]")
+	@ResponseBody
+	@RequestMapping(value = "/oper/del", method = RequestMethod.POST)
+	public JsonResult delOperRela(@RequestBody RoleParamsVo roleParamVo) {
+		operRelaService.delOperRela(roleParamVo.getRelaId(), roleParamVo.getRelaType());
+		return new JsonResult();
 	}
 
 }

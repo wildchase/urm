@@ -1,5 +1,8 @@
 package com.panly.urm.manager.common.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum OperTypeEnum {
 
 	OPER_DEFAULT("default", "默认日志"), 
@@ -47,6 +50,16 @@ public enum OperTypeEnum {
 	
 	;
 
+	public static Map<String, OperTypeEnum> OPERTYPE_MAP = new HashMap<>();
+	public static Map<String, String> OPERTYPE_DESC_MAP = new HashMap<>();
+	static{
+		OperTypeEnum[] u = OperTypeEnum.values();
+		for (OperTypeEnum type : u) {
+			OPERTYPE_MAP.put(type.getCode(),type);
+			OPERTYPE_DESC_MAP.put(type.getCode(),type.getDesc());
+		}
+	}
+	
 	private String code;
 
 	private String desc;

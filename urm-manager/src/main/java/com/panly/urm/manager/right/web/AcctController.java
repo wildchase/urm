@@ -1,5 +1,6 @@
 package com.panly.urm.manager.right.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +23,14 @@ import com.panly.urm.manager.common.constants.StatusEnum;
 import com.panly.urm.manager.common.excel.FileDownloadUtil;
 import com.panly.urm.manager.common.page.core.PageDTO;
 import com.panly.urm.manager.common.page.core.PageDTOUtil;
+import com.panly.urm.manager.common.tree.TreeNode;
+import com.panly.urm.manager.common.util.JsonUtil;
 import com.panly.urm.manager.common.web.JsonResult;
 import com.panly.urm.manager.log.anno.Log;
+import com.panly.urm.manager.right.config.DbConfig;
+import com.panly.urm.manager.right.service.AcctRoleRelaService;
 import com.panly.urm.manager.right.service.AcctService;
+import com.panly.urm.manager.right.service.OperRelaService;
 import com.panly.urm.manager.right.vo.AcctParamsVo;
 import com.panly.urm.manager.right.vo.AcctRelaRoleVo;
 import com.panly.urm.manager.right.vo.AcctVo;
@@ -38,6 +44,15 @@ public class AcctController {
 
 	@Autowired
 	private AcctService acctService;
+	
+	@Autowired
+	private AcctRoleRelaService acctRoleRelaService;
+	
+	@Autowired
+	private OperRelaService operRelaService;
+	
+	@Autowired
+	private DbConfig dbConfig;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String toAcct(HttpServletRequest req) {
@@ -48,6 +63,8 @@ public class AcctController {
 	public ModelAndView detail(Long acctId, HttpServletRequest req) {
 		ModelAndView mav = new ModelAndView("right/acct/acct-detail");
 		mav.addObject("acct", acctService.get(acctId));
+		mav.addObject("dbs", dbConfig.getRightDbConfigs());
+		mav.addObject("values", dbConfig.getRightValueSetConfigs());
 		return mav;
 	}
 
@@ -149,8 +166,8 @@ public class AcctController {
 		String[] ids = StringUtils.tokenizeToStringArray(
 				acctQueryVo.getRoleIds(), ",");
 		for (String roleId : ids) {
-			acctService
-					.addRole(acctQueryVo.getAcctId(), Long.parseLong(roleId));
+			acctRoleRelaService
+					.addRela(acctQueryVo.getAcctId(), Long.parseLong(roleId));
 		}
 		return new JsonResult();
 	}
@@ -162,9 +179,37 @@ public class AcctController {
 		String[] relaIds = StringUtils.tokenizeToStringArray(
 				acctQueryVo.getDeleteIds(), ",");
 		for (String relaId : relaIds) {
-			acctService.delRoleRela(Long.parseLong(relaId));
+			acctRoleRelaService.delRela(Long.parseLong(relaId));
 		}
 		return new JsonResult();
 	}
+	
+	
+	//获取app下面的操作和功能
+	@RequestMapping(value="/func/oper/tree")
+	public void getFuncOperTreeNodeByAcctId(AcctParamsVo acctParamsVo,HttpServletResponse resp) throws IOException{
+		List<TreeNode> nodes = acctService.getAcctFuncOperRightTreeNode(acctParamsVo);
+		JsonResult ret = new JsonResult().setData(nodes);
+		resp.setCharacterEncoding("UTF-8");
+		resp.getWriter().write(JsonUtil.toJsonDataFormat(ret));
+	}
+	
+	
+	@Log(type = OperTypeEnum.ACCT_OPER_ADD, value = "${userName}为账号[${acctParamVo.acctId}]添加操作关联 [${acctParamVo.operId}]")
+	@ResponseBody
+	@RequestMapping(value = "/oper/add", method = RequestMethod.POST)
+	public JsonResult addOperRela(@RequestBody AcctParamsVo acctParamVo) {
+		operRelaService.addAcctOperRela(acctParamVo.getAcctId(), acctParamVo.getOperId());
+		return new JsonResult();
+	}
+
+	@Log(type = OperTypeEnum.ACCT_OPER_DEL, value = "${userName}为账号[${acctParamVo.acctId}]删除操作关联 [${acctParamVo.relaId}],关联类型[${acctParamVo.relaType}]")
+	@ResponseBody
+	@RequestMapping(value = "/oper/del", method = RequestMethod.POST)
+	public JsonResult delOperRela(@RequestBody AcctParamsVo acctParamVo) {
+		operRelaService.delOperRela(acctParamVo.getRelaId(), acctParamVo.getRelaType());
+		return new JsonResult();
+	}
+	
 
 }

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.manager.right.dao.UrmRightValueSetConfigDao">
+
+    <resultMap type="com.panly.urm.manager.right.entity.UrmRightValueSetConfig" id="urmRightValueSetConfigResultMap">
+		<result property="valueCode" column="VALUE_CODE"  />
+		<result property="valueName" column="VALUE_NAME"  />
+		<result property="valueIntru" column="VALUE_INTRU"  />
+		<result property="valueTableName" column="VALUE_TABLE_NAME"  />
+		<result property="valueTableKey" column="VALUE_TABLE_KEY"  />
+		<result property="valueTableColumn" column="VALUE_TABLE_COLUMN"  />
+		<result property="valueColumnType" column="VALUE_COLUMN_TYPE"  />
+		<result property="valueConfig" column="VALUE_CONFIG"  />
+		<result property="dbCode" column="DB_CODE"  />
+		<result property="recordStatus" column="RECORD_STATUS"  />
+	</resultMap>
+	
+	<sql id="table_columns">
+		VALUE_CODE,
+		VALUE_NAME,
+		VALUE_INTRU,
+		VALUE_TABLE_NAME,
+		VALUE_TABLE_KEY,
+		VALUE_TABLE_COLUMN,
+		VALUE_COLUMN_TYPE,
+		VALUE_CONFIG,
+		DB_CODE,
+		RECORD_STATUS
+    </sql>
+	<sql id="entity_properties">
+		#{valueCode},
+		#{valueName},
+		#{valueIntru},
+		#{valueTableName},
+		#{valueTableKey},
+		#{valueTableColumn},
+		#{valueColumnType},
+		#{valueConfig},
+		#{dbCode},
+		#{recordStatus}
+	</sql>
+
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+				<if test="valueCode != null and valueCode != ''">and VALUE_CODE = #{valueCode}</if>
+				<if test="valueName != null and valueName != ''">and VALUE_NAME = #{valueName}</if>
+				<if test="valueIntru != null and valueIntru != ''">and VALUE_INTRU = #{valueIntru}</if>
+				<if test="valueTableName != null and valueTableName != ''">and VALUE_TABLE_NAME = #{valueTableName}</if>
+				<if test="valueTableKey != null and valueTableKey != ''">and VALUE_TABLE_KEY = #{valueTableKey}</if>
+				<if test="valueTableColumn != null and valueTableColumn != ''">and VALUE_TABLE_COLUMN = #{valueTableColumn}</if>
+				<if test="valueColumnType != null and valueColumnType != ''">and VALUE_COLUMN_TYPE = #{valueColumnType}</if>
+				<if test="valueConfig != null and valueConfig != ''">and VALUE_CONFIG = #{valueConfig}</if>
+				<if test="dbCode != null and dbCode != ''">and DB_CODE = #{dbCode}</if>
+				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+        </trim>
+    </sql>
+
+
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmRightValueSetConfig" >
+		insert into urm_right_value_set_config( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmRightValueSetConfig">
+        insert into urm_right_value_set_config
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="valueCode != null and valueCode != ''">VALUE_CODE,</if>
+				<if test="valueName != null and valueName != ''">VALUE_NAME,</if>
+				<if test="valueIntru != null and valueIntru != ''">VALUE_INTRU,</if>
+				<if test="valueTableName != null and valueTableName != ''">VALUE_TABLE_NAME,</if>
+				<if test="valueTableKey != null and valueTableKey != ''">VALUE_TABLE_KEY,</if>
+				<if test="valueTableColumn != null and valueTableColumn != ''">VALUE_TABLE_COLUMN,</if>
+				<if test="valueColumnType != null and valueColumnType != ''">VALUE_COLUMN_TYPE,</if>
+				<if test="valueConfig != null and valueConfig != ''">VALUE_CONFIG,</if>
+				<if test="dbCode != null and dbCode != ''">DB_CODE,</if>
+				<if test="recordStatus != null ">RECORD_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="valueCode != null and valueCode != ''">#{valueCode},</if>
+				<if test="valueName != null and valueName != ''">#{valueName},</if>
+				<if test="valueIntru != null and valueIntru != ''">#{valueIntru},</if>
+				<if test="valueTableName != null and valueTableName != ''">#{valueTableName},</if>
+				<if test="valueTableKey != null and valueTableKey != ''">#{valueTableKey},</if>
+				<if test="valueTableColumn != null and valueTableColumn != ''">#{valueTableColumn},</if>
+				<if test="valueColumnType != null and valueColumnType != ''">#{valueColumnType},</if>
+				<if test="valueConfig != null and valueConfig != ''">#{valueConfig},</if>
+				<if test="dbCode != null and dbCode != ''">#{dbCode},</if>
+				<if test="recordStatus != null ">#{recordStatus},</if>
+        </trim>
+	</insert>
+
+
+	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmRightValueSetConfig">
+		delete from urm_right_value_set_config
+        <include refid="page_where" />
+	</delete>
+
+	<delete id="deleteByPrimaryKey">
+		delete from urm_right_value_set_config
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and VALUE_CODE = #{valueCode}</if>
+        </trim>
+	</delete>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmRightValueSetConfig">
+		update urm_right_value_set_config 
+		<trim prefix="set" suffixOverrides=",">
+				<if test="valueName != null and valueName != ''">VALUE_NAME = #{valueName},</if>
+				<if test="valueIntru != null and valueIntru != ''">VALUE_INTRU = #{valueIntru},</if>
+				<if test="valueTableName != null and valueTableName != ''">VALUE_TABLE_NAME = #{valueTableName},</if>
+				<if test="valueTableKey != null and valueTableKey != ''">VALUE_TABLE_KEY = #{valueTableKey},</if>
+				<if test="valueTableColumn != null and valueTableColumn != ''">VALUE_TABLE_COLUMN = #{valueTableColumn},</if>
+				<if test="valueColumnType != null and valueColumnType != ''">VALUE_COLUMN_TYPE = #{valueColumnType},</if>
+				<if test="valueConfig != null and valueConfig != ''">VALUE_CONFIG = #{valueConfig},</if>
+				<if test="dbCode != null and dbCode != ''">DB_CODE = #{dbCode},</if>
+				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+		</trim>
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and VALUE_CODE = #{valueCode}</if>
+        </trim>
+	</update>
+
+    <select id="findAll" resultMap="urmRightValueSetConfigResultMap">
+        select <include refid="table_columns" />
+        from urm_right_value_set_config
+    </select>
+
+    <select id="find" resultMap="urmRightValueSetConfigResultMap">
+        select <include refid="table_columns" />
+        from urm_right_value_set_config
+        <include refid="page_where" />
+	</select>
+
+    <select id="getCount" resultType="int" >
+        select count(*) from urm_right_value_set_config
+        <include refid="page_where" />
+    </select>
+
+
+    <select id="getByPrimaryKey" resultMap="urmRightValueSetConfigResultMap"  >
+		select <include refid="table_columns" />
+		from urm_right_value_set_config
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="1==1">and VALUE_CODE = #{valueCode}</if>
+        </trim>
+	</select>
+	
+	
+	<!-- -->
+
+
+</mapper>

@@ -1,0 +1,24 @@
+<table class="table">
+	<thead>
+		<th>
+			总数
+		</th>
+		<td>
+			<th>[%=count %] </th>
+		<td>
+	</thead>
+	<thead>
+		<tr>
+			[% columns.forEach(function(c){ %] 
+				<th>[%=c %] </th>
+			[% }) %] 
+		</tr>
+	</thead>
+	<tbody>
+		[% result.forEach(function(r){ %] 
+		<tr>
+			<td>[%=r %]</td>
+		</tr>
+		[% }) %]
+	</tbody>
+</table>

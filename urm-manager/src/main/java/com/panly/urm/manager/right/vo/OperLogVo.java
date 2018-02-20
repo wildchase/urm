@@ -14,6 +14,23 @@ public class OperLogVo {
 	private Integer	success;		 /* 1，成功    2，失败 */ 
 	private String	errorMsg;		 /* 失败的原因 */ 
 	private Date	createTime;
+	
+	private String successName;
+	private String operTypeName;
+	
+	
+	public String getSuccessName() {
+		return successName;
+	}
+	public void setSuccessName(String successName) {
+		this.successName = successName;
+	}
+	public String getOperTypeName() {
+		return operTypeName;
+	}
+	public void setOperTypeName(String operTypeName) {
+		this.operTypeName = operTypeName;
+	}
 	public Long getOperLogId() {
 		return operLogId;
 	}
