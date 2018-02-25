@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.auth.dao.AcctTokenDao">
+	
+	<insert id="createToken" >
+		INSERT INTO ACCT_TOKEN
+		(token,acct_id,acct_name,create_time)
+		VALUES (
+		#{token},#{acctId},#{acctName},#{createTime} )
+	</insert>
+
+	<select id="getToken" resultType="com.panly.urm.auth.model.AcctToken">
+		SELECT
+		token,acct_id as acctId,acct_name acctName,create_time as createTime
+		FROM ACCT_TOKEN
+		WHERE token = #{token}
+	</select>
+
+	<delete id="deleteToken">
+		delete from ACCT_TOKEN where token = #{token}
+	</delete>
+	
+
+
+</mapper>

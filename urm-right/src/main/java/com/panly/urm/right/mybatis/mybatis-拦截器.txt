@@ -1,0 +1,13 @@
+执行的顺序是
+Executor
+(update, query, flushStatements, commit,  rollback, getTransaction, close, isClosed)
+
+StatementHandler
+(prepare, parameterize, batch, update, query)
+
+ParameterHandler
+(getParameterObject, setParameters)
+
+ResultSetHandler
+(handleResultSets, handleOutputParameters)
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>订单管理</title> 
+<#include "/common/meta.html">
+<script type="text/javascript" src="${ctx}/res/order/order-list.js"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- 首行显示-->
+		<#include "/common/header.html">
+
+		<!-- 菜单栏显示-->
+		<#include "/common/menu.html">
+
+		<!-- 内容显示位置 -->
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					订单管理<small>查询</small>
+				</h1>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<form id="queryForm">
+					<div class="row">
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">卖方Id</span> 
+								<input type="text" class="form-control" name="sellerId" autocomplete="on">
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">店铺Id</span> <input type="text"
+									class="form-control" name="mallId" autocomplete="on">
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="input-group">
+								<span class="input-group-addon">买方Id</span> <input type="text"
+									class="form-control" name="buyerId" autocomplete="on">
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="col-xs-2">
+						<button id="btn-query" class="btn btn-primary btn-sm">搜索</button>
+						<button id="btn-query-reset" class="btn btn-primary btn-sm">重置</button>
+					</div>
+				</div>
+				<div class="row">
+					<!-- 查询、添加、批量删除、导出、刷新 -->
+					<div class="row-fluid">
+						<div class="pull-right">
+							<div class="btn-group">
+								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
+									<i class="fa fa-refresh"></i>刷新
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header hide">
+								<h3 class="box-title">操作列表</h3>
+							</div>
+							<div class="box-body">
+								<table id="orderList" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th>订单编号</th>
+											<th>订单类型</th>
+											<th>区域Id</th>
+											<th>卖方Id</th>
+											<th>店铺Id</th>
+											<th>买方Id</th>
+											<th>订单金额</th>
+											<th>创建时间</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- EditUser -->
+		<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+						</button>
+						<h4 class="modal-title" id="editModalLabel">修改订单价格</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" id="editForm" method="post">
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">订单ID</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="orderId" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">原始订单价格</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="orderAmount"readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputName" class="col-sm-3 control-label">修改价格</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="orderAmount" >
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- modal-body END -->
+					<div class="modal-footer">
+						<button id="btn-edit-submit" type="submit" class="btn btn-primary">提交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 通用footer 展示-->
+		<#include "/common/footer.html">
+
+	</div>
+</body>
+</html>
+

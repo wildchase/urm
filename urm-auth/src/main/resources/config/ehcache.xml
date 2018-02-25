@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+	
+	<defaultCache maxElementsInMemory="10000" 
+		memoryStoreEvictionPolicy="LRU"
+		eternal="false"  
+		timeToIdleSeconds="7200"
+		timeToLiveSeconds="7200" 
+		overflowToDisk="false"
+		diskPersistent="false" />
+		
+	<cache name="token"
+		memoryStoreEvictionPolicy="LRU" 
+		maxElementsInMemory="10000" 
+		eternal="false"
+		timeToIdleSeconds="7200"
+		timeToLiveSeconds="7200" 
+		overflowToDisk="false" />
+		
+	<cache name="acct"
+		memoryStoreEvictionPolicy="LRU" 
+		maxElementsInMemory="10000" 
+		eternal="false"
+		timeToIdleSeconds="7200"
+		timeToLiveSeconds="7200" 
+		overflowToDisk="false" />
+		
+	<cache name="oper"
+		memoryStoreEvictionPolicy="LRU" 
+		maxElementsInMemory="10000" 
+		eternal="false"
+		timeToIdleSeconds="7200"
+		timeToLiveSeconds="7200" 
+		overflowToDisk="false" />
+		
+	<cache name="app"
+		memoryStoreEvictionPolicy="LRU" 
+		maxElementsInMemory="10000" 
+		eternal="false"
+		timeToIdleSeconds="7200"
+		timeToLiveSeconds="7200" 
+		overflowToDisk="false" />
+		
+		
+</ehcache>

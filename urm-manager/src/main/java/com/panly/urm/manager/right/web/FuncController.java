@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.panly.umr.common.BeanCopyUtil;
+import com.panly.urm.common.BeanCopyUtil;
 import com.panly.urm.manager.common.constants.OperTypeEnum;
 import com.panly.urm.manager.common.constants.StatusEnum;
 import com.panly.urm.manager.common.excel.FileDownloadUtil;
-import com.panly.urm.manager.common.page.core.PageDTO;
-import com.panly.urm.manager.common.page.core.PageDTOUtil;
+import com.panly.urm.page.core.PageDTO;
+import com.panly.urm.page.core.PageDTOUtil;
 import com.panly.urm.manager.common.select.CxSelect;
-import com.panly.urm.manager.common.web.JsonResult;
 import com.panly.urm.manager.log.anno.Log;
 import com.panly.urm.manager.right.service.FuncService;
 import com.panly.urm.manager.right.vo.FuncParamsVo;
 import com.panly.urm.manager.right.vo.FuncVo;
 import com.panly.urm.manager.user.anno.MenuOp;
+import com.panly.urm.web.JsonResult;
 
 @MenuOp("101004")
 @Controller

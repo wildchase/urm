@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.panly.urm.manager.common.web.JsonResult;
 import com.panly.urm.manager.right.service.RightDataService;
 import com.panly.urm.manager.right.vo.DataRightExecResult;
 import com.panly.urm.manager.right.vo.DataRightParam;
 import com.panly.urm.manager.right.vo.RightValueSetConfigSelect2;
+import com.panly.urm.web.JsonResult;
 
 @Controller
 @RequestMapping("/right")

@@ -1,0 +1,37 @@
+<aside class="main-sidebar">
+	<!-- sidebar: style can be found in sidebar.less -->
+	<section class="sidebar">
+		<!-- Sidebar Menu -->
+		<ul class="sidebar-menu" data-widget="tree">		
+			<#list menus as m>
+				<#if m.nodes??> 
+					<li  class="treeview">
+					  <a href="#" id="${m.id}">
+						<i class="fa ${m.icon}"></i> <span>${m.text}</span>
+						<span class="pull-right-container">
+			              <i class="fa fa-angle-left pull-right"></i>
+			            </span>
+					  </a>
+					  <ul class="treeview-menu">
+					  	<#list m.nodes as c >
+							<li>
+								<a href="${c.url}" id="${c.id}"  > 
+									<i class="fa ${c.icon}"></i> <span>${c.text}</span>
+								</a>
+							</li>
+						</#list>
+					  </ul>
+					</li>
+				<#else>
+					<li>
+						<a href="${m.url}" id="${m.id}" > 
+							<i class="fa ${m.icon}"></i> <span>${m.text}</span>
+						</a>
+					</li>
+				</#if>
+			</#list>
+		</ul>
+		<!-- /.sidebar-menu -->
+	</section>
+	<!-- /.sidebar -->
+</aside>

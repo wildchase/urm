@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>登陆页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="res/components/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="res/components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="res/components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="res/adminlte/css/AdminLTE.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="res/components/iCheck/square/blue.css">
+  <link rel="stylesheet" href="${ctx}/res/components/layer/theme/default/layer.css">
+
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">登陆界面</p>
+    <form id="loginForm" >
+      <div class="form-group ">
+      	<input name="loginKey"  type="hidden" value="${loginKey}" >
+        <input name="account"  type="text" class="form-control" placeholder="账户"  autocomplete="off" value="" required>
+      </div>
+      <div class="form-group ">
+        <input name="password" type="password" class="form-control" placeholder="密码"  autocomplete="off" value="" required>
+      </div>
+      <div class="form-group ">
+        <input name="verifyCode" type="text" class="form-control" style="width: 50%" placeholder="验证码"  autocomplete="off" value="" required>
+        <img alt="验证码" id="verifyCodeImg" src="/image?loginKey=${loginKey}" onclick="refresh()" style="position:relative;">
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+        </div>
+        <div class="col-xs-4">
+          <div onclick="login();" class="btn btn-primary btn-block btn-flat">登陆</div>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="res/components/jquery/jquery.min.js"></script>
+<script src="res/components/bootstrap/js/bootstrap.min.js"></script>
+<script src="res/components/iCheck/icheck.min.js"></script>
+<script src="res/components/jquery-validator/jquery.validate.js"></script>
+<script src="res/components/jquery-validator/additional-methods.js"></script>
+<script src="res/components/jquery-validator/messages_zh.js"></script>
+<script src="res/components/layer/layer.js"></script>
+<script src="res/common/common.js"></script>
+<script>
+var returnUrl = '${returnUrl}';
+var loginFormVali = null;
+$(function () {
+	loginFormVali = $("#loginForm").validate();
+	
+	$(document).keydown(function(event){ 
+		if(event.keyCode == 13){ // 绑定回车
+			login();
+		} 
+    });
+});
+ 
+function login() {
+	if(loginFormVali.form()){
+		$.ajaxPost('/login',
+			$("#loginForm").serializeObject(),
+			function(ret){
+	         	window.location = changeUrl(returnUrl,ret.data);
+			} 
+		)
+	}
+}
+
+function changeUrl(returnUrl,token){
+	if(returnUrl.indexOf("?")!=-1){
+		return returnUrl+"&token="+token;
+	}else{
+		return returnUrl+"?token="+token;
+	}
+}
+
+function refresh(){
+	$("#verifyCodeImg").attr("src","/image?loginKey=${loginKey}&d="+new Date().getTime());
+}
+
+</script>
+</body>
+</html>

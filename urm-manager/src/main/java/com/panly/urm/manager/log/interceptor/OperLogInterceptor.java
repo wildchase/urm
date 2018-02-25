@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.panly.umr.common.VelocityUtil;
-import com.panly.umr.method.MethodParamNameContext;
+import com.panly.urm.common.VelocityUtil;
 import com.panly.urm.manager.log.anno.Log;
 import com.panly.urm.manager.log.thread.LogThreadContext;
 import com.panly.urm.manager.right.entity.UrmOperLog;
 import com.panly.urm.manager.user.UserUtil;
+import com.panly.urm.method.MethodParamNameContext;
 
 public class OperLogInterceptor implements MethodInterceptor {
 

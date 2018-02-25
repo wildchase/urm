@@ -43,22 +43,15 @@
 		<module>urm-common</module>
 		<module>urm-manager</module>
 		<module>urm-right</module>
-		<module>urm-gateway</module>
 		<module>urm-auth</module>
-		<module>urm-example</module>
+		<module>urm-demo</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
-
 			<dependency>
 				<groupId>com.panly.urm</groupId>
 				<artifactId>urm-common</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.panly</groupId>
-				<artifactId>urm-gateway</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -91,23 +84,11 @@
 				<artifactId>mybatis-spring</artifactId>
 				<version>${mybatis_spring}</version>
 			</dependency>
-			<!-- 数据库连接池 -->
-			<dependency>
-				<groupId>com.github.pagehelper</groupId>
-				<artifactId>pagehelper</artifactId>
-				<version>5.0.4</version>
-			</dependency>
-			<dependency>
-				<groupId>org.logback-extensions</groupId>
-				<artifactId>logback-ext-spring</artifactId>
-				<version>0.1.4</version>
-			</dependency>
 			<dependency>
 				<groupId>com.github.jsqlparser</groupId>
 				<artifactId>jsqlparser</artifactId>
 				<version>1.0</version>
 			</dependency>
-			<!-- 数据库连接池 -->
 			<dependency>
 				<groupId>com.zaxxer</groupId>
 				<artifactId>HikariCP-java7</artifactId>
@@ -119,17 +100,6 @@
 				<version>3.1</version>
 			</dependency>
 			<dependency>
-				<groupId>com.sohu</groupId>
-				<artifactId>idcenter</artifactId>
-				<version>1.1.1</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-dbutils</groupId>
-				<artifactId>commons-dbutils</artifactId>
-				<version>1.7</version>
-			</dependency>
-
-			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>2.4</version>
@@ -139,7 +109,31 @@
 				<artifactId>commons-lang3</artifactId>
 				<version>3.4</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.17</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>3.17</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>1.7</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sohu</groupId>
+				<artifactId>idcenter</artifactId>
+				<version>1.1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-dbutils</groupId>
+				<artifactId>commons-dbutils</artifactId>
+				<version>1.7</version>
+			</dependency>
 			<!-- java加解密算法的补充类 -->
 			<dependency>
 				<groupId>org.bouncycastle</groupId>
@@ -147,38 +141,20 @@
 				<version>1.53</version>
 				<scope>provided</scope>
 			</dependency>
-			
 			<dependency>
-			    <groupId>org.apache.poi</groupId>
-			    <artifactId>poi</artifactId>
-			    <version>3.17</version>
+				<groupId>org.logback-extensions</groupId>
+				<artifactId>logback-ext-spring</artifactId>
+				<version>0.1.4</version>
 			</dependency>
-			<dependency>
-			    <groupId>org.apache.poi</groupId>
-			    <artifactId>poi-ooxml</artifactId>
-			    <version>3.17</version>
-			</dependency>
-			
-			<dependency>
-			    <groupId>org.apache.velocity</groupId>
-			    <artifactId>velocity</artifactId>
-			    <version>1.7</version>
-			</dependency>
-			
 		</dependencies>
 	</dependencyManagement>
-
-	<dependencies>
-	</dependencies>
-
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<configuration>
-					<skip>ture</skip>
+					<skip>false</skip>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -193,7 +169,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<developers>
 		<developer>
 			<id>www.panly.me</id>
@@ -204,4 +179,36 @@
 			<organizationUrl>http://urm.panly.me</organizationUrl>
 		</developer>
 	</developers>
+	
+	<repositories>
+		<repository>
+			<id>aliyun</id>
+			<name>aliyun Repository</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>nexus</id>
+			<name>Auto Maven Repository</name>
+			<url>http://ali.panly.me:8081/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>http://ali.panly.me:8081/nexus/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>my-releases</id>
+			<name>public</name>
+			<url>http://ali.panly.me:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>my-snapshots</id>
+			<name>Snapshots</name>
+			<url>http://ali.panly.me:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>

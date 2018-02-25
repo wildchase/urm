@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 
-import com.panly.umr.jaxb.JaxbUtil;
+import com.panly.urm.jaxb.JaxbUtil;
 import com.panly.urm.manager.user.model.User;
 
 /**

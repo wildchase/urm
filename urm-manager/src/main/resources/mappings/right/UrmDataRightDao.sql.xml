@@ -2,25 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.panly.urm.manager.right.dao.UrmDataRightDao">
 
-    <resultMap type="com.panly.urm.manager.right.entity.UrmDataRight" id="urmDataRightResultMap">
-		<result property="rightId" column="RIGHT_ID"  />
-		<result property="relaId" column="RELA_ID"  />
-		<result property="relaType" column="RELA_TYPE"  />
-		<result property="rightType" column="RIGHT_TYPE"  />
-		<result property="dbCode" column="DB_CODE"  />
-		<result property="dbName" column="DB_NAME"  />
-		<result property="valueCode" column="VALUE_CODE"  />
-		<result property="valueName" column="VALUE_NAME"  />
-		<result property="valueConfig" column="VALUE_CONFIG"  />
-		<result property="dataRightSql" column="DATA_RIGHT_SQL"  />
-		<result property="status" column="STATUS"  />
-		<result property="createTime" column="CREATE_TIME"  />
-		<result property="updateTime" column="UPDATE_TIME"  />
-		<result property="createBy" column="CREATE_BY"  />
-		<result property="updateBy" column="UPDATE_BY"  />
-		<result property="recordStatus" column="RECORD_STATUS"  />
+	<resultMap type="com.panly.urm.manager.right.entity.UrmDataRight"
+		id="urmDataRightResultMap">
+		<result property="rightId" column="RIGHT_ID" />
+		<result property="relaId" column="RELA_ID" />
+		<result property="relaType" column="RELA_TYPE" />
+		<result property="rightType" column="RIGHT_TYPE" />
+		<result property="dbCode" column="DB_CODE" />
+		<result property="dbName" column="DB_NAME" />
+		<result property="valueCode" column="VALUE_CODE" />
+		<result property="valueName" column="VALUE_NAME" />
+		<result property="valueConfig" column="VALUE_CONFIG" />
+		<result property="dataRightSql" column="DATA_RIGHT_SQL" />
+		<result property="status" column="STATUS" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="createBy" column="CREATE_BY" />
+		<result property="updateBy" column="UPDATE_BY" />
+		<result property="recordStatus" column="RECORD_STATUS" />
 	</resultMap>
-	
+
 	<sql id="table_columns">
 		RIGHT_ID,
 		RELA_ID,
@@ -38,7 +39,7 @@
 		CREATE_BY,
 		UPDATE_BY,
 		RECORD_STATUS
-    </sql>
+	</sql>
 	<sql id="entity_properties">
 		#{rightId},
 		#{relaId},
@@ -58,167 +59,176 @@
 		#{recordStatus}
 	</sql>
 
-    <sql id="page_where">
-        <trim prefix="where" prefixOverrides="and | or ">
-				<if test="rightId != null ">and RIGHT_ID = #{rightId}</if>
-				<if test="relaId != null ">and RELA_ID = #{relaId}</if>
-				<if test="relaType != null ">and RELA_TYPE = #{relaType}</if>
-				<if test="rightType != null ">and RIGHT_TYPE = #{rightType}</if>
-				<if test="dbCode != null and dbCode != ''">and DB_CODE = #{dbCode}</if>
-				<if test="dbName != null and dbName != ''">and DB_NAME = #{dbName}</if>
-				<if test="valueCode != null and valueCode != ''">and VALUE_CODE = #{valueCode}</if>
-				<if test="valueName != null and valueName != ''">and VALUE_NAME = #{valueName}</if>
-				<if test="valueConfig != null and valueConfig != ''">and VALUE_CONFIG = #{valueConfig}</if>
-				<if test="dataRightSql != null and dataRightSql != ''">and DATA_RIGHT_SQL = #{dataRightSql}</if>
-				<if test="status != null ">and STATUS = #{status}</if>
-				<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
-				<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
-				<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
-				<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
-				<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
-        </trim>
-    </sql>
+	<sql id="page_where">
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="rightId != null ">and RIGHT_ID = #{rightId}</if>
+			<if test="relaId != null ">and RELA_ID = #{relaId}</if>
+			<if test="relaType != null ">and RELA_TYPE = #{relaType}</if>
+			<if test="rightType != null ">and RIGHT_TYPE = #{rightType}</if>
+			<if test="dbCode != null and dbCode != ''">and DB_CODE = #{dbCode}</if>
+			<if test="dbName != null and dbName != ''">and DB_NAME = #{dbName}</if>
+			<if test="valueCode != null and valueCode != ''">and VALUE_CODE = #{valueCode}</if>
+			<if test="valueName != null and valueName != ''">and VALUE_NAME = #{valueName}</if>
+			<if test="valueConfig != null and valueConfig != ''">and VALUE_CONFIG = #{valueConfig}</if>
+			<if test="dataRightSql != null and dataRightSql != ''">and DATA_RIGHT_SQL = #{dataRightSql}</if>
+			<if test="status != null ">and STATUS = #{status}</if>
+			<if test="createTime != null ">and CREATE_TIME = #{createTime}</if>
+			<if test="updateTime != null ">and UPDATE_TIME = #{updateTime}</if>
+			<if test="createBy != null ">and CREATE_BY = #{createBy}</if>
+			<if test="updateBy != null ">and UPDATE_BY = #{updateBy}</if>
+			<if test="recordStatus != null ">and RECORD_STATUS = #{recordStatus}</if>
+		</trim>
+	</sql>
 
 
-	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmDataRight" >
-		insert into urm_data_right( <include refid="table_columns" /> ) 
-		values ( <include refid="entity_properties" /> )
+	<insert id="insert" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
+		insert into urm_data_right(
+		<include refid="table_columns" />
+		)
+		values (
+		<include refid="entity_properties" />
+		)
 	</insert>
 
-    <insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
-        insert into urm_data_right
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-				<if test="rightId != null ">RIGHT_ID,</if>
-				<if test="relaId != null ">RELA_ID,</if>
-				<if test="relaType != null ">RELA_TYPE,</if>
-				<if test="rightType != null ">RIGHT_TYPE,</if>
-				<if test="dbCode != null and dbCode != ''">DB_CODE,</if>
-				<if test="dbName != null and dbName != ''">DB_NAME,</if>
-				<if test="valueCode != null and valueCode != ''">VALUE_CODE,</if>
-				<if test="valueName != null and valueName != ''">VALUE_NAME,</if>
-				<if test="valueConfig != null and valueConfig != ''">VALUE_CONFIG,</if>
-				<if test="dataRightSql != null and dataRightSql != ''">DATA_RIGHT_SQL,</if>
-				<if test="status != null ">STATUS,</if>
-				<if test="createTime != null ">CREATE_TIME,</if>
-				<if test="updateTime != null ">UPDATE_TIME,</if>
-				<if test="createBy != null ">CREATE_BY,</if>
-				<if test="updateBy != null ">UPDATE_BY,</if>
-				<if test="recordStatus != null ">RECORD_STATUS,</if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-				<if test="rightId != null ">#{rightId},</if>
-				<if test="relaId != null ">#{relaId},</if>
-				<if test="relaType != null ">#{relaType},</if>
-				<if test="rightType != null ">#{rightType},</if>
-				<if test="dbCode != null and dbCode != ''">#{dbCode},</if>
-				<if test="dbName != null and dbName != ''">#{dbName},</if>
-				<if test="valueCode != null and valueCode != ''">#{valueCode},</if>
-				<if test="valueName != null and valueName != ''">#{valueName},</if>
-				<if test="valueConfig != null and valueConfig != ''">#{valueConfig},</if>
-				<if test="dataRightSql != null and dataRightSql != ''">#{dataRightSql},</if>
-				<if test="status != null ">#{status},</if>
-				<if test="createTime != null ">#{createTime},</if>
-				<if test="updateTime != null ">#{updateTime},</if>
-				<if test="createBy != null ">#{createBy},</if>
-				<if test="updateBy != null ">#{updateBy},</if>
-				<if test="recordStatus != null ">#{recordStatus},</if>
-        </trim>
+	<insert id="insertSelective" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
+		insert into urm_data_right
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rightId != null ">RIGHT_ID,</if>
+			<if test="relaId != null ">RELA_ID,</if>
+			<if test="relaType != null ">RELA_TYPE,</if>
+			<if test="rightType != null ">RIGHT_TYPE,</if>
+			<if test="dbCode != null and dbCode != ''">DB_CODE,</if>
+			<if test="dbName != null and dbName != ''">DB_NAME,</if>
+			<if test="valueCode != null and valueCode != ''">VALUE_CODE,</if>
+			<if test="valueName != null and valueName != ''">VALUE_NAME,</if>
+			<if test="valueConfig != null and valueConfig != ''">VALUE_CONFIG,</if>
+			<if test="dataRightSql != null and dataRightSql != ''">DATA_RIGHT_SQL,</if>
+			<if test="status != null ">STATUS,</if>
+			<if test="createTime != null ">CREATE_TIME,</if>
+			<if test="updateTime != null ">UPDATE_TIME,</if>
+			<if test="createBy != null ">CREATE_BY,</if>
+			<if test="updateBy != null ">UPDATE_BY,</if>
+			<if test="recordStatus != null ">RECORD_STATUS,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rightId != null ">#{rightId},</if>
+			<if test="relaId != null ">#{relaId},</if>
+			<if test="relaType != null ">#{relaType},</if>
+			<if test="rightType != null ">#{rightType},</if>
+			<if test="dbCode != null and dbCode != ''">#{dbCode},</if>
+			<if test="dbName != null and dbName != ''">#{dbName},</if>
+			<if test="valueCode != null and valueCode != ''">#{valueCode},</if>
+			<if test="valueName != null and valueName != ''">#{valueName},</if>
+			<if test="valueConfig != null and valueConfig != ''">#{valueConfig},</if>
+			<if test="dataRightSql != null and dataRightSql != ''">#{dataRightSql},</if>
+			<if test="status != null ">#{status},</if>
+			<if test="createTime != null ">#{createTime},</if>
+			<if test="updateTime != null ">#{updateTime},</if>
+			<if test="createBy != null ">#{createBy},</if>
+			<if test="updateBy != null ">#{updateBy},</if>
+			<if test="recordStatus != null ">#{recordStatus},</if>
+		</trim>
 	</insert>
 
 
 	<delete id="delete" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
 		delete from urm_data_right
-        <include refid="page_where" />
+		<include refid="page_where" />
 	</delete>
 
 	<delete id="deleteByPrimaryKey">
 		delete from urm_data_right
 		<trim prefix="where" prefixOverrides="and | or ">
 			<if test="1==1">and RIGHT_ID = #{rightId}</if>
-        </trim>
+		</trim>
 	</delete>
 
 
 	<update id="updateByPrimaryKey" parameterType="com.panly.urm.manager.right.entity.UrmDataRight">
-		update urm_data_right 
+		update urm_data_right
 		<trim prefix="set" suffixOverrides=",">
-				<if test="relaId != null ">RELA_ID = #{relaId},</if>
-				<if test="relaType != null ">RELA_TYPE = #{relaType},</if>
-				<if test="rightType != null ">RIGHT_TYPE = #{rightType},</if>
-				<if test="dbCode != null and dbCode != ''">DB_CODE = #{dbCode},</if>
-				<if test="dbName != null and dbName != ''">DB_NAME = #{dbName},</if>
-				<if test="valueCode != null and valueCode != ''">VALUE_CODE = #{valueCode},</if>
-				<if test="valueName != null and valueName != ''">VALUE_NAME = #{valueName},</if>
-				<if test="valueConfig != null and valueConfig != ''">VALUE_CONFIG = #{valueConfig},</if>
-				<if test="dataRightSql != null and dataRightSql != ''">DATA_RIGHT_SQL = #{dataRightSql},</if>
-				<if test="status != null ">STATUS = #{status},</if>
-				<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
-				<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
-				<if test="createBy != null ">CREATE_BY = #{createBy},</if>
-				<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
-				<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
+			<if test="relaId != null ">RELA_ID = #{relaId},</if>
+			<if test="relaType != null ">RELA_TYPE = #{relaType},</if>
+			<if test="rightType != null ">RIGHT_TYPE = #{rightType},</if>
+			<if test="dbCode != null and dbCode != ''">DB_CODE = #{dbCode},</if>
+			<if test="dbName != null and dbName != ''">DB_NAME = #{dbName},</if>
+			<if test="valueCode != null and valueCode != ''">VALUE_CODE = #{valueCode},</if>
+			<if test="valueName != null and valueName != ''">VALUE_NAME = #{valueName},</if>
+			<if test="valueConfig != null and valueConfig != ''">VALUE_CONFIG = #{valueConfig},</if>
+			<if test="dataRightSql != null and dataRightSql != ''">DATA_RIGHT_SQL = #{dataRightSql},</if>
+			<if test="status != null ">STATUS = #{status},</if>
+			<if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+			<if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+			<if test="createBy != null ">CREATE_BY = #{createBy},</if>
+			<if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+			<if test="recordStatus != null ">RECORD_STATUS = #{recordStatus},</if>
 		</trim>
 		<trim prefix="where" prefixOverrides="and | or ">
 			<if test="1==1">and RIGHT_ID = #{rightId}</if>
-        </trim>
+		</trim>
 	</update>
 
-    <select id="findAll" resultMap="urmDataRightResultMap">
-        select <include refid="table_columns" />
-        from urm_data_right
-    </select>
-
-    <select id="find" resultMap="urmDataRightResultMap">
-        select <include refid="table_columns" />
-        from urm_data_right
-        <include refid="page_where" />
-        order by create_time desc
+	<select id="findAll" resultMap="urmDataRightResultMap">
+		select
+		<include refid="table_columns" />
+		from urm_data_right
 	</select>
 
-    <select id="getCount" resultType="int" >
-        select count(*) from urm_data_right
-        <include refid="page_where" />
-    </select>
+	<select id="find" resultMap="urmDataRightResultMap">
+		select
+		<include refid="table_columns" />
+		from urm_data_right
+		<include refid="page_where" />
+		order by create_time desc
+	</select>
+
+	<select id="getCount" resultType="int">
+		select count(*) from urm_data_right
+		<include refid="page_where" />
+	</select>
 
 
-    <select id="getByPrimaryKey" resultMap="urmDataRightResultMap"  >
-		select <include refid="table_columns" />
+	<select id="getByPrimaryKey" resultMap="urmDataRightResultMap">
+		select
+		<include refid="table_columns" />
 		from urm_data_right
 		<trim prefix="where" prefixOverrides="and | or ">
 			<if test="1==1">and RIGHT_ID = #{rightId}</if>
-        </trim>
+		</trim>
 	</select>
-	
+
 	<!-- other -->
-	 <select id="getAcctRightData" resultMap="urmDataRightResultMap">
-	 	select * from (
-	        select 
-			c.*
-			from urm_acct a,urm_acct_rela_oper b,urm_data_right c 
-			where a.acct_id = b.acct_id and b.rela_id and c.rela_id and c.rela_type = 1
-			and a.record_status = 1 and a.status = 1 and b.record_status = 1 
-			and c.record_status = 1
-			and a.acct_id=#{acctId}
-			union all
-			select 
-			e.*
-			from urm_acct a , urm_acct_rela_role b ,urm_role c, urm_role_rela_oper d ,urm_data_right e
-			where a.acct_id = b.acct_id and b.role_id = c.role_id and c.role_id = d.role_id and d.rela_id = e.rela_id and e.rela_type = 2
-			and a.record_status = 1 and a.status = 1 and b.record_status = 1 
-			and c.record_status = 1 and c.status = 1 and d.record_status = 1
-			and e.record_status = 1 
-			and a.acct_id=#{acctId}
-		) aa order by aa.create_time desc
+	<select id="getAcctRightData" resultMap="urmDataRightResultMap">
+		select * 
+			from (
+				select 
+				a.*
+				from urm_data_right a 
+				left join urm_acct_rela_oper b on a.rela_id = b.rela_id 
+				where a.rela_type = 1
+				and a.record_status = 1 and b.record_status = 1 and a.status = 1 
+				and b.acct_id=#{acctId}
+				union all
+				select 
+				a.*
+				from urm_data_right a 
+				left join urm_role_rela_oper b on a.rela_id = b.rela_id 
+				left join urm_acct_rela_role c on b.role_id = c.role_id 
+				where a.rela_type = 2 
+				and a.record_status = 1 and b.record_status =1 and c.record_status =1 and a.status = 1 
+				and c.acct_id =#{acctId}
+		) 
+		aa 
+		order by right_id desc
 	</select>
-	
-	 <select id="getRoleRightData" resultMap="urmDataRightResultMap">
-			select b.*
-			from  urm_role_rela_oper a ,urm_data_right b
-			where  a.rela_id = b.rela_id and b.rela_type = 2
-			and a.record_status = 1 
-			and b.record_status = 1 and b.status = 1
-			and a.role_id=#{roleId}
+
+	<select id="getRoleRightData" resultMap="urmDataRightResultMap">
+		select b.*
+		from urm_role_rela_oper a ,urm_data_right b
+		where a.rela_id = b.rela_id and b.rela_type = 2
+		and a.record_status = 1
+		and b.record_status = 1 and b.status = 1
+		and a.role_id=#{roleId}
 	</select>
-	
 
 </mapper>

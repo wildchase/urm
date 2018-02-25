@@ -10,18 +10,19 @@ import java.io.Serializable;
  */
 public class UrmAuthLog implements Serializable {
 	
-	private static final long serialVersionUID = 167536464515723947L;
+	private static final long serialVersionUID = -6837314176278641826L;
 	
 	private Long	authLogId;		
-	private Long	appId;		
+	private String	appCode;		
 	private String	appName;		
 	private Long	acctId;		
 	private String	acctName;		
-	private String	authType;		 /* 鉴权的类型，1 登陆，2,操作，3,功能 */ 
-	private String	authParam;		 /* 鉴权参数 */ 
-	private Long	authCost;		 /* 耗费时间 */ 
+	private String	operCode;		
+	private String	operName;		
 	private Integer	success;		 /* 1，成功    2，失败 */ 
-	private String	authRet;		 /* 鉴权返回 */ 
+	private String	dataRight;		
+	private Long	authCost;		 /* 耗费时间 */ 
+	private String	reqIp;		
 	private Date	createTime;		
 
 	// Constructor
@@ -31,17 +32,18 @@ public class UrmAuthLog implements Serializable {
 	/**
 	 * full Constructor
 	 */
-	public UrmAuthLog(Long authLogId, Long appId, String appName, Long acctId, String acctName, String authType, String authParam, Long authCost, Integer success, String authRet, Date createTime) {
+	public UrmAuthLog(Long authLogId, String appCode, String appName, Long acctId, String acctName, String operCode, String operName, Integer success, String dataRight, Long authCost, String reqIp, Date createTime) {
 		this.authLogId = authLogId;
-		this.appId = appId;
+		this.appCode = appCode;
 		this.appName = appName;
 		this.acctId = acctId;
 		this.acctName = acctName;
-		this.authType = authType;
-		this.authParam = authParam;
-		this.authCost = authCost;
+		this.operCode = operCode;
+		this.operName = operName;
 		this.success = success;
-		this.authRet = authRet;
+		this.dataRight = dataRight;
+		this.authCost = authCost;
+		this.reqIp = reqIp;
 		this.createTime = createTime;
 	}
 
@@ -53,12 +55,12 @@ public class UrmAuthLog implements Serializable {
 		this.authLogId = authLogId;
 	}
 
-	public Long getAppId() {
-		return appId;
+	public String getAppCode() {
+		return appCode;
 	}
 
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setAppCode(String appCode) {
+		this.appCode = appCode;
 	}
 
 	public String getAppName() {
@@ -85,28 +87,20 @@ public class UrmAuthLog implements Serializable {
 		this.acctName = acctName;
 	}
 
-	public String getAuthType() {
-		return authType;
+	public String getOperCode() {
+		return operCode;
 	}
 
-	public void setAuthType(String authType) {
-		this.authType = authType;
+	public void setOperCode(String operCode) {
+		this.operCode = operCode;
 	}
 
-	public String getAuthParam() {
-		return authParam;
+	public String getOperName() {
+		return operName;
 	}
 
-	public void setAuthParam(String authParam) {
-		this.authParam = authParam;
-	}
-
-	public Long getAuthCost() {
-		return authCost;
-	}
-
-	public void setAuthCost(Long authCost) {
-		this.authCost = authCost;
+	public void setOperName(String operName) {
+		this.operName = operName;
 	}
 
 	public Integer getSuccess() {
@@ -117,12 +111,28 @@ public class UrmAuthLog implements Serializable {
 		this.success = success;
 	}
 
-	public String getAuthRet() {
-		return authRet;
+	public String getDataRight() {
+		return dataRight;
 	}
 
-	public void setAuthRet(String authRet) {
-		this.authRet = authRet;
+	public void setDataRight(String dataRight) {
+		this.dataRight = dataRight;
+	}
+
+	public Long getAuthCost() {
+		return authCost;
+	}
+
+	public void setAuthCost(Long authCost) {
+		this.authCost = authCost;
+	}
+
+	public String getReqIp() {
+		return reqIp;
+	}
+
+	public void setReqIp(String reqIp) {
+		this.reqIp = reqIp;
 	}
 
 	public Date getCreateTime() {
@@ -135,6 +145,6 @@ public class UrmAuthLog implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UrmAuthLog [" + "authLogId=" + authLogId+ ", appId=" + appId+ ", appName=" + appName+ ", acctId=" + acctId+ ", acctName=" + acctName+ ", authType=" + authType+ ", authParam=" + authParam+ ", authCost=" + authCost+ ", success=" + success+ ", authRet=" + authRet+ ", createTime=" + createTime+  "]";
+		return "UrmAuthLog [" + "authLogId=" + authLogId+ ", appCode=" + appCode+ ", appName=" + appName+ ", acctId=" + acctId+ ", acctName=" + acctName+ ", operCode=" + operCode+ ", operName=" + operName+ ", success=" + success+ ", dataRight=" + dataRight+ ", authCost=" + authCost+ ", reqIp=" + reqIp+ ", createTime=" + createTime+  "]";
 	}
 }

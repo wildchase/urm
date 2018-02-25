@@ -1,6 +1,6 @@
 package com.panly.urm.manager.right.vo;
 
-import com.panly.urm.manager.common.page.core.DataTablePageBase;
+import com.panly.urm.page.core.DataTablePageBase;
 
 public class AppParamsVo  extends DataTablePageBase{
 

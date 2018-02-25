@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.auth.dao.AuthLogDao">
+
+	<sql id="table_columns">
+		AUTH_LOG_ID,
+		APP_CODE,
+		APP_NAME,
+		ACCT_ID,
+		ACCT_NAME,
+		OPER_CODE,
+		OPER_NAME,
+		SUCCESS,
+		DATA_RIGHT,
+		AUTH_COST,
+		REQ_IP,
+		CREATE_TIME
+    </sql>
+	<sql id="entity_properties">
+		#{authLogId},
+		#{appCode},
+		#{appName},
+		#{acctId},
+		#{acctName},
+		#{operCode},
+		#{operName},
+		#{success},
+		#{dataRight},
+		#{authCost},
+		#{reqIp},
+		#{createTime}
+	</sql>
+
+	<insert id="insert" parameterType="com.panly.urm.auth.model.AuthLog" >
+		insert into urm_auth_log( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+    <insert id="insertSelective" parameterType="com.panly.urm.auth.model.AuthLog">
+        insert into urm_auth_log
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="authLogId != null ">AUTH_LOG_ID,</if>
+				<if test="appCode != null and appCode != ''">APP_CODE,</if>
+				<if test="appName != null and appName != ''">APP_NAME,</if>
+				<if test="acctId != null ">ACCT_ID,</if>
+				<if test="acctName != null and acctName != ''">ACCT_NAME,</if>
+				<if test="operCode != null and operCode != ''">OPER_CODE,</if>
+				<if test="operName != null and operName != ''">OPER_NAME,</if>
+				<if test="success != null ">SUCCESS,</if>
+				<if test="dataRight != null and dataRight != ''">DATA_RIGHT,</if>
+				<if test="authCost != null ">AUTH_COST,</if>
+				<if test="reqIp != null and reqIp != ''">REQ_IP,</if>
+				<if test="createTime != null ">CREATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="authLogId != null ">#{authLogId},</if>
+				<if test="appCode != null and appCode != ''">#{appCode},</if>
+				<if test="appName != null and appName != ''">#{appName},</if>
+				<if test="acctId != null ">#{acctId},</if>
+				<if test="acctName != null and acctName != ''">#{acctName},</if>
+				<if test="operCode != null and operCode != ''">#{operCode},</if>
+				<if test="operName != null and operName != ''">#{operName},</if>
+				<if test="success != null ">#{success},</if>
+				<if test="dataRight != null and dataRight != ''">#{dataRight},</if>
+				<if test="authCost != null ">#{authCost},</if>
+				<if test="reqIp != null and reqIp != ''">#{reqIp},</if>
+				<if test="createTime != null ">#{createTime},</if>
+        </trim>
+	</insert>
+
+
+</mapper>

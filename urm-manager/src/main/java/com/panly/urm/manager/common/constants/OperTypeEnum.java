@@ -43,9 +43,9 @@ public enum OperTypeEnum {
 		
 		
 	//操作
-	OPER_ADD("func_add", "操作新增"), 
-	OPER_EDIT("func_edit", "操作修改"), 
-	OPER_DEL("func_del", "操作删除"), 
+	OPER_ADD("oper_add", "操作新增"), 
+	OPER_EDIT("oper_edit", "操作修改"), 
+	OPER_DEL("oper_del", "操作删除"), 
 	
 	
 	;

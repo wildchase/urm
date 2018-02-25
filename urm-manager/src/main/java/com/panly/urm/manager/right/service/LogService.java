@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.panly.umr.common.BeanCopyUtil;
+import com.panly.urm.common.BeanCopyUtil;
 import com.panly.urm.manager.common.constants.OperSuccessEnum;
 import com.panly.urm.manager.common.constants.OperTypeEnum;
-import com.panly.urm.manager.common.page.core.PageDTO;
-import com.panly.urm.manager.common.page.core.PageDTOUtil;
+import com.panly.urm.page.core.PageDTO;
+import com.panly.urm.page.core.PageDTOUtil;
 import com.panly.urm.manager.right.dao.UrmAppLogDao;
 import com.panly.urm.manager.right.dao.UrmAuthLogDao;
 import com.panly.urm.manager.right.dao.UrmOperLogDao;

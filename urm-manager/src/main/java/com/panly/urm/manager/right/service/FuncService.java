@@ -10,11 +10,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.panly.umr.common.BeanCopyUtil;
+import com.panly.urm.common.BeanCopyUtil;
 import com.panly.urm.manager.common.constants.RecordStatusEnum;
 import com.panly.urm.manager.common.constants.StatusEnum;
-import com.panly.urm.manager.common.page.core.PageDTO;
-import com.panly.urm.manager.common.page.core.PageDTOUtil;
+import com.panly.urm.page.core.PageDTO;
+import com.panly.urm.page.core.PageDTOUtil;
 import com.panly.urm.manager.common.select.CxSelect;
 import com.panly.urm.manager.right.dao.UrmAppDao;
 import com.panly.urm.manager.right.dao.UrmFunctionModelDao;

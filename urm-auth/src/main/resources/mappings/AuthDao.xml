@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.auth.dao.AuthDao">
+
+	<select id="getApp" resultType="com.panly.urm.auth.model.AppEntity">
+		select app_id appId,app_code appCode,app_name appName ,status
+		from urm_app
+		where app_code = #{appCode} and record_status = 1 
+	</select>
+	
+	<select id="getOper" resultType="com.panly.urm.auth.model.OperEntity">
+		select oper_id operId , oper_code operCode, oper_name operName,status
+		from urm_oper
+		where oper_code = #{operCode} and record_status = 1 
+	</select>
+	
+	<select id="getAcct" resultType="com.panly.urm.auth.model.AcctEntity">
+		select acct_id acctId,acct_name acctName,phone,email,status
+		from urm_acct
+		where acct_id = #{acctId} and record_status = 1 
+	</select>
+	
+	<!-- 查询是否该操作的权限 -->
+	<select id="getAcctOperCount" resultType="int">
+			select count(1) count
+			from 
+			(
+				select a.acct_id,a.oper_id
+				from urm_acct_rela_oper a where
+				a.record_status = 1
+				union all
+				select a.acct_id,c.oper_id
+				from  urm_acct_rela_role a ,urm_role b, urm_role_rela_oper c
+				where 
+				a.role_id = b.role_id and b.role_id = c.role_id 
+				and a.record_status = 1 and b.record_status = 1 and b.status=1
+				and c.record_status = 1 
+			) AA where acct_id = #{acctId} and oper_id = #{operId}
+	</select>
+	
+	<!-- 查询关联的数据权限 -->
+	<select id="getAcctOperRight" resultType="com.panly.urm.auth.model.AcctRight">
+		select acct_id acctId ,data_right_sql dataRightSql,rela_id relaId,rela_type relaType,right_id rightId, oper_id operId
+		from 
+		(
+			select 
+			a.data_right_sql,a.rela_id,a.rela_type,a.right_id,b.oper_id,b.acct_id
+			from urm_data_right a
+			LEFT JOIN urm_acct_rela_oper b on a.rela_id = b.rela_id
+			where a.rela_type = 1 
+			and a.record_status = 1 and b.record_status = 1 and a.status = 1
+			and b.oper_id = #{operId} and  b.acct_id = #{acctId} 
+			union all
+			select 
+			a.data_right_sql,a.rela_id,a.rela_type,a.right_id,b.oper_id,c.acct_id
+			from urm_data_right a
+			left join urm_role_rela_oper b on a.rela_id = b.rela_id 
+			left join urm_acct_rela_role c on b.role_id = c.role_id 
+			where a.rela_type = 2
+			and a.record_status = 1 and b.record_status = 1 and c.record_status = 1 and a.status =1
+			and b.oper_id = #{operId} and c.acct_id = #{acctId} 
+		) AA
+		order by right_id desc
+	</select>
+	
+	<select id="getAppFuncList" resultType="com.panly.urm.auth.model.FuncEntity">
+		select c.function_id functionId,c.function_code functionCode,c.function_name functionName,
+		c.parent_function_id parentFunctionId,c.app_id appId,c.status
+		from urm_function_model c where c.app_id = #{appId}	and c.record_status = 1 and c.status = 1	
+	</select>
+	
+	<select id="getAcctAppFuncList" resultType="com.panly.urm.auth.model.FuncEntity">
+		select a.acct_id acctId,c.function_id functionId
+		from urm_acct_rela_oper a,urm_oper b,urm_function_model c 
+		where a.oper_id =b.oper_id and b.function_id = c.function_id
+		and a.record_status = 1 and b.record_status= 1 and c.record_status = 1
+		and b.status= 1 and c.status = 1 and a.acct_id = #{acctId} and c.app_id = #{appId}
+		union
+		select 
+		a.acct_id acctId,e.function_id functionId
+		from urm_acct_rela_role a,urm_role b, urm_role_rela_oper  c,  urm_oper d, urm_function_model e 
+		where a.role_id =b.role_id and a.role_id = c.role_id  and c.oper_id = d.oper_id and d.function_id = e.function_id
+		and a.record_status = 1 and b.record_status= 1 and c.record_status = 1  and d.record_status= 1 and e.record_status = 1
+		and b.status= 1 and d.status= 1 and e.status = 1 and a.acct_id= #{acctId} and e.app_id = #{appId}
+	</select>
+</mapper>

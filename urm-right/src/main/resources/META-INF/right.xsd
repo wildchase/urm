@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://right.panly.com/schema/right"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:beans="http://www.springframework.org/schema/beans"
+			xmlns:tool="http://www.springframework.org/schema/tool"
+            targetNamespace="http://right.panly.com/schema/right">
+
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+	<xsd:import namespace="http://www.springframework.org/schema/beans"/>
+	<xsd:import namespace="http://www.springframework.org/schema/tool"/>
+	
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[ Namespace support for the right service ]]></xsd:documentation>
+	</xsd:annotation>
+	
+     <xsd:element name="application" >
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="beans:identifiedType">
+                    <xsd:attribute name="appCode" type="xsd:string" use="required"/>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <!-- use 表示出现的要求，required/optional/prohibited, 分别是必须出现/可选/不出现 -->
+    <xsd:element name="auth">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="beans:identifiedType">
+                    <xsd:attribute name="type" type="xsd:string" use="required"/>
+                    <xsd:attribute name="address" type="xsd:string" use="required" />
+                    <xsd:attribute name="userService" type="xsd:string" use="optional" default="default"/>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="logger">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="beans:identifiedType">
+                    <xsd:attribute name="type" type="xsd:string" use="required"/>
+                    <xsd:attribute name="address" type="xsd:string" use="required" />
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+    
+    
+	    
+    
+</xsd:schema>

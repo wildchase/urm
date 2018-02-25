@@ -119,8 +119,10 @@
 				</div>
 			</div>
 			<div class="col-xs-4">
+				[% if (rela.relaType=='1') { %]
 				<button class="btn btn-primary btn-sm pull-right" onclick="deleteAcctOperRight('[%=right.rightId %]')">删除数据</button>
 				<button class="btn btn-primary btn-sm pull-right" onclick="modifyDbRight('[%=right.rightId %]')">修改数据</button>
+				[% } %]
 			</div>
 		</div>	
 		[% }else{ %]
@@ -146,8 +148,10 @@
 				</div>
 			</div>
 			<div class="col-xs-4">
+				[% if (rela.relaType=='1') { %]
 				<button class="btn btn-primary btn-sm pull-right" onclick="deleteAcctOperRight('[%=right.rightId %]')">删除数据</button>
 				<button class="btn btn-primary btn-sm pull-right" onclick="modifyValueRight('[%=right.rightId %]')">修改数据</button>
+				[% } %]
 			</div>
 		</div>	
 		[% } %]

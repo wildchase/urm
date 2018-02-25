@@ -41,7 +41,7 @@
 	</settings>
 	
 	<plugins>
-		<plugin interceptor="com.panly.urm.manager.common.page.MysqlPagingInterceptor"></plugin>
+		<plugin interceptor="com.panly.urm.page.MysqlPagingInterceptor"></plugin>
 	</plugins>
 	
 </configuration>

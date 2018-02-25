@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.panly.umr.common.BeanCopyUtil;
+import com.panly.urm.common.BeanCopyUtil;
 import com.panly.urm.manager.common.constants.RecordStatusEnum;
 import com.panly.urm.manager.common.tree.RightRela;
 import com.panly.urm.manager.right.config.DbConfig;

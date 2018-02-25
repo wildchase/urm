@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.panly.urm.auth.dao.VerifyCodeDao">
+
+	<insert id="insert">
+		INSERT INTO verify_code
+		(verify_key,create_time,verify_code)
+		VALUES 
+		(#{verifyKey},#{createTime},#{verifyCode} )
+	</insert>
+	
+	<insert id="update">
+		update verify_code
+		set 
+		create_time = #{createTime},
+		verify_code = #{verifyCode}
+		WHERE verify_key = #{verifyKey}
+	</insert>
+
+	<select id="getVerifyCode" resultType="com.panly.urm.auth.model.VerifyCode">
+		SELECT
+		verify_key as verifyKey,
+		create_time as createTime,
+		verify_code as verifyCode
+		FROM verify_code
+		WHERE verify_key = #{verifyKey}
+	</select>
+</mapper>

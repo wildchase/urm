@@ -8,14 +8,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.panly.urm.manager.user.filter.MenuInterceptor;
-import com.panly.urm.manager.user.filter.TokenInterceptor;
-import com.panly.urm.manager.user.service.TokenService;
+import com.panly.urm.manager.user.filter.LoginInterceptor;
+import com.panly.urm.manager.user.login.LoginUtil;
 
 @Configuration
 public class InterceptorConfig extends WebMvcConfigurerAdapter {
-	
-	@Autowired
-	private TokenService tokenService;
 	
 	@Value("${login.url}")
 	private String loginUrl;
@@ -23,14 +20,17 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
 	@Value("${login.exclude.url}")
 	private String loginExcludeUrl;
 	
+	@Autowired
+	private LoginUtil loginUtil;
+	
 	@Override
     public void addInterceptors(InterceptorRegistry registry) {
-		TokenInterceptor tokenInterceptor = new TokenInterceptor();
+		LoginInterceptor tokenInterceptor = new LoginInterceptor();
 		tokenInterceptor.setLoginUrl(loginUrl);
-		tokenInterceptor.setTokenService(tokenService);
+		tokenInterceptor.setLoginUtil(loginUtil);
 		
 		registry.addInterceptor(tokenInterceptor).addPathPatterns("/**").excludePathPatterns(StringUtils.tokenizeToStringArray(loginExcludeUrl, ","));
-        registry.addInterceptor(new MenuInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new MenuInterceptor()).addPathPatterns("/**").excludePathPatterns("/res/**");
         super.addInterceptors(registry);
     }
 	

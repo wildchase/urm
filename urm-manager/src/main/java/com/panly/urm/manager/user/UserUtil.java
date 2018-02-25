@@ -1,19 +1,14 @@
 package com.panly.urm.manager.user;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import com.panly.umr.common.WebUtil;
-import com.panly.urm.manager.user.model.Token;
+import com.panly.urm.common.WebUtil;
+import com.panly.urm.manager.user.login.LoginObject;
 
 public class UserUtil {
 
-	private static ThreadLocal<Token> t = new ThreadLocal<>();
+	private static ThreadLocal<LoginObject> t = new ThreadLocal<>();
 
-	public static void init(Token token) {
-		t.set(token);
+	public static void init(LoginObject o) {
+		t.set(o);
 	}
 
 	public static void remove() {
@@ -27,28 +22,12 @@ public class UserUtil {
 			return null;
 		}
 	}
-
+	
 	public static String getUserName() {
 		if (t.get() != null) {
 			return t.get().getUserName();
 		} else {
-			return "";
-		}
-	}
-
-	public static String getAccount() {
-		if (t.get() != null) {
-			return t.get().getAccount();
-		} else {
-			return "";
-		}
-	}
-
-	public static String getToken() {
-		if (t.get() != null) {
-			return t.get().getToken();
-		} else {
-			return "";
+			return null;
 		}
 	}
 
@@ -58,12 +37,7 @@ public class UserUtil {
 	 * @return
 	 */
 	public static String getVisitIp() {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-				.getRequest();
-		if (request != null) {
-			return WebUtil.getRemoteAddr(request);
-		}
-		return "";
+		return WebUtil.getRemoteAddr();
 	}
 
 	public static boolean isLogin() {

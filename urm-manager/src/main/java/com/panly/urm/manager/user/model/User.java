@@ -21,12 +21,6 @@ public class User {
 	/** 密码*/
 	private String password;
 	
-	/** 角色编号*/
-	private String roleCode;
-	
-	/** 角色名称*/
-	private String roleName;
-	
 
 	@XmlAttribute
 	public Long getUserId() {
@@ -64,23 +58,5 @@ public class User {
 		this.password = password;
 	}
 
-	@XmlAttribute
-	public String getRoleCode() {
-		return roleCode;
-	}
-
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
-	}
-
-	@XmlAttribute
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	
 	
 }

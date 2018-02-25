@@ -1,12 +1,12 @@
 package com.panly.urm.manager.right.vo;
 
-import com.panly.urm.manager.common.page.core.DataTablePageBase;
+import com.panly.urm.page.core.DataTablePageBase;
 
 public class AuthLogParamsVo  extends DataTablePageBase{
 	
-	private Long	appId;		
-	private Long	acctId;		
-	private String	authType;		 /* 鉴权的类型，1 登陆，2,操作，3,功能 */
+	private String	appName;		
+	private String	acctName;		
+	private String  operName;
 	
 	private String	startCreateTime;
 	private String	endCreateTime;
@@ -31,23 +31,24 @@ public class AuthLogParamsVo  extends DataTablePageBase{
 	public void setSuccess(Integer success) {
 		this.success = success;
 	}
-	public Long getAppId() {
-		return appId;
+	
+	public String getOperName() {
+		return operName;
 	}
-	public void setAppId(Long appId) {
-		this.appId = appId;
+	public void setOperName(String operName) {
+		this.operName = operName;
 	}
-	public Long getAcctId() {
-		return acctId;
+	public String getAppName() {
+		return appName;
 	}
-	public void setAcctId(Long acctId) {
-		this.acctId = acctId;
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
-	public String getAuthType() {
-		return authType;
+	public String getAcctName() {
+		return acctName;
 	}
-	public void setAuthType(String authType) {
-		this.authType = authType;
+	public void setAcctName(String acctName) {
+		this.acctName = acctName;
 	}
 	
 	

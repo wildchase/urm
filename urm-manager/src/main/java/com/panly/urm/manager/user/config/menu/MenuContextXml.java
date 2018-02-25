@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.panly.umr.jaxb.JaxbUtil;
+import com.panly.urm.jaxb.JaxbUtil;
 import com.panly.urm.manager.user.model.Menu;
 
 

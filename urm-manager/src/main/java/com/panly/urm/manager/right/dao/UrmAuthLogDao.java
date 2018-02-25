@@ -32,8 +32,5 @@ public interface UrmAuthLogDao {
     UrmAuthLog getByPrimaryKey(@Param("authLogId") Long authLogId);
 
 	List<UrmAuthLog> queryAuthLog(AuthLogParamsVo authLogParamsVo);
-
 	
-
-
 }

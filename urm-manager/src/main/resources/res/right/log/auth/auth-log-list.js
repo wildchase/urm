@@ -26,37 +26,22 @@ $(function(){
             }
         },
         "columns": [// 每页展示什么
-             { 
-            	 "data": "acctId",
-        		 "render": function (data, type, full, meta) {
-                     return '<a href="'+ctx+'/acct/detail?acctId='+data+'">'+data+'</a>';
-                 },
-            	 "bSortable": false
-             },
              { "data": "acctName" },
-             { "data": "phone" },
-             { "data": "email" },
-             { 	
-            	 "data": "status",
-            	 "render": function (data, type, full, meta) {
+             { "data": "appName" },
+             { "data": "operName" },
+             { "data": "createTime" },
+             { 
+             	"data": "success" ,
+             	"render": function (data, type, full, meta) {
                      if( data==1 ){
-                    	 return "正常";
+                    	 return "成功";
                      }else{
-                    	 return "禁用";
+                    	 return "失败";
                      }
                  }
              },
-             { "data": "lastLoginTime" },
-             { "data": "lastLoginIp" },
-             { "data": "createUserName" },
-             { "data": "createTime" },
-             { 
-            	 "render": function (data, type, full, meta) {
-                     return "<div class='btn-group'>"+
-                     "<button id='editRow' title='查看' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
-                     "</div>";
-                 }
-             }
+             { "data": "dataRight" },
+             { "data": "authCost" }
         ]
     });
   

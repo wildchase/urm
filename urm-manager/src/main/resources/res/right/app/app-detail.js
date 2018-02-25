@@ -17,7 +17,7 @@ function showTree(){
 	//展示权限tree
 	$.ajaxPost("/app/func/oper/tree",{appId:$("#appId").val()},function(result){
 		treeData = result.data;
-		$('#tree').treeview({data: treeData,levels:5}); 
+		$('#tree').treeview({data: treeData,levels:2}); 
 		$('#tree').on('nodeSelected',function(event, data) {
 			chooseData = data;
 			var type = data.type;
@@ -57,6 +57,7 @@ function firstOperSelected(){
 		var node = nodes[i];
 		if(node.type=='3'){
 			$('#tree').treeview('toggleNodeSelected',[node.nodeId,{ silent: false}]);
+			expandNode(node);
 			break;
 		}
 	}
@@ -68,10 +69,21 @@ function chooseOperSelected(){
 		var node = nodes[i];
 		if(node.type==chooseData.type &&node.id==chooseData.id){
 			$('#tree').treeview('toggleNodeSelected',[node.nodeId,{ silent: false}]);
+			expandNode(node);
 			break;
 		}
 	}
 }
+
+
+function expandNode(node){
+	if(node!=null){
+		$('#tree').treeview('expandNode',[node.nodeId,{silent: false}]);
+		var parentNode = $('#tree').treeview('getParent', node);
+		expandNode(parentNode);
+	}
+}
+
 
 
 
