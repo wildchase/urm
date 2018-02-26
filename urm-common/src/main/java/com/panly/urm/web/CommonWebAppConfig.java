@@ -24,7 +24,9 @@ public class CommonWebAppConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**").allowedOrigins("*")
+        .allowedMethods("GET", "HEAD", "POST","PUT", "DELETE", "OPTIONS")
+        .allowCredentials(false).maxAge(3600);;
     }
 	
 	@Override

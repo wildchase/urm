@@ -72,7 +72,16 @@
 <script type="text/javascript">
 	var ctx = '${ctx}';
 	var userId = '${userId}';
-	var logOutUrl= '${props.getProperty("logout.url")}'
+	var logOutUrl= '${props.getProperty("logout.url")}';
+	
+	function logout(){
+		var sendData =  {token:$.cookie("token")};
+		log(sendData);
+		$.ajaxPost(logOutUrl,sendData,function(ret){
+			location.reload();
+		});
+	}
+	
 </script>
 <style>
 .error {
