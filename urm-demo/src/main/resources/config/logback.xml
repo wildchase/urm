@@ -9,9 +9,9 @@
 	</appender>
 
 	<appender name="defaultAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/data/opt/urm/provider/provider.log</file>
+		<file>/data/opt/urm/demo/demo.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/data/opt/urm/provider/provider.log-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>/data/opt/urm/demo/demo.log-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
