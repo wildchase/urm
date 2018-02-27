@@ -1,6 +1,6 @@
 # urm
 user right manager system
-权限管理系统
+权限管理系统，管理用户的菜单，操作，和操作的数据权限，（数据权限通过动态修改sql语句完成）
 
 # 介绍
 urm-parent
