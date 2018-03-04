@@ -52,5 +52,9 @@ public class AcctService {
 	private AcctEntity getByPhone(String phone) {
 		return acctDao.getAcctByPhone(phone);
 	}
+
+	public void updateAcctLoginLog(Long acctId, String remoteAddr) {
+		acctDao.updateAcctLoginLog(acctId,remoteAddr);
+	}
 	
 }

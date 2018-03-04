@@ -74,7 +74,7 @@ public class RightUtil implements ApplicationContextAware,EnvironmentAware{
 			for (int i = 0; i < list.size(); i++) {
 				TreeDTO vo = list.get(i);
 				String funcCode = vo.getCode();
-				String url = env.getProperty("menu.url."+funcCode,"#");
+				String url = env.getProperty("menu.url."+funcCode);
 				String icon = env.getProperty("menu.icon."+funcCode,"fa-laptop");
 				vo.setUrl(url);
 				vo.setIcon(icon);

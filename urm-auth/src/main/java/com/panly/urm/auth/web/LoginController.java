@@ -24,6 +24,7 @@ import com.panly.urm.auth.service.TokenService;
 import com.panly.urm.auth.service.VerifyCodeService;
 import com.panly.urm.common.CookieUtil;
 import com.panly.urm.common.RandomCharUtil;
+import com.panly.urm.common.WebUtil;
 import com.panly.urm.tran.auth.TokenDTO;
 import com.panly.urm.web.JsonResult;
 
@@ -105,6 +106,9 @@ public class LoginController {
 
 		//校验用户名和密码
 		AcctEntity acct = acctService.checkAndGetUser(account, password);
+		
+		//修改登录用户的ip
+		acctService.updateAcctLoginLog(acct.getAcctId(),WebUtil.getRemoteAddr());
 
 		// 创建token
 		AcctToken token = tokenService.createToken(acct);

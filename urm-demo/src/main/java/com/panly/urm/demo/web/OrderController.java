@@ -1,8 +1,6 @@
 
 package com.panly.urm.demo.web;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +14,6 @@ import com.panly.urm.demo.vo.OrderParamVo;
 import com.panly.urm.demo.vo.TestOrderVo;
 import com.panly.urm.page.core.PageDTO;
 import com.panly.urm.page.core.PageDTOUtil;
-import com.panly.urm.right.util.RightUtil;
-import com.panly.urm.tran.auth.TreeDTO;
 import com.panly.urm.web.JsonResult;
 
 @Controller
@@ -30,8 +26,6 @@ public class OrderController {
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public ModelAndView list(){
 		ModelAndView mav = new ModelAndView("order/order-list");
-		List<TreeDTO> menus = RightUtil.getAcctTree();
-		mav.addObject("menus", menus);
 		return mav;
 	}
 	

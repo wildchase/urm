@@ -152,6 +152,11 @@
 				<artifactId>logback-ext-spring</artifactId>
 				<version>0.1.4</version>
 			</dependency>
+			<dependency>
+			    <groupId>com.google.guava</groupId>
+			    <artifactId>guava</artifactId>
+			    <version>19.0</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>

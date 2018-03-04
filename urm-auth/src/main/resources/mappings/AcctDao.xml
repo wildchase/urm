@@ -20,4 +20,14 @@
 		where email = #{phone} and record_status = 1  
 	</select>
 	
+	
+	<update id="updateAcctLoginLog" >
+		update urm_acct 
+		set 
+			LAST_LOGIN_IP = #{lastLoginIp},
+			LAST_LOGIN_TIME = now()
+		where  ACCT_ID = #{acctId}
+     
+	</update>
+	
 </mapper>

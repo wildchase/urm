@@ -18,6 +18,8 @@ public class Right {
 	
 	private String operCode;
 	
+	private String operName;
+	
 	//关联的权限sql
 	private List<String> rightSql;
 	
@@ -46,6 +48,14 @@ public class Right {
 
 	public void setOperCode(String operCode) {
 		this.operCode = operCode;
+	}
+	
+	public String getOperName() {
+		return operName;
+	}
+
+	public void setOperName(String operName) {
+		this.operName = operName;
 	}
 
 	public List<String> getRightSql() {

@@ -202,6 +202,8 @@ public class AcctService {
 			UrmApp app = apps.get(i);
 			TreeNode appNode = new TreeNode(app.getAppId().toString(),
 					app.getAppCode(), app.getAppName(), TreeNode.TYPE_APP);
+			
+			appNode.setIcon("glyphicon glyphicon-stop");
 
 			List<TreeNode> childNodes = new ArrayList<>();
 

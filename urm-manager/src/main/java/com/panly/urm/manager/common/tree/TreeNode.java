@@ -26,6 +26,8 @@ public class TreeNode {
 	 
 	private State state = new State();
 	
+	private String icon;
+	
 	public TreeNode() {
 		super();
 	}
@@ -100,6 +102,13 @@ public class TreeNode {
 	public void setSelectable(boolean selectable) {
 		this.selectable = selectable;
 	}
-	
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 	
 }

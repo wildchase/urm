@@ -1,5 +1,6 @@
 package com.panly.urm.prop;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
@@ -27,4 +28,23 @@ public class PropConfig implements EnvironmentAware {
 	public static <T> T getProperty(String key, Class<T> targetType){
 		return env.getProperty(key, targetType);
 	}
+	
+	public static String getEnv(){
+		String [] profiles = env.getActiveProfiles();
+		if(profiles!=null&&profiles.length>0){
+			return profiles[0];
+		}else{
+			return "";
+		}
+	}
+	
+	public static boolean isProd(){
+		return StringUtils.equals(getEnv(), "");
+	}
+	
+	public static boolean isLocal(){
+		return StringUtils.isEmpty(getEnv());
+	}
+	
+	
 }

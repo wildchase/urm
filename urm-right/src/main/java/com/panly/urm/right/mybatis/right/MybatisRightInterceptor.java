@@ -23,8 +23,8 @@ public class MybatisRightInterceptor implements Interceptor {
 			int changed = (Integer) returnValue;
 			if (changed == 0 && RightThreadLocal.get() != null && RightThreadLocal.get().getRightSql() != null
 					&& RightThreadLocal.get().getRightSql().size() > 0) {
-				String operCode = RightThreadLocal.get().getOperCode();
-				throw new RightException(operCode + "操作失败，请查看权限配置");
+				String operName = RightThreadLocal.get().getOperName();
+				throw new RightException(operName + "操作失败，请查看权限配置");
 			}
 		}
 		return returnValue;

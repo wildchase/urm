@@ -16,49 +16,50 @@ import com.panly.urm.prop.PropConfig;
 
 @Configuration
 public class CommonWebAppConfig extends WebMvcConfigurerAdapter {
-	
+
 	@Bean
-	public PropConfig props(){
+	public PropConfig props() {
 		return new PropConfig();
 	}
-	
-	@Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*")
-        .allowedMethods("GET", "HEAD", "POST","PUT", "DELETE", "OPTIONS")
-        .allowCredentials(false).maxAge(3600);;
-    }
-	
-	@Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/res/**").addResourceLocations("classpath:/res/");
-        super.addResourceHandlers(registry);
-    }
-	
+
 	@Bean
-	public FastJsonHttpMessageConverter converter(){
+	public FastJsonHttpMessageConverter converter() {
 		FastJsonConfig conf = new FastJsonConfig();
 		SerializerFeature[] serializerFeatures = { SerializerFeature.DisableCircularReferenceDetect,
 				SerializerFeature.WriteDateUseDateFormat, SerializerFeature.WriteNullListAsEmpty,
-				SerializerFeature.WriteNullStringAsEmpty
-		};
+				SerializerFeature.WriteNullStringAsEmpty };
 		conf.setSerializerFeatures(serializerFeatures);
 		conf.setCharset(Charset.forName("UTF-8"));
 		conf.setDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		Feature[] features = {
-				Feature.AutoCloseSource,
-				Feature.AllowUnQuotedFieldNames,
-				Feature.AllowComment,
-				Feature.CustomMapDeserializer,
-				Feature.IgnoreAutoType,
-				Feature.IgnoreNotMatch,
-				Feature.AllowArbitraryCommas,
-		};
+
+		Feature[] features = { Feature.AutoCloseSource, Feature.AllowUnQuotedFieldNames, Feature.AllowComment,
+				Feature.CustomMapDeserializer, Feature.IgnoreAutoType, Feature.IgnoreNotMatch,
+				Feature.AllowArbitraryCommas, };
 		conf.setFeatures(features);
 		FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
 		converter.setFastJsonConfig(conf);
 		return converter;
 	}
 	
+	
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+				.allowCredentials(false).maxAge(3600);
+		;
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		//默认 res中静态文件，7天缓存
+//		Integer cachePeriod = 60*60*24*7;
+//		if(PropConfig.isLocal()){
+//			registry.addResourceHandler("/res/**").addResourceLocations("classpath:/res/");
+//		}else{
+//			registry.addResourceHandler("/res/**").addResourceLocations("classpath:/res/").setCachePeriod(cachePeriod);
+//		}
+		registry.addResourceHandler("/res/**").addResourceLocations("classpath:/res/");
+		super.addResourceHandlers(registry);
+	}
+
 }

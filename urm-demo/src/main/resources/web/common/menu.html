@@ -6,7 +6,7 @@
 			<#list menus as m>
 				<#if m.nodes??> 
 					<li  class="treeview">
-					  <a href="#" id="${m.id}">
+					  <a href="javascript:void(0);" id="${m.id}">
 						<i class="fa ${m.icon}"></i> <span>${m.text}</span>
 						<span class="pull-right-container">
 			              <i class="fa fa-angle-left pull-right"></i>
@@ -15,7 +15,7 @@
 					  <ul class="treeview-menu">
 					  	<#list m.nodes as c >
 							<li>
-								<a href="${c.url}" id="${c.id}"  > 
+								<a href="javascript:void(0);" data="${c.url}" id="${c.id}"  > 
 									<i class="fa ${c.icon}"></i> <span>${c.text}</span>
 								</a>
 							</li>
@@ -24,7 +24,7 @@
 					</li>
 				<#else>
 					<li>
-						<a href="${m.url}" id="${m.id}" > 
+						<a href="javascript:void(0);" data="${m.url}" id="${m.id}" > 
 							<i class="fa ${m.icon}"></i> <span>${m.text}</span>
 						</a>
 					</li>

@@ -56,6 +56,7 @@ public class RightHttpServiceImpl implements RightService {
 			r.setOperId(resp.getOperId());
 			r.setAcctId(acctId);
 			r.setOperCode(resp.getOperCode());
+			r.setOperName(resp.getOperName());
 			List<String> rightSqls = resp.getRightSqls();
 			r.setRightSql(rightSqls);
 			return r;
