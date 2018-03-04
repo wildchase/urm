@@ -7,10 +7,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @ImportResource({ "classpath*:*/**/*.spring.xml" })
 @SpringBootApplication(scanBasePackages = "com.panly.urm")
+@PropertySource(value={
+		"classpath:/config/config.properties",
+		"classpath:/config/${spring.profiles.active}/config.properties"
+	})
 public class ManagerMain implements EnvironmentAware  {
 	
 	private final static Logger logger = LoggerFactory.getLogger(ManagerMain.class);
