@@ -94,13 +94,117 @@ $(function(){
     });
     
     
-    $("#btn-add").click(function(){
-    	$("#addModal").modal("show");
+   
+    
+    var addVali = $("#addForm").validate({
+    		debug:true,
+            onkeyup:false, 
+            rules:{  
+            	acctName:{  
+                    required:true,   
+                    remote:{  
+                        type:"POST",  
+                        url:ctx+"/acct/check/acctName", //请求地址  
+                        data:{  
+                        	acctName:function(){ 
+                        		return $("#addForm").find("input[name=acctName]").val(); 
+                        	}
+                        }  
+                    }  
+                },
+                phone:{  
+                    required:true,   
+                    remote:{  
+                        type:"POST",
+                        url:ctx+"/acct/check/phone", //请求地址  
+                        data:{  
+                        	phone:function(){ 
+                        		return $("#addForm").find("input[name=phone]").val(); 
+                        	}
+                        }  
+                    }  
+                },
+                email:{  
+                    required:true,   
+                    remote:{  
+                        type:"POST",
+                        url:ctx+"/acct/check/email", //请求地址  
+                        data:{  
+                        	email:function(){ 
+                        		return $("#addForm").find("input[name=email]").val(); 
+                        	}
+                        }  
+                    }  
+                }
+            },  
+            messages:{  
+            	acctName:{  
+                    required:"用户名必填",  
+                    remote:"用户名已存在"  
+                },
+                phone:{  
+                    required:"手机号码必填",  
+                    remote:"手机号码已存在"  
+                },
+                email:{  
+                    required:"邮箱必填",  
+                    remote:"邮箱已存在"  
+                }
+            }
     });
     
-    var addVali = $("#addForm").validate();
+    var editVali = $("#editForm").validate({
+        		debug:true,
+                onkeyup:false, 
+                rules:{  
+                    phone:{  
+                        required:true,   
+                        remote:{  
+                            type:"POST",
+                            url:ctx+"/acct/check/update/phone", //请求地址  
+                            data:{  
+                            	phone:function(){ 
+                            		return $("#editForm").find("input[name=phone]").val(); 
+                            	},
+                            	oldPhone:function(){ 
+                            		return $("#editForm").find("input[name=oldPhone]").val(); 
+                            	}
+                            }  
+                        }  
+                    },
+                    email:{  
+                        required:true,   
+                        remote:{  
+                            type:"POST",
+                            url:ctx+"/acct/check/update/email", //请求地址  
+                            data:{  
+                            	email:function(){ 
+                            		return $("#editForm").find("input[name=email]").val(); 
+                            	},
+                            	oldEmail:function(){ 
+                            		return $("#editForm").find("input[name=oldEmail]").val(); 
+                            	}
+                            }  
+                        }  
+                    }
+                },  
+                messages:{  
+                    phone:{  
+                        required:"手机号码必填",  
+                        remote:"手机号码已存在"  
+                    },
+                    email:{  
+                        required:"邮箱必填",  
+                        remote:"邮箱已存在"  
+                    }
+                }
+     });
     
-    var editVali = $("#editForm").validate();
+    
+    $("#btn-add").click(function(){
+    	addVali.resetForm();
+    	 $("#addModal").modal("show");
+    });
     
     $('#btn-add-submit').click(function(){
     	if(addVali.form()){
@@ -115,6 +219,9 @@ $(function(){
     		})
     	}
     });
+    
+    
+    
     
     //清空add
     $('#btn-add-reset').click(function(){
@@ -179,6 +286,8 @@ $(function(){
 		$("#editModal").find("input[name=acctName]").val(data.acctName);
 		$("#editModal").find("input[name=phone]").val(data.phone);
 		$("#editModal").find("input[name=email]").val(data.email);
+		$("#editModal").find("input[name=oldPhone]").val(data.phone);
+		$("#editModal").find("input[name=oldEmail]").val(data.email);
 		$("#editModal").find("select[name=status]").val(data.status);	
 		$("#editModal").modal("show");
     });

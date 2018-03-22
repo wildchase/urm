@@ -211,5 +211,49 @@ public class AcctController {
 		return new JsonResult();
 	}
 	
+	
+	@RequestMapping(value = "/check/acctName")
+	public void checkAcctName(String acctName,HttpServletResponse resp) throws IOException {
+		Boolean success = acctService.checkAcctName(acctName);
+		resp.getWriter().write(String.valueOf(success));
+	}
+	
+	@RequestMapping(value = "/check/phone")
+	public void checkPhone(String phone,HttpServletResponse resp) throws IOException {
+		Boolean success = acctService.checkPhone(phone);
+		resp.getWriter().write(String.valueOf(success));
+	}
+	
+	@RequestMapping(value = "/check/email")
+	public void checkEmail(String email,HttpServletResponse resp) throws IOException {
+		Boolean success = acctService.checkEmail(email);
+		resp.getWriter().write(String.valueOf(success));
+	}
+	
+	
+	@RequestMapping(value = "/check/update/phone")
+	public void checkUpdatePhone(String phone,String oldPhone,HttpServletResponse resp) throws IOException {
+		Boolean success = false;
+		if(org.apache.commons.lang3.StringUtils.equalsIgnoreCase(phone, oldPhone)){
+			success = true;
+		}else{
+			success = acctService.checkPhone(phone);
+		}
+		resp.getWriter().write(String.valueOf(success));
+	}
+	
+	@RequestMapping(value = "/check/update/email")
+	public void checkUpdateEmail(String email,String oldEmail,HttpServletResponse resp) throws IOException {
+		Boolean success = false;
+		if(org.apache.commons.lang3.StringUtils.equalsIgnoreCase(email, oldEmail)){
+			success = true;
+		}else{
+			success = acctService.checkEmail(email);
+		}
+		resp.getWriter().write(String.valueOf(success));
+	}
+
+	
+	
 
 }

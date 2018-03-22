@@ -203,8 +203,6 @@ public class AcctService {
 			TreeNode appNode = new TreeNode(app.getAppId().toString(),
 					app.getAppCode(), app.getAppName(), TreeNode.TYPE_APP);
 			
-			appNode.setIcon("glyphicon glyphicon-stop");
-
 			List<TreeNode> childNodes = new ArrayList<>();
 
 			List<UrmFunctionModel> firstLevelFuncions = getChildFunction(
@@ -229,6 +227,7 @@ public class AcctService {
 		TreeNode treeNode = new TreeNode(func.getFunctionId().toString(),
 				func.getFunctionCode(), func.getFunctionName(),
 				TreeNode.TYPE_FUNC);
+		
 		List<TreeNode> nodes = new ArrayList<>();
 
 		// 获取functionNode
@@ -249,7 +248,7 @@ public class AcctService {
 				AcctRightTreeNode operNode = new AcctRightTreeNode(urmOper
 						.getOperId().toString(), urmOper.getOperCode(),
 						urmOper.getOperName(), TreeNode.TYPE_OPER);
-
+				
 				UrmFunctionModel parentFunction = getFunction(
 						urmOper.getFunctionId(), funcList);
 				if (parentFunction != null) {
@@ -345,6 +344,39 @@ public class AcctService {
 			}
 		}
 		return result;
+	}
+
+	public boolean checkAcctName(String acctName) {
+		UrmAcct record = new UrmAcct();
+		record.setRecordStatus(RecordStatusEnum.NORMAL.getCode());
+		record.setAcctName(acctName);
+		int count = urmAcctDao.getCount(record);
+		if(count==0){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean checkPhone(String phone) {
+		UrmAcct record = new UrmAcct();
+		record.setRecordStatus(RecordStatusEnum.NORMAL.getCode());
+		record.setPhone(phone);
+		int count = urmAcctDao.getCount(record);
+		if(count==0){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean checkEmail(String email) {
+		UrmAcct record = new UrmAcct();
+		record.setRecordStatus(RecordStatusEnum.NORMAL.getCode());
+		record.setEmail(email);
+		int count = urmAcctDao.getCount(record);
+		if(count==0){
+			return true;
+		}
+		return false;
 	}
 
 }

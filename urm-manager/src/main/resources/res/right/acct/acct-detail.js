@@ -281,7 +281,7 @@ function showTree(){
 	$.ajaxPost("/acct/func/oper/tree",{acctId:$("#acctId").val()},function(result){
 		treeData = result.data;
 		
-		treeObj= $('#tree').treeview({data: treeData,levels:1});
+		treeObj= $('#tree').treeview({data: treeData,levels:1,showTags: true});
 		 
 		$('#tree').on('nodeSelected',function(event, data) {
 			chooseData = data;

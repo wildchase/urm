@@ -6,7 +6,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.panly.urm.demo.menu.MenuInterceptor;
 import com.panly.urm.right.login.TokenInterceptor;
 
 
@@ -27,12 +26,8 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
 		TokenInterceptor tokenInterceptor = new TokenInterceptor();
 		tokenInterceptor.setLoginUrl(loginUrl);
 		tokenInterceptor.setCheckTokenUrl(checkTokenUrl);
-		
 		registry.addInterceptor(tokenInterceptor).addPathPatterns("/**").excludePathPatterns(StringUtils.tokenizeToStringArray(loginExcludeUrl, ","));
         
-		MenuInterceptor menuInterceptor = new MenuInterceptor();
-		registry.addInterceptor(menuInterceptor).addPathPatterns("/**");
-		
 		super.addInterceptors(registry);
     }
 	

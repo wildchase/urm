@@ -3,6 +3,8 @@ package com.panly.urm.manager.common.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.panly.urm.manager.common.constants.TreeConstant;
+
 public class TreeNode {
 
 	public final static String TYPE_APP = "1";
@@ -104,6 +106,15 @@ public class TreeNode {
 	}
 
 	public String getIcon() {
+		if(getType().equals(TYPE_APP)){
+			return TreeConstant.APP_ICON;
+		}
+		if(getType().equals(TYPE_FUNC)){
+			return TreeConstant.FUNC_ICON;
+		}
+		if(getType().equals(TYPE_OPER)){
+			return TreeConstant.OPER_ICON;
+		}
 		return icon;
 	}
 

@@ -17,6 +17,7 @@ import com.panly.urm.manager.common.constants.StatusEnum;
 //import com.panly.urm.page.core.PageDTO;
 //import com.panly.urm.page.core.PageDTOUtil;
 
+import com.panly.urm.manager.common.constants.TreeConstant;
 import com.panly.urm.manager.common.tree.TreeNode;
 import com.panly.urm.manager.right.dao.UrmAppDao;
 import com.panly.urm.manager.right.dao.UrmFunctionModelDao;
@@ -116,7 +117,6 @@ public class AppService {
 		
 		AppVo appVo = get(appId);
 		
-		
 		UrmFunctionModel funcRecord = new UrmFunctionModel();
 		funcRecord.setAppId(appId);
 		funcRecord.setRecordStatus(RecordStatusEnum.NORMAL.getCode());
@@ -130,47 +130,45 @@ public class AppService {
 		TreeNode appNode = new TreeNode(appVo.getAppId().toString(), appVo.getAppCode(),
 				appVo.getAppName(), TreeNode.TYPE_APP);
 		
-		List<TreeNode> childNodes = new ArrayList<>();
-
-		List<UrmFunctionModel> firstLevelFuncions = getChildFunction(null, funcList);
-		if (firstLevelFuncions.size() > 0) {
-			for (UrmFunctionModel func : firstLevelFuncions) {
-				TreeNode node = buildFuncTreeNode(func, funcList, operList);
-				childNodes.add(node);
-			}
+		List<TreeNode> childNodes = buildFuncTreeNode(null, funcList, operList);
+		
+		if(childNodes!=null&&childNodes.size()>0){
 			appNode.setNodes(childNodes);
 		}
 		return appNode;
 	}
 
-	private TreeNode buildFuncTreeNode(UrmFunctionModel func, List<UrmFunctionModel> funcList, List<UrmOper> operList) {
-		TreeNode treeNode = new TreeNode(func.getFunctionId().toString(), func.getFunctionCode(),
-				func.getFunctionName(), TreeNode.TYPE_FUNC);
-		List<TreeNode> nodes = new ArrayList<>();
-		
-		//获取functionNode
-		List<UrmFunctionModel> childFuncions = getChildFunction(func.getFunctionId(), funcList);
-		if (childFuncions.size() > 0) {
-			for (UrmFunctionModel child : childFuncions) {
-				TreeNode childTree = buildFuncTreeNode(child, funcList, operList);
-				nodes.add(childTree);
+	private List<TreeNode> buildFuncTreeNode(Long parentId, List<UrmFunctionModel> funcList, List<UrmOper> operList) {
+		List<TreeNode> funcNodes = new ArrayList<>();
+		List<UrmFunctionModel> childFuncs = getChildFunction(parentId, funcList);
+		if(childFuncs!=null&&childFuncs.size()>0){
+			for (UrmFunctionModel func : childFuncs) {
+				TreeNode treeNode  = new TreeNode(func.getFunctionId().toString(), func.getFunctionCode(), func.getFunctionName(), TreeNode.TYPE_FUNC);
+				
+				List<TreeNode> childNodes = buildFuncTreeNode(func.getFunctionId(), funcList, operList);
+				
+				// 获取 operNode
+				List<UrmOper> childOpers = getChildOper(func.getFunctionId(), operList);
+				if (childOpers != null && childOpers.size() > 0) {
+					
+					for (UrmOper urmOper : childOpers) {
+						TreeNode operNode = new TreeNode(urmOper.getOperId().toString(), urmOper.getOperCode(),
+								urmOper.getOperName(), TreeNode.TYPE_OPER);
+						if(childNodes==null){
+							childNodes = new ArrayList<>();
+						}
+						childNodes.add(operNode);
+					}
+				}
+				if(childNodes.size()>0){
+					treeNode.setNodes(childNodes);
+				}
+				funcNodes.add(treeNode);
 			}
 		}
-
-		// 获取 operNode
-		List<UrmOper> childOpers = getChildOper(func.getFunctionId(), operList);
-		if (childOpers != null && childOpers.size() > 0) {
-			for (UrmOper urmOper : childOpers) {
-				TreeNode operNode = new TreeNode(urmOper.getOperId().toString(), urmOper.getOperCode(),
-						urmOper.getOperName(), TreeNode.TYPE_OPER);
-				nodes.add(operNode);
-			}
-		}
-		if(nodes.size()>0){
-			treeNode.setNodes(nodes);
-		}
-		return treeNode;
+		return funcNodes;
 	}
+	
 
 	private List<UrmOper> getChildOper(Long functionId, List<UrmOper> operList) {
 		List<UrmOper> list  = new ArrayList<>();

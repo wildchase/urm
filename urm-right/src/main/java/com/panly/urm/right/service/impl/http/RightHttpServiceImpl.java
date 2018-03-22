@@ -1,6 +1,7 @@
 package com.panly.urm.right.service.impl.http;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +74,9 @@ public class RightHttpServiceImpl implements RightService {
 
 	@Override
 	public List<TreeDTO> getAcctFuncTree(Long acctId, String appCode) {
+		if(acctId==null){
+			return new ArrayList<>();
+		}
 		Map<String, String> params = new HashMap<>();
 		params.put("appCode", appCode);
 		params.put("acctId", String.valueOf(acctId));
